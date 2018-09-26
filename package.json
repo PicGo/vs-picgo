@@ -13,15 +13,24 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.picgo"
+        "onCommand:picgo.uploadClipboardImage"
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.picgo",
-            "title": "PicGo",
-            "key": "cmd+m"
-        }]
+        "commands": [
+            {
+                "command": "picgo.uploadClipboardImage",
+                "title": "Upload image from clipboard"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "picgo.uploadClipboardImage",
+                "key": "ctrl+alt+u",
+                "mac": "cmd+alt+u",
+                "when": "editorTextFocus"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -31,14 +40,15 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.21",
-        "tslint": "^5.8.0",
+        "@types/mocha": "^2.2.42",
         "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
+        "tslint": "^5.8.0",
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.21"
     },
     "dependencies": {
         "moment": "^2.22.2",
-        "picgo": "^1.1.0"
-    }
+        "picgo": "^1.1.5"
+    },
+    "license": "MIT"
 }
