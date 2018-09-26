@@ -30,7 +30,128 @@
                 "mac": "cmd+alt+u",
                 "when": "editorTextFocus"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "PicGo configuration",
+            "properties": {
+                "picbed": {
+                    "type": "object",
+                    "properties": {
+                        "current": {
+                            "type": "string",
+                            "enum": ["smms", "qiniu", "weibo", "tcyun", "upyun", "aliyun", "github", "imgur"],
+                            "default": "smms",
+                            "description": "Choose a picbed to upload."
+                        },
+                        "weibo": {
+                            "type": "object",
+                            "description": "Weibo pic-bed configurations",
+                            "properties": {
+                                "chooseCookie": {
+                                    "type": "boolean",
+                                    "default": true
+                                },
+                                "quality": {
+                                    "type": "string",
+                                    "enum": ["thumbnail" , "mw690" , "large"],
+                                    "default": "large"
+                                }
+                            },
+                            "default": {
+                                "chooseCookie": true,
+                                "username": "",
+                                "password": "",
+                                "quality": "large",
+                                "cookie": ""
+                            }
+                        },
+                        "qiniu": {
+                            "type": "object",
+                            "description": "Qiniu pic-bed configurations",
+                            "default": {
+                                "accessKey": "",
+                                "secretKey": "",
+                                "bucket": "",
+                                "url": "",
+                                "area": "",
+                                "options": "",
+                                "path": ""
+                            }
+                        },
+                        "upyun": {
+                            "type": "object",
+                            "description": "Upyun pic-bed configurations",
+                            "default": {
+                                "bucket": "",
+                                "operator": "",
+                                "password": "",
+                                "options": "",
+                                "path": "",
+                                "url": ""
+                            }
+                        },
+                        "tcyun": {
+                            "type": "object",
+                            "description": "Tencent COS pic-bed configurations",
+                            "properties": {
+                                "version": {
+                                    "type": "string",
+                                    "enum": ["v4", "v5"],
+                                    "default": "v5"
+                                }
+                            },
+                            "default": {
+                                "secretId": "",
+                                "secretKey": "",
+                                "bucket": "",
+                                "appId": "",
+                                "area": "",
+                                "path": "",
+                                "customUrl": "",
+                                "version": "v5"
+                            }
+                        },
+                        "github": {
+                            "type": "object",
+                            "description": "GitHub configurations",
+                            "default": {
+                                "repo": "",
+                                "token": "",
+                                "path": "",
+                                "customUrl": "",
+                                "branch": "",
+                                "username": ""
+                            }
+                        },
+                        "aliyun": {
+                            "type": "object",
+                            "description": "Aliyun OSS configurations",
+                            "default": {
+                                "accessKeyId": "",
+                                "accessKeySecret": "",
+                                "bucket": "",
+                                "area": "",
+                                "path": "",
+                                "customUrl": ""
+                            }
+                        },
+                        "imgur": {
+                            "type": "object",
+                            "description": "Imgur configurations",
+                            "default": {
+                                "clientId": "",
+                                "proxy": ""
+                            }
+                        }
+                    },
+                    "description": "PicGo configurations, see https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#picbed",
+                    "default": {
+                        "current": "smms"
+                    }
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
