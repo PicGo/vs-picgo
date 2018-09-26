@@ -12,6 +12,7 @@
     "categories": [
         "Other"
     ],
+    "icon": "logo.png",
     "activationEvents": [
         "onCommand:picgo.uploadImageFromClipboard",
         "onCommand:picgo.uploadImageFromExplorer",
