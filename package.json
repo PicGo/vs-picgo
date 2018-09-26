@@ -13,21 +13,43 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:picgo.uploadClipboardImage"
+        "onCommand:picgo.uploadImageFromClipboard",
+        "onCommand:picgo.uploadImageFromExplorer",
+        "onCommand:picgo.uploadImageFromInputBox"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "picgo.uploadClipboardImage",
+                "command": "picgo.uploadImageFromClipboard",
                 "title": "Upload image from clipboard"
+            },
+            {
+                "command": "picgo.uploadImageFromExplorer",
+                "title": "Upload image from explorer"
+            },
+            {
+                "command": "picgo.uploadImageFromInputBox",
+                "title": "Upload image from inputBox"
             }
         ],
         "keybindings": [
             {
-                "command": "picgo.uploadClipboardImage",
+                "command": "picgo.uploadImageFromClipboard",
                 "key": "ctrl+alt+u",
                 "mac": "cmd+alt+u",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "picgo.uploadImageFromExplorer",
+                "key": "ctrl+alt+e",
+                "mac": "cmd+alt+e",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "picgo.uploadImageFromInputBox",
+                "key": "ctrl+alt+o",
+                "mac": "cmd+alt+o",
                 "when": "editorTextFocus"
             }
         ],
@@ -35,7 +57,20 @@
             "type": "object",
             "title": "PicGo configuration",
             "properties": {
-                "picbed": {
+                "picgo": {
+                    "type": "object",
+                    "properties": {
+                        "path": {
+                            "type": "string",
+                            "description": "Specific the picgo config path",
+                            "default": ""
+                        }
+                    },
+                    "default": {
+                        "path": ""
+                    }
+                },
+                "picBed": {
                     "type": "object",
                     "properties": {
                         "current": {
