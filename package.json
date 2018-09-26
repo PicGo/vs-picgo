@@ -12,16 +12,182 @@
     "categories": [
         "Other"
     ],
+    "icon": "logo.png",
     "activationEvents": [
-        "onCommand:extension.picgo"
+        "onCommand:picgo.uploadImageFromClipboard",
+        "onCommand:picgo.uploadImageFromExplorer",
+        "onCommand:picgo.uploadImageFromInputBox"
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.picgo",
-            "title": "PicGo",
-            "key": "cmd+m"
-        }]
+        "commands": [
+            {
+                "command": "picgo.uploadImageFromClipboard",
+                "title": "Upload image from clipboard"
+            },
+            {
+                "command": "picgo.uploadImageFromExplorer",
+                "title": "Upload image from explorer"
+            },
+            {
+                "command": "picgo.uploadImageFromInputBox",
+                "title": "Upload image from inputBox"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "picgo.uploadImageFromClipboard",
+                "key": "ctrl+alt+u",
+                "mac": "cmd+alt+u",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "picgo.uploadImageFromExplorer",
+                "key": "ctrl+alt+e",
+                "mac": "cmd+alt+e",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "picgo.uploadImageFromInputBox",
+                "key": "ctrl+alt+o",
+                "mac": "cmd+alt+o",
+                "when": "editorTextFocus"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "PicGo configuration",
+            "properties": {
+                "picgo": {
+                    "type": "object",
+                    "properties": {
+                        "path": {
+                            "type": "string",
+                            "description": "Specific the picgo config path",
+                            "default": ""
+                        }
+                    },
+                    "default": {
+                        "path": ""
+                    }
+                },
+                "picBed": {
+                    "type": "object",
+                    "properties": {
+                        "current": {
+                            "type": "string",
+                            "enum": ["smms", "qiniu", "weibo", "tcyun", "upyun", "aliyun", "github", "imgur"],
+                            "default": "smms",
+                            "description": "Choose a picbed to upload."
+                        },
+                        "weibo": {
+                            "type": "object",
+                            "description": "Weibo pic-bed configurations",
+                            "properties": {
+                                "chooseCookie": {
+                                    "type": "boolean",
+                                    "default": true
+                                },
+                                "quality": {
+                                    "type": "string",
+                                    "enum": ["thumbnail" , "mw690" , "large"],
+                                    "default": "large"
+                                }
+                            },
+                            "default": {
+                                "chooseCookie": true,
+                                "username": "",
+                                "password": "",
+                                "quality": "large",
+                                "cookie": ""
+                            }
+                        },
+                        "qiniu": {
+                            "type": "object",
+                            "description": "Qiniu pic-bed configurations",
+                            "default": {
+                                "accessKey": "",
+                                "secretKey": "",
+                                "bucket": "",
+                                "url": "",
+                                "area": "",
+                                "options": "",
+                                "path": ""
+                            }
+                        },
+                        "upyun": {
+                            "type": "object",
+                            "description": "Upyun pic-bed configurations",
+                            "default": {
+                                "bucket": "",
+                                "operator": "",
+                                "password": "",
+                                "options": "",
+                                "path": "",
+                                "url": ""
+                            }
+                        },
+                        "tcyun": {
+                            "type": "object",
+                            "description": "Tencent COS pic-bed configurations",
+                            "properties": {
+                                "version": {
+                                    "type": "string",
+                                    "enum": ["v4", "v5"],
+                                    "default": "v5"
+                                }
+                            },
+                            "default": {
+                                "secretId": "",
+                                "secretKey": "",
+                                "bucket": "",
+                                "appId": "",
+                                "area": "",
+                                "path": "",
+                                "customUrl": "",
+                                "version": "v5"
+                            }
+                        },
+                        "github": {
+                            "type": "object",
+                            "description": "GitHub configurations",
+                            "default": {
+                                "repo": "",
+                                "token": "",
+                                "path": "",
+                                "customUrl": "",
+                                "branch": "",
+                                "username": ""
+                            }
+                        },
+                        "aliyun": {
+                            "type": "object",
+                            "description": "Aliyun OSS configurations",
+                            "default": {
+                                "accessKeyId": "",
+                                "accessKeySecret": "",
+                                "bucket": "",
+                                "area": "",
+                                "path": "",
+                                "customUrl": ""
+                            }
+                        },
+                        "imgur": {
+                            "type": "object",
+                            "description": "Imgur configurations",
+                            "default": {
+                                "clientId": "",
+                                "proxy": ""
+                            }
+                        }
+                    },
+                    "description": "PicGo configurations, see https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#picbed",
+                    "default": {
+                        "current": "smms"
+                    }
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -31,14 +197,15 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.21",
-        "tslint": "^5.8.0",
+        "@types/mocha": "^2.2.42",
         "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
+        "tslint": "^5.8.0",
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.21"
     },
     "dependencies": {
         "moment": "^2.22.2",
-        "picgo": "^1.1.0"
-    }
+        "picgo": "^1.1.5"
+    },
+    "license": "MIT"
 }

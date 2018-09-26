@@ -1,114 +1,108 @@
 'use strict';
 import * as vscode from 'vscode';
-import { spawn, ChildProcess } from 'child_process';
-import * as  path from 'path';
+import * as os from 'os';
 import * as fs from 'fs';
-
 const PicGo = require('picgo');
 
-export function activate(context: vscode.ExtensionContext) {
-    const disposable = vscode.commands.registerCommand('extension.picgo', () => start());
-    context.subscriptions.push(disposable);
+function uploadImageFromClipboard (): void {
+    return upload();
 }
 
-export function deactivate() {
+async function uploadImageFromExplorer (): Promise<any> {
+    const result = await vscode.window.showOpenDialog({
+        filters: {
+            'Images': ['png', 'jpg', 'jpeg', 'webp', 'gif', 'bmp', 'tiff', 'ico']
+        },
+        canSelectMany: true
+    });
+
+    if (result) {
+        const input = result.map(item => item.fsPath);
+        return upload(input);
+    }
 }
 
-function start(): void {
-    const editor = vscode.window.activeTextEditor;
-    // 当前是否有active编辑器
-    // 插件只支持markdown文法
-    if (editor && editor.document.languageId === 'markdown') {
-        const imageDir = path.join(editor.document.uri.fsPath, '../.imgs');
-        try {
-            fs.accessSync(imageDir);
-        } catch (err) {
-            fs.mkdirSync(imageDir);
+async function uploadImageFromInputBox (): Promise<any> {
+    const result = await vscode.window.showInputBox({
+        placeHolder: 'Please input an image location path'
+    });
+    if (result) {
+        if (fs.existsSync(result)) {
+            return upload([result]);
+        } else {
+            vscode.window.showErrorMessage('No such image or path.');
         }
-        const imageName = getImageName(editor);
-        getImagePath(saveImageFromClipboard(`${imageDir}/${imageName}.png`))
-            .then(path => {
-
-                if (path === 'no image') {
-                    vscode.window.showErrorMessage('copy image first');
-                } else {
-                    const picgoConfig = vscode.workspace.getConfiguration('picgo');
-                    const picgo = new PicGo(picgoConfig.path || '');
-                    picgo.upload([path]);
-                    picgo.on('finished', (ctx: any) => {
-                        editor.edit(textEditor => {
-                            textEditor.replace(editor.selection, `![image ${imageName}](${ctx.output[0].imgUrl})`);
-                            vscode.window.showInformationMessage('upload successfully');
-                        });
-                    });
-                    picgo.on('notification', (notice: any) => {
-                        vscode.window.showErrorMessage(notice.title);
-                    });
-                }
-            })
-            .catch(() => {
-            });
-    } else {
-        vscode.window.showErrorMessage('No Active Editor!');
     }
 }
 
 function getImageName(editor: vscode.TextEditor): string {
     const selectedString = editor.document.getText(editor.selection);
     const nameReg = /[^:.\/\?\$]+$/;  // 补充完全命名限制
-    return (selectedString && nameReg.test(selectedString)) ? selectedString : `${new Date().getTime()}`;
+    return (selectedString && nameReg.test(selectedString)) ? selectedString : '';
 }
 
+function getUserSettingFile () {
+    // https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
+    const home = process.env.APPDATA ? process.env.APPDATA : os.homedir();
+    switch (os.platform()) {
+        case 'win32':
+            return `${home}\\Code\\User\\settings.json`;
+        case 'darwin':
+            return `${home}/Library/Application Support/Code/User/settings.json`;
+        default:
+            return `${home}/.config/Code/User/settings.json`;
+    }
+}
 
-function saveImageFromClipboard(imagePath: string): ChildProcess {
-    const platform: string = process.platform;
-    const platformMaps: {
-        [index: string]: {
-            script: string,
-            path: string
+function upload (input?: any[]): void {
+    const editor = vscode.window.activeTextEditor;
+    if (editor && editor.document.languageId === 'markdown') {
+        const imageName = getImageName(editor);
+        const picgoConfig = vscode.workspace.getConfiguration('picgo');
+        // using the vscode setting file will be a better choice
+        const picgo = new PicGo(picgoConfig.path || getUserSettingFile());
+        // change image fileName to selection text
+        if (imageName) {
+            picgo.helper.beforeUploadPlugins.register('changeFileNameToSelection',{
+                handle (ctx: any) {
+                    if (ctx.output.length === 1) {
+                        ctx.output[0].fileName = imageName;
+                    } else {
+                        ctx.output = ctx.output.map((item: any, index: number) => {
+                            item.fileName = `${imageName}_${index}`;
+                            return item;
+                        });
+                    }
+                }
+            });
         }
-    } = {
-        'darwin': {
-            script: 'osascript',
-            path: '../lib/mac.applescript'
-        },
-        'win32': {
-            script: 'powershell',
-            path: '../lib/windows.ps1'
-        },
-        'linux': {
-            script: 'sh',
-            path: '../lib/linux.sh'
-        }
-    };
-    const args = platform === 'win32' ? [
-        '-noprofile',
-        '-noninteractive',
-        '-nologo',
-        '-sta',
-        '-executionpolicy', 'unrestricted',
-        '-windowstyle', 'hidden',
-        '-file'] : [];
-
-    args.push(path.join(__dirname, platformMaps[platform].path), imagePath);
-    return spawn(platformMaps[platform].script, args);
+        picgo.upload(input); // Since picgo-core v1.1.5 will upload image from clipboard without input.
+        picgo.on('finished', (ctx: any) => {
+            editor.edit(textEditor => {
+                let urlText = '';
+                ctx.output.forEach((item: any) => {
+                    urlText += `![${item.fileName}](${item.imgUrl})\n`;
+                });
+                textEditor.replace(editor.selection, urlText);
+                vscode.window.showInformationMessage('upload successfully');
+            });
+        });
+        picgo.on('notification', (notice: any) => {
+            vscode.window.showErrorMessage(notice.title);
+        });
+    } else {
+        vscode.window.showErrorMessage('No Active Editor!');
+    }
 }
 
-function getImagePath(execution: ChildProcess): Promise<string> {
-    return new Promise((resolve, reject) => {
-        execution.stdout.on('data', (data: string) => {
-            if (process.platform === 'linux' && data.toString().trim() === 'no xclip') {
-                vscode.window.showErrorMessage('Please install xclip before run picgo!');
-            } else {
-                resolve(data.toString().trim());
-            }
-        });
-        execution.stderr.on('data', (err: any) => {
-            reject(err);
-        });
-    });
+export function activate(context: vscode.ExtensionContext) {
+    let disposable = [
+        vscode.commands.registerCommand('picgo.uploadImageFromClipboard', () => uploadImageFromClipboard()),
+        vscode.commands.registerCommand('picgo.uploadImageFromExplorer', () => uploadImageFromExplorer()),
+        vscode.commands.registerCommand('picgo.uploadImageFromInputBox', () => uploadImageFromInputBox()),
+    ];
+    context.subscriptions.push(...disposable);
 }
 
-
-
-
+export function deactivate() {
+}
