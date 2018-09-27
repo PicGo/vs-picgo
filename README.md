@@ -1,10 +1,12 @@
 # vs-picgo(Vscode Plugin for PicGo)
 
-> [PicGo](https://github.com/PicGo)的vscode插件
+> [PicGo](https://github.com/PicGo) 的vscode插件
+
+
 
 ## 功能
 
-在VSCode里使用picgo，实现快速上传图片到远端图床并直接将URL写进Markdown文件里，极大提升Markdown贴图效率与体验。支持[PicGo](https://github.com/Molunerfinn/PicGo)原生自带的8种图床。
+在VSCode里使用picgo，实现快速上传图片到远端图床并直接将URL写进Markdown文件里，极大提升Markdown贴图效率与体验。支持 [PicGo](https://github.com/Molunerfinn/PicGo) 原生自带的8种图床。
 
 - 截图上传
 
@@ -38,7 +40,7 @@
 **如果你指定的`picgo`的`path`为空，那么将使用VSCode默认的`setting.json`作为配置文件。**
 
 配置文件内容(usersetting.json文件中picgo.path路径指定的文件)里需要配置的项主要是`picBed`：
-详细信息可参看[PicGo-配置](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+详细信息可参看 [PicGo-配置](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
 
 
 ``` js
@@ -108,15 +110,21 @@
 
 ## 使用
 
-* 在插件商店中查找**picgo**，并安装
-* 安装完成后，可在命令面板中输入PicGo运行插件
-* 推荐：为PicGo设置键盘快捷方式（自行设定）
+* 在插件商店中查找**PicGo**，并安装
+* 安装完成后，可在命令面板中输入
+  * Upload image from inputBox  [从输入框上传]
+  * Upload image from explorer  [从文件管理器上传]
+  * Upload image from clipboard [从剪切板上传]
+* 推荐：使用键盘快捷方式（可自行修改）
 * 选定文本再上传的话会使用选定的文本作为文件名
 
+## Contributers
+* [Spades-S](https://github.com/Spades-S)
+* [Molunerfinn](https://github.com/Molunerfinn)
 
 ## Thanks
 
-[PicGo-Core](https://github.com/PicGo/PicGo-Core)
+* [PicGo-Core](https://github.com/PicGo/PicGo-Core)
 
 
 

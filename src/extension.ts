@@ -37,9 +37,8 @@ async function uploadImageFromInputBox(): Promise<any> {
     let result = await vscode.window.showInputBox({
         placeHolder: 'Please input an image location path'
     });
-    // check if result is a path of image file 
+    // check if `result` is a path of image file 
     const pathReg = /\.(png|jpg|jpeg|webp|gif|bmp|tiff|ico)$/;
-    // if `result` starts with '/', `result` will be seen as an absolute path
     if (result && pathReg.test(result)) {
         result = path.isAbsolute(result)
             ? result : path.join(editor.document.uri.fsPath, '../', result);
@@ -53,7 +52,7 @@ async function uploadImageFromInputBox(): Promise<any> {
 
 function getImageName(editor: vscode.TextEditor): string {
     const selectedString = editor.document.getText(editor.selection);
-    const nameReg = /[^:.\/\?\$]+$/;  // 补充完全命名限制
+    const nameReg = /[^:.\/\?\$]+$/;  // limations of name 
     return (selectedString && nameReg.test(selectedString)) ? selectedString : '';
 }
 
@@ -71,7 +70,7 @@ function getUserSettingFile() {
 }
 
 /*
-*  获取当前active Markdown 编辑器
+*  get active markdown editor
 */
 function getActiveMarkDownEditor(): vscode.TextEditor | undefined {
     const editor = vscode.window.activeTextEditor;
@@ -116,6 +115,26 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
     picgo.on('notification', (notice: any) => {
         vscode.window.showErrorMessage(notice.title);
     });
+    // uploading pogress
+    vscode.window.withProgress({
+        location: vscode.ProgressLocation.Notification,
+        title: "Image Uploading...",
+        cancellable: false
+    }, (progress) => {
+        return new Promise((resolve, reject) => {
+            picgo.on('uploadProgress', (p: number) => {
+                progress.report({ increment: p });
+                if (p === 100) {
+                    resolve();
+                }
+            });
+            picgo.on('notification', (notice: any) => {
+                vscode.window.showErrorMessage(notice.title);
+                reject();
+            });
+        });
+    });
+
 }
 
 export function activate(context: vscode.ExtensionContext) {
