@@ -76,7 +76,16 @@
                     "properties": {
                         "current": {
                             "type": "string",
-                            "enum": ["smms", "qiniu", "weibo", "tcyun", "upyun", "aliyun", "github", "imgur"],
+                            "enum": [
+                                "smms",
+                                "qiniu",
+                                "weibo",
+                                "tcyun",
+                                "upyun",
+                                "aliyun",
+                                "github",
+                                "imgur"
+                            ],
                             "default": "smms",
                             "description": "Choose a picbed to upload."
                         },
@@ -90,7 +99,11 @@
                                 },
                                 "quality": {
                                     "type": "string",
-                                    "enum": ["thumbnail" , "mw690" , "large"],
+                                    "enum": [
+                                        "thumbnail",
+                                        "mw690",
+                                        "large"
+                                    ],
                                     "default": "large"
                                 }
                             },
@@ -133,7 +146,10 @@
                             "properties": {
                                 "version": {
                                     "type": "string",
-                                    "enum": ["v4", "v5"],
+                                    "enum": [
+                                        "v4",
+                                        "v5"
+                                    ],
                                     "default": "v5"
                                 }
                             },
@@ -204,7 +220,6 @@
         "vscode": "^1.1.21"
     },
     "dependencies": {
-        "moment": "^2.22.2",
         "picgo": "^1.1.5"
     },
     "license": "MIT"
