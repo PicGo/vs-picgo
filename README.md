@@ -111,7 +111,7 @@
 ## 使用
 
 * 在插件商店中查找**PicGo**，并安装
-* 安装完成后，可在命令面板中输入
+* 安装完成后，可在命令面板中输入
   * Upload image from inputBox  [从输入框上传]
   * Upload image from explorer  [从文件管理器上传]
   * Upload image from clipboard [从剪切板上传]

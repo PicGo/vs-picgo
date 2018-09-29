@@ -1,7 +1,9 @@
-# Change Log
-All notable changes to the "picgo" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+* 0.0.3  
+Display a progress bar when uploading the image(s).
 
-## [Unreleased]
-- Initial release
+* 0.0.2
+Support uploading images from Explorer/InputBox.
+
+* 0.0.1
+Support uploading images from Clipboard.

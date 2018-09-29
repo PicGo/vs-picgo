@@ -38,16 +38,19 @@ async function uploadImageFromInputBox(): Promise<any> {
         placeHolder: 'Please input an image location path'
     });
     // check if `result` is a path of image file 
-    const pathReg = /\.(png|jpg|jpeg|webp|gif|bmp|tiff|ico)$/;
-    if (result && pathReg.test(result)) {
+    const imageReg = /\.(png|jpg|jpeg|webp|gif|bmp|tiff|ico)$/;
+    if (result && imageReg.test(result)) {
         result = path.isAbsolute(result)
             ? result : path.join(editor.document.uri.fsPath, '../', result);
-        if (result && fs.existsSync(result)) {
+        if (fs.existsSync(result)) {
             return upload(editor, [result]);
         } else {
-            vscode.window.showErrorMessage('No such image or path.');
+            vscode.window.showErrorMessage('No such image.');
         }
+    } else {
+        vscode.window.showErrorMessage('No such image.');
     }
+
 }
 
 function getImageName(editor: vscode.TextEditor): string {
@@ -112,10 +115,8 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
             vscode.window.showInformationMessage('Upload successfully');
         });
     });
-    picgo.on('notification', (notice: any) => {
-        vscode.window.showErrorMessage(notice.title);
-    });
-    // uploading pogress
+
+    // uploading progress
     vscode.window.withProgress({
         location: vscode.ProgressLocation.Notification,
         title: "Image Uploading...",
