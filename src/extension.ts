@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
-const PicGo = require('picgo');
+import PicGo from 'picgo';
 
 function uploadImageFromClipboard(): void {
     const editor = getActiveMarkDownEditor();

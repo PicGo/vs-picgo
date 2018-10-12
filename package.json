@@ -20,7 +20,8 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
+        "commands": [
+            {
                 "command": "picgo.uploadImageFromClipboard",
                 "title": "Upload image from clipboard"
             },
@@ -33,7 +34,8 @@
                 "title": "Upload image from inputBox"
             }
         ],
-        "keybindings": [{
+        "keybindings": [
+            {
                 "command": "picgo.uploadImageFromClipboard",
                 "key": "ctrl+alt+u",
                 "mac": "cmd+alt+u",
@@ -218,7 +220,7 @@
         "vscode": "^1.1.21"
     },
     "dependencies": {
-        "picgo": "^1.1.5"
+        "picgo": "^1.1.9"
     },
     "license": "MIT"
 }
