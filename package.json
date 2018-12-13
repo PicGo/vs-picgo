@@ -2,9 +2,9 @@
     "name": "vs-picgo",
     "displayName": "PicGo",
     "description": "vscode plugin for PicGo",
-    "repository": "https://github.com/Spades-S/vscode-plugin-for-PicGo",
-    "issues": "https://github.com/Spades-S/vscode-plugin-for-PicGo/issues",
-    "version": "0.0.3",
+    "repository": "https://github.com/Spades-S/vs-picgo",
+    "issues": "https://github.com/Spades-S/vs-picgo/issues",
+    "version": "1.0.1",
     "publisher": "Spades",
     "engines": {
         "vscode": "^1.27.0"
@@ -20,8 +20,7 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [
-            {
+        "commands": [{
                 "command": "picgo.uploadImageFromClipboard",
                 "title": "Upload image from clipboard"
             },
@@ -34,8 +33,7 @@
                 "title": "Upload image from inputBox"
             }
         ],
-        "keybindings": [
-            {
+        "keybindings": [{
                 "command": "picgo.uploadImageFromClipboard",
                 "key": "ctrl+alt+u",
                 "mac": "cmd+alt+u",
