@@ -1,4 +1,11 @@
 
+* 1.0.4
+	* Add English docs.
+	* Change the image name filters.
+
+* 1.0.3
+	* Update dependencies: Picgo-Core 1.10 -> Picgo-Core 1.16 etc.
+
 * 1.0.2
   * Update ReadMe.
 	

@@ -4,7 +4,7 @@
     "description": "vscode plugin for PicGo",
     "repository": "https://github.com/Spades-S/vs-picgo",
     "issues": "https://github.com/Spades-S/vs-picgo/issues",
-    "version": "1.0.1",
+    "version": "1.0.4",
     "publisher": "Spades",
     "engines": {
         "vscode": "^1.27.0"
@@ -20,7 +20,8 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
+        "commands": [
+            {
                 "command": "picgo.uploadImageFromClipboard",
                 "title": "Upload image from clipboard"
             },
@@ -33,7 +34,8 @@
                 "title": "Upload image from inputBox"
             }
         ],
-        "keybindings": [{
+        "keybindings": [
+            {
                 "command": "picgo.uploadImageFromClipboard",
                 "key": "ctrl+alt+u",
                 "mac": "cmd+alt+u",
@@ -213,6 +215,7 @@
     "devDependencies": {
         "@types/mocha": "^2.2.42",
         "@types/node": "^8.10.25",
+        "cz-conventional-changelog": "2.1.0",
         "tslint": "^5.8.0",
         "typescript": "^2.6.1",
         "vscode": "^1.1.21"
@@ -220,5 +223,10 @@
     "dependencies": {
         "picgo": "^1.1.9"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    }
 }
