@@ -1,3 +1,10 @@
+* 1.0.6
+	* Upgrade picgo-core to fix errors caused by comments in a json file
+	* Update ReadMe
+
+* 1.0.5
+  * Fix spelling errors in README.md
+	* Update the regular expression of the image name
 
 * 1.0.4
 	* Add English docs.
@@ -8,7 +15,7 @@
 
 * 1.0.2
   * Update ReadMe.
-	
+
 * 1.0.1
 	* Fix a bug caused by settings.json with comments.
 

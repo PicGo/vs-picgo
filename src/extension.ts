@@ -53,7 +53,7 @@ async function uploadImageFromInputBox(): Promise<any> {
 
 function getImageName(editor: vscode.TextEditor): string {
 	let selectedString = editor.document.getText(editor.selection);
-	const nameReg = /[:.\/\?\$]+/; // limations of name
+	const nameReg = /[:\/\?\$]+/; // limations of name
 	selectedString = selectedString.replace(nameReg, () => '');
 	return selectedString;
 }

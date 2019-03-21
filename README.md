@@ -7,14 +7,14 @@
 `vs-picgo` is a VSCode extension to upload images to a remote image hosting and insert the url into current active MarkDown file. It's more efficient. And it can give us a better experience of uploading images. `vs-picgo` supports 8 kinds of image hostings supported by [PicGo](https://github.com/PicGo).
 
 - Uploading an image from clipboard
-![clipboard.gif](https://i.loli.net/2019/01/16/5c3ed033577a0.gif)
+![clipboard.gif](https://i.loli.net/2019/03/21/5c93900712842.gif)
 - Uploading images from explorer
-![explorer.gif](https://i.loli.net/2019/01/16/5c3ed36d0d9d3.gif)
+![explorer.gif](https://i.loli.net/2019/03/21/5c9390959d7a1.gif)
 - Uploading an image from input box 
-![inputbox.gif](https://i.loli.net/2019/01/16/5c3ed2386b7ac.gif)
+![inputbox.gif](https://i.loli.net/2019/03/21/5c939163807b6.gif)
 - Select characters as image name 
-**Note: These characters, `$`, `:`, `/`, `.`, `?`, will be ignored in the image name.**
-![image name.gif](https://i.loli.net/2019/01/16/5c3ecdd550dee.gif)
+**Note: These characters, `$`, `:`, `/`, `?`, will be ignored in the image name.**
+![image name.gif](https://i.loli.net/2019/03/21/5c9392c749d99.gif)
 
 
 ## Settings
@@ -24,10 +24,12 @@
 	* The default image hosting is [SM.MS](https://sm.ms/)
 - custom
 	* insert the content below into `usersetting.json` of VSCode. [Detail information about custom setting](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+
+	**NOTE: picgo.path is prior to picBed, which means if picgo.path is not empty string, vs-picgo will use the configuration file defined by picogo.path.**
 		```js
 		{
 			"picgo": {
-				"path": "path to your external configure file" // default value is "", which means use "picBed" info below. External configure file should be a JSON file containing all the "picBed" info below.
+				"path": "" // path to your external configure file, default value is "", which means that vs-picgo will use "picBed" info below. External configure file should be a JSON file containing all the "picBed" info below.
 			},
 			"picBed": {
 				"current": "smms",  // current image hosting, default value is "smms"
@@ -100,7 +102,7 @@
 
 
 
-## Useage
+## Usage
 
 - Find `vs-picgo` in the extension store, and install `vs-picgo`. You can use `vs-picgo` on installation finishes. 
 

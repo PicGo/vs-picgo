@@ -4,7 +4,7 @@
     "description": "vscode plugin for PicGo",
     "repository": "https://github.com/Spades-S/vs-picgo",
     "issues": "https://github.com/Spades-S/vs-picgo/issues",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "publisher": "Spades",
     "engines": {
         "vscode": "^1.27.0"
