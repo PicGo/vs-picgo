@@ -159,13 +159,6 @@ function updateLog(picInfo: Object) {
 	try {
 		let data = fs.readFileSync(logPath, 'utf8');
 		let log = JSON.parse(data); //now it an object
-		if (!log) {
-			vscode.window.showErrorMessage(
-				`The log file ${logPath} is dirty, ` +
-				`please delete it and vs-picgo will recreate for you.`
-			);
-			return;
-		}
 		const currentPicBed = getCurrentPicBed();
 		if (!log[currentPicBed]) {
 			log[currentPicBed] = [];
