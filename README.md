@@ -29,7 +29,8 @@
 ```js
 {
   "picgo": {
-    "path": "" // path to your external configure file, default value is "", which means that vs-picgo will use "picBed" info below. External configure file should be a JSON file containing all the "picBed" info below.
+    "path": "" // path to your external configure file, default value is "", which means that vs-picgo will use "picBed" info below. External configure file should be a JSON file containing all the "picBed" info below.,
+    "logPath": ""  // path to the json log file which records all uploaded images, default to your_home_dir/vs-picgo-log.json
   },
   "picBed": {
     "current": "smms",  // current image hosting, default value is "smms"

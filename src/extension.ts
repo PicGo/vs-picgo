@@ -5,6 +5,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 const PicGo = require('picgo');
 
+const picgoConfig = vscode.workspace.getConfiguration('picgo');
+const logPath = picgoConfig.logPath || path.resolve(os.homedir(), 'vs-picgo-log.json');
+
 function uploadImageFromClipboard(): void {
 	const editor = getActiveMarkDownEditor();
 	return editor ? upload(editor) : (() => {})();
@@ -86,7 +89,6 @@ function getActiveMarkDownEditor(): vscode.TextEditor | undefined {
 
 function upload(editor: vscode.TextEditor, input?: any[]): void {
 	const imageName = getImageName(editor);
-	const picgoConfig = vscode.workspace.getConfiguration('picgo');
 	// using the vscode setting file will be a better choice
 	const picgo = new PicGo(picgoConfig.path || getUserSettingFile());
 	// change image fileName to selection text
@@ -110,6 +112,7 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
 			let urlText = '';
 			ctx.output.forEach((item: any) => {
 				urlText += `![${item.fileName}](${item.imgUrl})\n`;
+				updateLog(item.fileName, item.imgUrl);
 			});
 			textEditor.replace(editor.selection, urlText);
 			vscode.window.showInformationMessage('Upload successfully');
@@ -140,6 +143,62 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
 	);
 }
 
+function updateLog(description: string, url: string) {
+	try {
+		let data = fs.readFileSync(logPath, 'utf8');
+		let log = JSON.parse(data); //now it an object
+		if (!log || !log.images) {
+			vscode.window.showErrorMessage(
+				`The log file ${logPath} is dirty, ` +
+				`please delete it and vs-picgo will recreate for you.`
+			);
+			return;
+		}
+		log.images.push({description, url}); //add some data
+		let json = JSON.stringify(log, null, 2); //convert it back to json
+		writeJsonToLog(json);
+	} catch (err) {
+		// We have initialized log files when extension activated.
+		// If get ENOENT error, there must be a user deletion of the log file.
+		if (err.message.includes('ENOENT: no such file or directory')) {
+			initLogFile();
+			vscode.window.showInformationMessage(
+				`Log file recreated at ${logPath}.`
+			);
+			updateLog(description, url);
+		}
+		// Syntax error
+		else if (err instanceof SyntaxError) {
+			vscode.window.showErrorMessage(
+				`The log file ${logPath} has syntax error, ` + 
+				`please fix the error by yourself or delete the log file and vs-picgo will recreate for you.`
+			);
+		} else {
+			vscode.window.showErrorMessage(
+				`Failed to read from log file ${logPath}: ${err || ''}`
+			);
+			console.log(err.name);
+		}
+	}
+}
+
+function initLogFile() {
+	if (!fs.existsSync(logPath)) {
+		let log = {
+			images: []
+		 };
+		writeJsonToLog(JSON.stringify(log));
+	}
+}
+
+function writeJsonToLog(json: string) {
+	try {
+		fs.writeFileSync(logPath, json, 'utf8');	
+	} catch (err) {
+		vscode.window.showErrorMessage(`Failed to write to log file ${logPath}: ${err || ''}`);
+	}
+}
+
 export function activate(context: vscode.ExtensionContext) {
 	let disposable = [
 		vscode.commands.registerCommand('picgo.uploadImageFromClipboard', () => uploadImageFromClipboard()),
@@ -147,6 +206,8 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand('picgo.uploadImageFromInputBox', () => uploadImageFromInputBox()),
 	];
 	context.subscriptions.push(...disposable);
+
+	initLogFile();
 }
 
 export function deactivate() {}
