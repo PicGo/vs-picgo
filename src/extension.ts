@@ -4,9 +4,9 @@ import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
 const PicGo = require('picgo');
-
-const picgoConfig = vscode.workspace.getConfiguration('picgo');
-const logPath = picgoConfig.logPath || path.resolve(os.homedir(), 'vs-picgo-log.json');
+const _ = require('lodash');
+const _db = require('lodash-id');
+_.mixin(_db);
 
 function uploadImageFromClipboard(): void {
 	const editor = getActiveMarkDownEditor();
@@ -89,6 +89,7 @@ function getActiveMarkDownEditor(): vscode.TextEditor | undefined {
 
 function upload(editor: vscode.TextEditor, input?: any[]): void {
 	const imageName = getImageName(editor);
+	const picgoConfig = vscode.workspace.getConfiguration('picgo');
 	// using the vscode setting file will be a better choice
 	const picgo = new PicGo(picgoConfig.path || getUserSettingFile());
 	// change image fileName to selection text
@@ -112,7 +113,7 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
 			let urlText = '';
 			ctx.output.forEach((item: any) => {
 				urlText += `![${item.fileName}](${item.imgUrl})\n`;
-				updateLog(item.fileName, item.imgUrl);
+				updateLog(item);
 			});
 			textEditor.replace(editor.selection, urlText);
 			vscode.window.showInformationMessage('Upload successfully');
@@ -143,18 +144,34 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
 	);
 }
 
-function updateLog(description: string, url: string) {
+function getCurrentPicBed() {
+	const picBed = vscode.workspace.getConfiguration('picBed');
+	return picBed.current;
+}
+
+function getLogPath() {
+	const picgoConfig = vscode.workspace.getConfiguration('picgo');
+	return picgoConfig.logPath || path.resolve(os.homedir(), 'vs-picgo-log.json');
+}
+
+function updateLog(picInfo: Object) {
+	const logPath = getLogPath();
 	try {
 		let data = fs.readFileSync(logPath, 'utf8');
 		let log = JSON.parse(data); //now it an object
-		if (!log || !log.images) {
+		if (!log) {
 			vscode.window.showErrorMessage(
 				`The log file ${logPath} is dirty, ` +
 				`please delete it and vs-picgo will recreate for you.`
 			);
 			return;
 		}
-		log.images.push({description, url}); //add some data
+		const currentPicBed = getCurrentPicBed();
+		if (!log[currentPicBed]) {
+			log[currentPicBed] = [];
+		}
+		// log[currentPicBed].push({picInfo}); //add some data
+		_.insert(log[currentPicBed], picInfo);
 		let json = JSON.stringify(log, null, 2); //convert it back to json
 		writeJsonToLog(json);
 	} catch (err) {
@@ -165,7 +182,7 @@ function updateLog(description: string, url: string) {
 			vscode.window.showInformationMessage(
 				`Log file recreated at ${logPath}.`
 			);
-			updateLog(description, url);
+			updateLog(picInfo);
 		}
 		// Syntax error
 		else if (err instanceof SyntaxError) {
@@ -183,15 +200,14 @@ function updateLog(description: string, url: string) {
 }
 
 function initLogFile() {
+	const logPath = getLogPath();
 	if (!fs.existsSync(logPath)) {
-		let log = {
-			images: []
-		 };
-		writeJsonToLog(JSON.stringify(log));
+		writeJsonToLog(JSON.stringify({}));
 	}
 }
 
 function writeJsonToLog(json: string) {
+	const logPath = getLogPath();
 	try {
 		fs.writeFileSync(logPath, json, 'utf8');	
 	} catch (err) {
