@@ -63,12 +63,18 @@
                     "properties": {
                         "path": {
                             "type": "string",
-                            "description": "Specific the picgo config path",
+                            "description": "Specify the picgo config path",
+                            "default": ""
+                        },
+                        "logPath": {
+                            "type": "string",
+                            "description": "Specify the path to the json log file which records all uploaded images",
                             "default": ""
                         }
                     },
                     "default": {
-                        "path": ""
+                        "path": "",
+                        "logPath": ""
                     }
                 },
                 "picBed": {
@@ -221,6 +227,8 @@
         "vscode": "^1.1.21"
     },
     "dependencies": {
+        "lodash": "^4.17.11",
+        "lodash-id": "^0.14.0",
         "picgo": "^1.1.9"
     },
     "license": "MIT",

@@ -4,6 +4,9 @@ import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
 const PicGo = require('picgo');
+const _ = require('lodash');
+const _db = require('lodash-id');
+_.mixin(_db);
 
 function uploadImageFromClipboard(): void {
 	const editor = getActiveMarkDownEditor();
@@ -110,6 +113,7 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
 			let urlText = '';
 			ctx.output.forEach((item: any) => {
 				urlText += `![${item.fileName}](${item.imgUrl})\n`;
+				updateLog(item);
 			});
 			textEditor.replace(editor.selection, urlText);
 			vscode.window.showInformationMessage('Upload successfully');
@@ -140,6 +144,64 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
 	);
 }
 
+function getLogPath() {
+	const picgoConfig = vscode.workspace.getConfiguration('picgo');
+	return picgoConfig.logPath || path.resolve(os.homedir(), 'vs-picgo-log.json');
+}
+
+function updateLog(picInfo: Object) {
+	const logPath = getLogPath();
+	try {
+		let data = fs.readFileSync(logPath, 'utf8');
+		let log = JSON.parse(data); // log object
+		if (!log['uploaded']) {
+			log['uploaded'] = [];
+		}
+		// log[currentPicBed].push({picInfo}); //add some data
+		_.insert(log['uploaded'], picInfo);
+		let json = JSON.stringify(log, null, 2); //convert it back to json
+		writeJsonToLog(json);
+	} catch (err) {
+		// We have initialized log files when extension activated.
+		// If get ENOENT error, there must be a user deletion of the log file.
+		if (err.message.includes('ENOENT: no such file or directory')) {
+			initLogFile();
+			vscode.window.showInformationMessage(
+				`Log file recreated at ${logPath}.`
+			);
+			updateLog(picInfo);
+		}
+		// Syntax error
+		else if (err instanceof SyntaxError) {
+			vscode.window.showErrorMessage(
+				`The log file ${logPath} has syntax error, ` + 
+				`please fix the error by yourself or delete the log file and vs-picgo will recreate for you.`
+			);
+		} else {
+			vscode.window.showErrorMessage(
+				`Failed to read from log file ${logPath}: ${err || ''}`
+			);
+			console.log(err.name);
+		}
+	}
+}
+
+function initLogFile() {
+	const logPath = getLogPath();
+	if (!fs.existsSync(logPath)) {
+		writeJsonToLog(JSON.stringify({}));
+	}
+}
+
+function writeJsonToLog(json: string) {
+	const logPath = getLogPath();
+	try {
+		fs.writeFileSync(logPath, json, 'utf8');	
+	} catch (err) {
+		vscode.window.showErrorMessage(`Failed to write to log file ${logPath}: ${err || ''}`);
+	}
+}
+
 export function activate(context: vscode.ExtensionContext) {
 	let disposable = [
 		vscode.commands.registerCommand('picgo.uploadImageFromClipboard', () => uploadImageFromClipboard()),
@@ -147,6 +209,8 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand('picgo.uploadImageFromInputBox', () => uploadImageFromInputBox()),
 	];
 	context.subscriptions.push(...disposable);
+
+	initLogFile();
 }
 
 export function deactivate() {}
