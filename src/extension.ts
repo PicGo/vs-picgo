@@ -144,11 +144,6 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
 	);
 }
 
-function getCurrentPicBed() {
-	const picBed = vscode.workspace.getConfiguration('picBed');
-	return picBed.current;
-}
-
 function getLogPath() {
 	const picgoConfig = vscode.workspace.getConfiguration('picgo');
 	return picgoConfig.logPath || path.resolve(os.homedir(), 'vs-picgo-log.json');
@@ -158,13 +153,12 @@ function updateLog(picInfo: Object) {
 	const logPath = getLogPath();
 	try {
 		let data = fs.readFileSync(logPath, 'utf8');
-		let log = JSON.parse(data); //now it an object
-		const currentPicBed = getCurrentPicBed();
-		if (!log[currentPicBed]) {
-			log[currentPicBed] = [];
+		let log = JSON.parse(data); // log object
+		if (!log['uploaded']) {
+			log['uploaded'] = [];
 		}
 		// log[currentPicBed].push({picInfo}); //add some data
-		_.insert(log[currentPicBed], picInfo);
+		_.insert(log['uploaded'], picInfo);
 		let json = JSON.stringify(log, null, 2); //convert it back to json
 		writeJsonToLog(json);
 	} catch (err) {
