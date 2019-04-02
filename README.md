@@ -110,6 +110,7 @@
 
 - [Spades-S](https://github.com/Spades-S)
 - [Molunerfinn](https://github.com/Molunerfinn)
+- [upupming](https://github.com/upupming)
 
 ## Thanks
 

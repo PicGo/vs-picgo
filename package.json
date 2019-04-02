@@ -227,6 +227,7 @@
         "vscode": "^1.1.21"
     },
     "dependencies": {
+        "loadsh": "0.0.4",
         "lodash": "^4.17.11",
         "lodash-id": "^0.14.0",
         "picgo": "^1.1.9"

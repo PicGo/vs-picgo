@@ -3,3 +3,5 @@ node_modules
 .vscode-test/
 *.vsix
 .imgs
+.vscode
+.packge-lock.json
