@@ -14,6 +14,7 @@ const readFileP = promisify(fs.readFile);
 
 export interface INotice {
   title: string;
+  body: string;
 }
 export interface IOutput {
   fileName: string;
@@ -74,7 +75,7 @@ async function uploadImageFromInputBox(): Promise<any> {
 
 function getImageName(editor: vscode.TextEditor): string {
   let selectedString = editor.document.getText(editor.selection);
-  const nameReg = /[:\/\?\$]+/; // limations of name
+  const nameReg = /[:\/\?\$]+/g; // limitations of name
   selectedString = selectedString.replace(nameReg, () => '');
   return selectedString;
 }
@@ -169,7 +170,8 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
           }
         });
         picgo.on('notification', (notice: INotice) => {
-          vscode.window.showErrorMessage(notice.title);
+          // Waiting for https://github.com/PicGo/PicGo-Core/pull/9 to be published.
+          vscode.window.showErrorMessage(notice.title + (notice.body || ''));
           reject();
         });
       });
