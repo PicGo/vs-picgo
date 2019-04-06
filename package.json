@@ -68,6 +68,16 @@
           "markdownDescription": "%config.logPath.description%",
           "default": ""
         },
+        "picgo.customUploadName": {
+          "type": "string",
+          "markdownDescription": "%config.customUploadName.description%",
+          "default": "${fileName}"
+        },
+        "picgo.customOutputFormat": {
+          "type": "string",
+          "markdownDescription": "%config.customOutputFormat.description%",
+          "default": "![${uploadedName}](${url})"
+        },
         "picgo.picBed.current": {
           "type": "string",
           "enum": [
@@ -258,6 +268,7 @@
     "@types/inquirer": "0.0.42",
     "@types/mocha": "^2.2.42",
     "@types/node": "^8.10.25",
+    "@types/request-promise-native": "^1.0.15",
     "cz-conventional-changelog": "2.1.0",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1",
