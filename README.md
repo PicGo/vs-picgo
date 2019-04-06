@@ -21,72 +21,19 @@
 - out of box
 	* We could use `vs-picgo` without any setting.
 	* The default image hosting is [SM.MS](https://sm.ms/).
-- custom
-	* insert the content below into `usersetting.json` of VSCode. [Detail information about custom setting](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+- custom  **BIG NEWS  From 2.0.0, We can customize the settings in `vscode settings`**
+  ![20190406155436.png](https://i.loli.net/2019/04/06/5ca85b3f1b952.png)
 
-**NOTE: picgo.path is prior to picBed, which means if picgo.path is not empty string, vs-picgo will use the configuration file defined by picogo.path.**
+  * Use external configuration file
+    * Enter the path of the configuration file 
+    ![20190406155620.png](https://i.loli.net/2019/04/06/5ca85ba6c5858.png)
 
-```js
-{
-  "picgo": {
-    "path": "" // path to your external configure file, default value is "", which means that vs-picgo will use "picBed" info below. External configure file should be a JSON file containing all the "picBed" info below.,
-    "logPath": ""  // path to the json log file which records all uploaded images, default to your_home_dir/vs-picgo-log.json
-  },
-  "picBed": {
-    "current": "smms",  // current image hosting, default value is "smms"
-    "weibo":{           // weibo image hosting
-      "chooseCookie": true | false,
-      "username": "",
-      "password": "",
-      "quality": "thumbnail" | "mw690" | "large",
-      "cookie": ""
-    },
-    "qiniu": {          // qiniu image hosting
-      "accessKey": "",
-      "secretKey": "",
-      "bucket": "",
-      "url": "",
-      "area": "",       // "z0" -> 华东, "z1" -> 华北, "z2" -> 华南, "na0" -> 北美, "as0" -> 东南亚
-      "options": "" 		// prefix of url
-      "path":"" 				// postfix of path
-    },
-    "upyun": {          // upyun image hosting
-      "bucket": "",
-      "operator": "",
-      "password": "",
-      "options": "",
-      "path": "",
-      "url": ""
-    },
-    "tcyun": {          // tcyun image hosting
-      "secretId": "",
-      "secretKey": "",
-      "bucket": "",
-      "appId": "",
-      "area": "",
-      "path": "",
-      "customUrl": "",
-      "version": "v5" | "v4"
-    },
-    "github": {         // github image hosting
-      "repo": "",
-      "token": "",
-      "path": "",
-      "customUrl": "",
-      "branch": "",
-      "username": ""
-    },
-    "aliyun": {         // aliyun image hosting
-      "accessKeyId": "",
-      "accessKeySecret": "",
-      "bucket": "",
-      "area": "",
-      "path": "",
-      "customUrl": ""
-    }
-  }
-}
-```
+  * Use vscode settings
+    * First, choose the current PicBed
+    ![20190406155908.png](https://i.loli.net/2019/04/06/5ca85c4f0f93e.png)
+    * Input all the info current PicBed need
+    ![20190406160045.png](https://i.loli.net/2019/04/06/5ca85cb35667c.png)
+
 
 ## KeyMap
 
@@ -101,6 +48,13 @@
 - Uploading an image from input box 
 	* Windows/Unix: `Ctrl + Alt + o`
 	* OsX: `Cmd + Opt + 0`
+
+
+
+#### Migration
+
+* From ^1.0.0
+  * External configuration file property has changed, from `picgo.path` to `picgo.configPath`.
 
 ## Usage
 

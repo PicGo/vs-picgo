@@ -1,5 +1,10 @@
+* 2.0.0
+	* Upgrade PicGo-Core to 1.3.2
+	* Add the log file which contains the info of images uploaded by `vs-picgo`, which can be used by [picgo-plugin-vscode-migrator](https://github.com/upupming/picgo-plugin-vscode-migrator)
+	* Change `external configuration file property` in picgo config object
+
 * 1.0.6
-	* Upgrade picgo-core to fix errors caused by comments in a json file
+	* Upgrade PicGo-Core to fix errors caused by comments in a json file
 	* Update ReadMe
 
 * 1.0.5

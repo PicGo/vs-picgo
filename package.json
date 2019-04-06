@@ -2,9 +2,9 @@
   "name": "vs-picgo",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "repository": "https://github.com/Spades-S/vs-picgo",
-  "issues": "https://github.com/Spades-S/vs-picgo/issues",
-  "version": "1.0.6",
+  "repository": "https://github.com/PicGo/vs-picgo",
+  "issues": "https://github.com/PicGo/vs-picgo/issues",
+  "version": "2.0.0",
   "publisher": "Spades",
   "engines": {
     "vscode": "^1.27.0"
@@ -72,13 +72,13 @@
           "type": "string",
           "enum": [
             "smms",
-            "qiniu",
-            "weibo",
-            "tcyun",
-            "upyun",
             "aliyun",
             "github",
-            "imgur"
+            "imgur",
+            "qiniu",
+            "tcyun",
+            "upyun",
+            "weibo"
           ],
           "default": "smms",
           "markdownDescription": "%config.picBed.description%"
@@ -122,7 +122,14 @@
         },
         "picgo.picBed.qiniu.area": {
           "type": "string",
-          "default": ""
+          "enum": [
+            "z0",
+            "z1",
+            "z2",
+            "na0",
+            "as0"
+          ],
+          "default": "z0"
         },
         "picgo.picBed.qiniu.options": {
           "type": "string",

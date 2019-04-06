@@ -1,12 +1,12 @@
 'use strict';
-import * as vscode from 'vscode';
-import * as os from 'os';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
-import { promisify } from 'util';
 import PicGo from 'picgo/dist/core/PicGo';
 import { ImgInfo } from 'picgo/dist/utils/interfaces';
-type PicGoType = import('picgo/dist/index');
+import { promisify } from 'util';
+import * as vscode from 'vscode';
+
 const _ = require('lodash');
 const _db = require('lodash-id');
 _.mixin(_db);
@@ -15,12 +15,9 @@ const writeFileP = promisify(fs.writeFile);
 const readFileP = promisify(fs.readFile);
 
 export interface INotice {
-  title: string;
   body: string;
-}
-
-export interface IPicGoCtx {
-  output: Array<ImgInfo>;
+  text: string;
+  title: string;
 }
 
 function uploadImageFromClipboard(): void {
@@ -94,7 +91,7 @@ function getActiveMarkDownEditor(): vscode.TextEditor | undefined {
 function upload(editor: vscode.TextEditor, input?: any[]): void {
   const imageName = getImageName(editor);
   const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
-  let picgo: PicGoType;
+  let picgo: PicGo;
   if (picgoConfigPath) {
     picgo = new PicGo(picgoConfigPath);
   } else {
@@ -117,8 +114,9 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
       }
     });
   }
+  // debugger;
   picgo.upload(input); // Since picgo-core v1.1.5 will upload image from clipboard without input.
-  picgo.on('finished', async (ctx: IPicGoCtx) => {
+  picgo.on('finished', async (ctx: PicGo) => {
     let urlText = '';
     const logPath = getLogPath();
     try {
@@ -162,8 +160,8 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
         });
         picgo.on('notification', (notice: INotice) => {
           // Waiting for https://github.com/PicGo/PicGo-Core/pull/9 to be published.
-          vscode.window.showErrorMessage(notice.title + (notice.body || ''));
           reject();
+          vscode.window.showErrorMessage(`${notice.title} ${notice.body || ''} ${notice.text || ''}`);
         });
       });
     }
