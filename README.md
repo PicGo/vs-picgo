@@ -1,4 +1,4 @@
-# vs-picgo(Vscode Plugin for PicGo)
+# vs-picgo (VSCode Plugin of PicGo)
 
 [![version](https://img.shields.io/vscode-marketplace/v/Spades.vs-picgo.svg?style=flat-square&label=vscode%20marketplace)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
 [![installs](https://img.shields.io/vscode-marketplace/d/Spades.vs-picgo.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
@@ -26,14 +26,14 @@
 <details>
 <summary>Selection as image name</summary>
 
-![inputbox.gif](https://i.loli.net/2019/03/21/5c939163807b6.gif)
+![image name.gif](https://i.loli.net/2019/03/21/5c9392c749d99.gif)
 
 </details>
 
 <details>
 <summary><b>Note: These characters: <code>$</code>, <code>:</code>, <code>/</code>, <code>?</code> and newline will be ignored in the image name. </b>(Because they are invalid for file names.)</summary>
 
-![image name.gif](https://i.loli.net/2019/03/21/5c9392c749d99.gif)
+![inputbox.gif](https://i.loli.net/2019/03/21/5c939163807b6.gif)
 
 </details>
 
