@@ -1,0 +1,19 @@
+{
+  "ext.displayName": "PicGo",
+  "ext.description": "vscode plugin of PicGo",
+  "command.upload.clipboard.title": "Upload image from clipboard",
+  "command.upload.explorer.title": "Upload image from explorer",
+  "command.upload.inputBox.title": "Upload image from inputBox",
+  "config.title": "PicGo",
+  "config.configPath.description": "The path to your PicGo-Core configuration. PicGo will use `#picgo.picBed#` if this is not specified.",
+  "config.logPath.description": "The path to your log file. PicGo will use `your_home_dir/vs-picgo-log.json` if this is not specified.",
+  "config.picBed.description": "PicGo-Core configuration, please see https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#picbed.",
+  "config.picBed.smms.description": "SM.MS picBed configuration.",
+  "config.picBed.weibo.description": "Weibo picBed configuration.",
+  "config.picBed.qiniu.description": "Qiniu picBed configuration.",
+  "config.picBed.upyun.description": "Upyun picBed configuration.",
+  "config.picBed.tcyun.description": "Tencent COS picBed configuration.",
+  "config.picBed.github.description": "GitHub configuration.",
+  "config.picBed.aliyun.description": "Aliyun OSS configuration.",
+  "config.picBed.imgur.description": "Imgur picBed configuration."
+}
