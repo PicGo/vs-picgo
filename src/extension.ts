@@ -20,6 +20,19 @@ export interface INotice {
   title: string;
 }
 
+export interface UploadNameData {
+  date: string;
+  dateTime: string;
+  fileName: string;
+  extName: string;
+  mdFileName: string;
+  [key: string]: string;
+}
+
+export interface ISomeObject {
+  [key: string]: string;
+}
+
 function uploadImageFromClipboard(): void {
   const editor = getActiveMarkDownEditor();
   return editor ? upload(editor) : (() => {})();
@@ -88,41 +101,71 @@ function getActiveMarkDownEditor(): vscode.TextEditor | undefined {
   return hasActiveMDEditor ? editor : undefined;
 }
 
-function upload(editor: vscode.TextEditor, input?: any[]): void {
-  const imageName = getImageName(editor);
-  const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
-  let picgo: PicGo;
-  if (picgoConfigPath) {
-    picgo = new PicGo(picgoConfigPath);
-  } else {
-    picgo = new PicGo();
-    const picBed = vscode.workspace.getConfiguration('picgo.picBed');
-    picgo.setConfig({ picBed });
-  }
-  // change image fileName to selection text
-  if (imageName) {
-    picgo.helper.beforeUploadPlugins.register('changeFileNameToSelection', {
-      handle(ctx: PicGo) {
-        if (ctx.output.length === 1) {
-          ctx.output[0].fileName = imageName;
-        } else {
-          ctx.output = ctx.output.map((item: ImgInfo, index: number) => {
-            item.fileName = `${imageName}_${index}`;
-            return item;
-          });
-        }
-      }
+function formatParam (file: string, mdFileName: string): UploadNameData {
+  const dt = new Date();
+  const y = dt.getFullYear();
+  const m = dt.getMonth() + 1;
+  const d = dt.getDate();
+  const h = dt.getHours();
+  const mm = dt.getMinutes();
+  const s = dt.getSeconds();
+
+  const date = `${y}-${m}-${d}`;
+  var extName = path.extname(file);
+
+  return {
+      date,
+      dateTime: `${date}-${h}-${mm}-${s}`,
+      fileName: path.basename(file, extName),
+      extName,
+      mdFileName
+  };
+}
+
+function formatString (tplString: string, data: ISomeObject) {
+  const keys = Object.keys(data);
+  const values = keys.map(k => data[k]);
+
+  return new Function(keys.join(','), 'return `' + tplString + '`').apply(null, values);
+}
+
+/**
+ * Returns the modified file name as per `customUploadName` setting
+ * @param original The filename of the original image file.
+ * @param template The template string.
+ */
+function changeFilename(original: string, template: string, editor: vscode.TextEditor): string {
+  const mdFilePath = editor.document.fileName;
+  const mdFileName = path.basename(mdFilePath, path.extname(mdFilePath));
+  let uploadNameData = formatParam(original, mdFileName);
+  return formatString(template, uploadNameData);
+}
+
+function addRenameListener(picgo: PicGo, editor: vscode.TextEditor) {
+  picgo.on('beforeUpload', (ctx: PicGo) => {
+    console.log(ctx.output); // [{ base64Image, fileName, width, height, extname }]
+    const uploadNameTemplate = vscode.workspace.getConfiguration('picgo').get<string>('customUploadName')  || "${fileName}";
+    ctx.output.forEach((imgInfo: ImgInfo) => {
+      imgInfo.fileName = changeFilename(imgInfo.fileName || "", uploadNameTemplate, editor);
     });
-  }
-  // debugger;
-  picgo.upload(input); // Since picgo-core v1.1.5 will upload image from clipboard without input.
+    console.log(ctx.output); // [{ base64Image, fileName, width, height, extname }]
+  });
+}
+
+function addGenerateOutputListener(picgo: PicGo, editor: vscode.TextEditor) {
   picgo.on('finished', async (ctx: PicGo) => {
     let urlText = '';
     const logPath = getLogPath();
+    const outputFormatTemplate = vscode.workspace.getConfiguration('picgo').get<string>('customOutputFormat') || "![${uploadedName}](${url})";
     try {
       urlText = ctx.output.reduce((acc: string, cur: ImgInfo): string => {
-        return `${acc}![${cur.fileName}](${cur.imgUrl})\n`;
+        // return `${acc}![${cur.fileName}](${cur.imgUrl})\n`;
+        return `${acc}${formatString(outputFormatTemplate, {
+          uploadedName: cur.fileName || "",
+          url: cur.imgUrl
+        })}\n`;
       }, '');
+      urlText = urlText.trim();
       await updateLog(ctx.output, logPath);
     } catch (err) {
       if (err instanceof SyntaxError) {
@@ -142,6 +185,44 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
       vscode.window.showInformationMessage('Upload successfully');
     });
   });
+}
+
+function getPicgo(editor: vscode.TextEditor): PicGo {
+  const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
+  let picgo: PicGo;
+  if (picgoConfigPath) {
+    picgo = new PicGo(picgoConfigPath);
+  } else {
+    picgo = new PicGo();
+    const picBed = vscode.workspace.getConfiguration('picgo.picBed');
+    picgo.setConfig({ picBed });
+  }
+  // Before upload, we change names of the images.
+  addRenameListener(picgo, editor);
+  // After upload, we use the custom output format.
+  addGenerateOutputListener(picgo, editor);
+  return picgo;
+}
+
+function upload(editor: vscode.TextEditor, input?: any[]): void {
+  const imageName = getImageName(editor);
+  const picgo = getPicgo(editor);
+  // change image fileName to selection text
+  if (imageName) {
+    picgo.helper.beforeUploadPlugins.register('changeFileNameToSelection', {
+      handle(ctx: PicGo) {
+        if (ctx.output.length === 1) {
+          ctx.output[0].fileName = imageName;
+        } else {
+          ctx.output = ctx.output.map((item: ImgInfo, index: number) => {
+            item.fileName = `${imageName}_${index}`;
+            return item;
+          });
+        }
+      }
+    });
+  }
+  picgo.upload(input); // Since picgo-core v1.1.5 will upload image from clipboard without input.
 
   // uploading progress
   vscode.window.withProgress(
@@ -160,8 +241,12 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
         });
         picgo.on('notification', (notice: INotice) => {
           // Waiting for https://github.com/PicGo/PicGo-Core/pull/9 to be published.
+          vscode.window.showErrorMessage(notice.title + '\n' + (notice.body || ''));
           reject();
-          vscode.window.showErrorMessage(`${notice.title} ${notice.body || ''} ${notice.text || ''}`);
+        });
+        picgo.on('failed', error => {
+          vscode.window.showErrorMessage(error.message);
+          reject();
         });
       });
     }
