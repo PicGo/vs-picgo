@@ -4,7 +4,9 @@ import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
 import { promisify } from 'util';
-const PicGo = require('picgo');
+import PicGo from 'picgo/dist/core/PicGo';
+import { ImgInfo } from 'picgo/dist/utils/interfaces';
+type PicGoType = import('picgo/dist/index');
 const _ = require('lodash');
 const _db = require('lodash-id');
 _.mixin(_db);
@@ -16,13 +18,9 @@ export interface INotice {
   title: string;
   body: string;
 }
-export interface IOutput {
-  fileName: string;
-  imgUrl: string;
-}
 
 export interface IPicGoCtx {
-  output: Array<IOutput>;
+  output: Array<ImgInfo>;
 }
 
 function uploadImageFromClipboard(): void {
@@ -80,19 +78,6 @@ function getImageName(editor: vscode.TextEditor): string {
   return selectedString;
 }
 
-function getUserSettingFile() {
-  // https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
-  const home = process.env.APPDATA ? process.env.APPDATA : os.homedir();
-  switch (os.platform()) {
-    case 'win32':
-      return `${home}\\Code\\User\\settings.json`;
-    case 'darwin':
-      return `${home}/Library/Application Support/Code/User/settings.json`;
-    default:
-      return `${home}/.config/Code/User/settings.json`;
-  }
-}
-
 /*
  *  get active markdown editor
  */
@@ -108,17 +93,23 @@ function getActiveMarkDownEditor(): vscode.TextEditor | undefined {
 
 function upload(editor: vscode.TextEditor, input?: any[]): void {
   const imageName = getImageName(editor);
-  const picgoConfig = vscode.workspace.getConfiguration('picgo');
-  // using the vscode setting file will be a better choice
-  const picgo = new PicGo(picgoConfig.path || getUserSettingFile());
+  const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
+  let picgo: PicGoType;
+  if (picgoConfigPath) {
+    picgo = new PicGo(picgoConfigPath);
+  } else {
+    picgo = new PicGo();
+    const picBed = vscode.workspace.getConfiguration('picgo.picBed');
+    picgo.setConfig({ picBed });
+  }
   // change image fileName to selection text
   if (imageName) {
     picgo.helper.beforeUploadPlugins.register('changeFileNameToSelection', {
-      handle(ctx: IPicGoCtx) {
+      handle(ctx: PicGo) {
         if (ctx.output.length === 1) {
           ctx.output[0].fileName = imageName;
         } else {
-          ctx.output = ctx.output.map((item: IOutput, index: number) => {
+          ctx.output = ctx.output.map((item: ImgInfo, index: number) => {
             item.fileName = `${imageName}_${index}`;
             return item;
           });
@@ -131,7 +122,7 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
     let urlText = '';
     const logPath = getLogPath();
     try {
-      urlText = ctx.output.reduce((acc: string, cur: IOutput): string => {
+      urlText = ctx.output.reduce((acc: string, cur: ImgInfo): string => {
         return `${acc}![${cur.fileName}](${cur.imgUrl})\n`;
       }, '');
       await updateLog(ctx.output, logPath);
@@ -184,7 +175,7 @@ function getLogPath() {
   return picgoConfig.logPath || path.resolve(os.homedir(), 'vs-picgo-log.json');
 }
 
-async function updateLog(picInfos: Array<IOutput>, logPath: string) {
+async function updateLog(picInfos: Array<ImgInfo>, logPath: string) {
   // debugger;
   if (!fs.existsSync(logPath)) {
     await initLogFile(getLogPath());

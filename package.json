@@ -1,7 +1,7 @@
 {
   "name": "vs-picgo",
-  "displayName": "PicGo",
-  "description": "vscode plugin for PicGo",
+  "displayName": "%ext.displayName%",
+  "description": "%ext.description%",
   "repository": "https://github.com/Spades-S/vs-picgo",
   "issues": "https://github.com/Spades-S/vs-picgo/issues",
   "version": "1.0.6",
@@ -23,15 +23,15 @@
     "commands": [
       {
         "command": "picgo.uploadImageFromClipboard",
-        "title": "Upload image from clipboard"
+        "title": "%command.upload.clipboard.title%"
       },
       {
         "command": "picgo.uploadImageFromExplorer",
-        "title": "Upload image from explorer"
+        "title": "%command.upload.explorer.title%"
       },
       {
         "command": "picgo.uploadImageFromInputBox",
-        "title": "Upload image from inputBox"
+        "title": "%command.upload.inputBox.title%"
       }
     ],
     "keybindings": [
@@ -56,157 +56,193 @@
     ],
     "configuration": {
       "type": "object",
-      "title": "PicGo configuration",
+      "title": "%config.title%",
       "properties": {
-        "picgo": {
-          "type": "object",
-          "properties": {
-            "path": {
-              "type": "string",
-              "description": "Specify the picgo config path",
-              "default": ""
-            },
-            "logPath": {
-              "type": "string",
-              "description": "Specify the path to the json log file which records all uploaded images",
-              "default": ""
-            }
-          },
-          "default": {
-            "path": "",
-            "logPath": ""
-          }
+        "picgo.configPath": {
+          "type": "string",
+          "markdownDescription": "%config.configPath.description%",
+          "default": ""
         },
-        "picBed": {
-          "type": "object",
-          "properties": {
-            "current": {
-              "type": "string",
-              "enum": [
-                "smms",
-                "qiniu",
-                "weibo",
-                "tcyun",
-                "upyun",
-                "aliyun",
-                "github",
-                "imgur"
-              ],
-              "default": "smms",
-              "description": "Choose a picbed to upload."
-            },
-            "weibo": {
-              "type": "object",
-              "description": "Weibo pic-bed configurations",
-              "properties": {
-                "chooseCookie": {
-                  "type": "boolean",
-                  "default": true
-                },
-                "quality": {
-                  "type": "string",
-                  "enum": [
-                    "thumbnail",
-                    "mw690",
-                    "large"
-                  ],
-                  "default": "large"
-                }
-              },
-              "default": {
-                "chooseCookie": true,
-                "username": "",
-                "password": "",
-                "quality": "large",
-                "cookie": ""
-              }
-            },
-            "qiniu": {
-              "type": "object",
-              "description": "Qiniu pic-bed configurations",
-              "default": {
-                "accessKey": "",
-                "secretKey": "",
-                "bucket": "",
-                "url": "",
-                "area": "",
-                "options": "",
-                "path": ""
-              }
-            },
-            "upyun": {
-              "type": "object",
-              "description": "Upyun pic-bed configurations",
-              "default": {
-                "bucket": "",
-                "operator": "",
-                "password": "",
-                "options": "",
-                "path": "",
-                "url": ""
-              }
-            },
-            "tcyun": {
-              "type": "object",
-              "description": "Tencent COS pic-bed configurations",
-              "properties": {
-                "version": {
-                  "type": "string",
-                  "enum": [
-                    "v4",
-                    "v5"
-                  ],
-                  "default": "v5"
-                }
-              },
-              "default": {
-                "secretId": "",
-                "secretKey": "",
-                "bucket": "",
-                "appId": "",
-                "area": "",
-                "path": "",
-                "customUrl": "",
-                "version": "v5"
-              }
-            },
-            "github": {
-              "type": "object",
-              "description": "GitHub configurations",
-              "default": {
-                "repo": "",
-                "token": "",
-                "path": "",
-                "customUrl": "",
-                "branch": "",
-                "username": ""
-              }
-            },
-            "aliyun": {
-              "type": "object",
-              "description": "Aliyun OSS configurations",
-              "default": {
-                "accessKeyId": "",
-                "accessKeySecret": "",
-                "bucket": "",
-                "area": "",
-                "path": "",
-                "customUrl": ""
-              }
-            },
-            "imgur": {
-              "type": "object",
-              "description": "Imgur configurations",
-              "default": {
-                "clientId": "",
-                "proxy": ""
-              }
-            }
-          },
-          "description": "PicGo configurations, see https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#picbed",
-          "default": {
-            "current": "smms"
-          }
+        "picgo.logPath": {
+          "type": "string",
+          "markdownDescription": "%config.logPath.description%",
+          "default": ""
+        },
+        "picgo.picBed.current": {
+          "type": "string",
+          "enum": [
+            "smms",
+            "qiniu",
+            "weibo",
+            "tcyun",
+            "upyun",
+            "aliyun",
+            "github",
+            "imgur"
+          ],
+          "default": "smms",
+          "markdownDescription": "%config.picBed.description%"
+        },
+        "picgo.picBed.weibo.chooseCookie": {
+          "type": "boolean",
+          "default": true
+        },
+        "picgo.picBed.weibo.username": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.weibo.quality": {
+          "type": "string",
+          "enum": [
+            "thumbnail",
+            "mw690",
+            "large"
+          ],
+          "default": "large"
+        },
+        "picgo.picBed.weibo.cookie": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.qiniu.accessKey": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.qiniu.secretKey": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.qiniu.bucket": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.qiniu.url": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.qiniu.area": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.qiniu.options": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.qiniu.path": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.upyun.bucket": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.upyun.operator": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.upyun.password": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.upyun.options": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.upyun.path": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.upyun.url": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.tcyun.version": {
+          "type": "string",
+          "enum": [
+            "v4",
+            "v5"
+          ],
+          "default": "v5"
+        },
+        "picgo.picBed.tcyun.secretId": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.tcyun.secretKey": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.tcyun.bucket": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.tcyun.appId": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.tcyun.area": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.tcyun.customUrl": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.repo": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.token": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.path": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.customUrl": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.branch": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.username": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.accessKeyId": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.accessKeySecret": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.bucket": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.area": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.path": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.customUrl": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.imgur.clientId": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.imgur.proxy": {
+          "type": "string",
+          "default": ""
         }
       }
     }
@@ -219,6 +255,7 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
+    "@types/inquirer": "0.0.42",
     "@types/mocha": "^2.2.42",
     "@types/node": "^8.10.25",
     "cz-conventional-changelog": "2.1.0",
