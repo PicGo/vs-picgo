@@ -89,6 +89,7 @@
     Customize the name of the image to be uploaded
     </summary>
 
+    **Notice: The text you selected will become the fileName of the image to upload.**
     ![20190407122443.png](https://i.loli.net/2019/04/07/5ca97b8f402b7.png)
 
     </details>
@@ -103,7 +104,7 @@
 
     Suggested settings for [`PicGo-electron`](https://github.com/Molunerfinn/PicGo) users (See [PicGo configuration path](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C) for more information):
 
-    **Notice: `~`,`%APPDATA%` should be replaced by the path of current user path.**
+    **Notice: `YOUR_HOME_DIR` should be replaced by the path of current user path.**
 
     ```json
     // Windows

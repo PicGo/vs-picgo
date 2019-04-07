@@ -4,6 +4,4 @@ node_modules
 *.vsix
 .imgs
 .vscode
-package-lock.json
-package.json
 yarn-error.log

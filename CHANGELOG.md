@@ -1,5 +1,5 @@
 * 2.0.0
-	* Upgrade PicGo-Core to 1.3.2
+	* Upgrade PicGo-Core to 1.3.4
 	* Add the log file which contains the info of images uploaded by `vs-picgo`, which can be used by [picgo-plugin-vscode-migrator](https://github.com/upupming/picgo-plugin-vscode-migrator)
 	* Change `external configuration file property` in picgo config object
 	* Added: custom upload name & output format [#21](https://github.com/PicGo/vs-picgo/pull/21)

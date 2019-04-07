@@ -182,11 +182,11 @@ function addGenerateOutputListener(picgo: PicGo, editor: vscode.TextEditor) {
     } catch (err) {
       if (err instanceof SyntaxError) {
         vscode.window.showErrorMessage(
-          `The log file ${dataPath} has syntax error, ` +
-            `please fix the error by yourself or delete the log file and vs-picgo will recreate for you.`,
+          `The data file ${dataPath} has syntax error, ` +
+            `please fix the error by yourself or delete the data file and vs-picgo will recreate for you.`,
         );
       } else {
-        vscode.window.showErrorMessage(`Failed to read from log file ${dataPath}: ${err || ''}`);
+        vscode.window.showErrorMessage(`Failed to read from data file ${dataPath}: ${err || ''}`);
       }
       return;
     }
@@ -234,7 +234,7 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
         });
         picgo.on('notification', (notice: INotice) => {
           vscode.window.showErrorMessage(
-            `${notice.title}! ${notice.body || ''}${notice.text ? `, ${notice.text}` : '.'}`,
+            `${notice.title}! ${notice.body || ''}${notice.text ? `, ${notice.text}.` : '.'}`,
           );
           reject();
         });
@@ -261,7 +261,7 @@ function getdataPath() {
 async function updateLog(picInfos: Array<ImgInfo>, dataPath: string) {
   if (!fs.existsSync(dataPath)) {
     await initLogFile(getdataPath());
-    vscode.window.showInformationMessage(`Log file created at ${dataPath}.`);
+    vscode.window.showInformationMessage(`Data file created at ${dataPath}.`);
   }
   const data = await readFileP(dataPath, 'utf8');
   const log = JSON.parse(data);
