@@ -42,18 +42,19 @@
 - out of box
   - We could use `vs-picgo` without any setting.
   - The default image hosting is [SM.MS](https://sm.ms/).
-- custom  
+- custom
 
   <details>
   <summary>
-  <b>BIG NEWS from 2.0.0, We can customize the settings in vscode settings</b>
+  <b>BIG NEWS: from 2.0.0, We can customize the settings in vscode settings</b>
   </summary>
 
   ![20190406155436.png](https://i.loli.net/2019/04/06/5ca85b3f1b952.png)
-  
+
   </details>
 
   - Use external configuration file
+
     <details>
     <summary>
     Enter the path of the configuration file
@@ -64,6 +65,7 @@
     </details>
 
   - Use vscode settings
+
     <details>
     <summary>
     First, choose the current PicBed
@@ -82,14 +84,56 @@
 
     </details>
 
-    Suggested settings for [`PicGo-electron`](https://github.com/Molunerfinn/PicGo) users (Replace `Doraeming` with your username, see [PicGo configuration path](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C) for more information):
+    <details>
+    <summary>
+    Customize the name of the image to be uploaded
+    </summary>
+
+    ![20190407122443.png](https://i.loli.net/2019/04/07/5ca97b8f402b7.png)
+
+    </details>
+    <details>
+    <summary>
+    Customize the output format of the uploaded image
+    </summary>
+
+    ![20190407122537.png](https://i.loli.net/2019/04/07/5ca97bc56016d.png)
+
+    </details>
+
+    Suggested settings for [`PicGo-electron`](https://github.com/Molunerfinn/PicGo) users (See [PicGo configuration path](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C) for more information):
+
+    **Notice: `~`,`%APPDATA%` should be replaced by the path of current user path.**
 
     ```json
+    // Windows
     {
-        "picgo.configPath": "C:\\Users\\Doraeming\\AppData\\Roaming\\PicGo\\data.json",
-        "picgo.logPath": "C:\\Users\\Doraeming\\AppData\\Roaming\\PicGo\\data.json"
+        "picgo.configPath":"YOUR_HOME_DIR\\AppData\\Roaming\\PicGo\\data.json", 
+        "picgo.dataInfoPath": "YOUR_HOME_DIR\\AppData\\Roaming\\PicGo\\data.json" 
+    }
+
+    // macOS
+    {
+        "picgo.configPath": "YOUR_HOME_DIR/Library/Application Support/picgo/data.json", 
+        "picgo.dataInfoPath": "YOUR_HOME_DIR/Library/Application Support/picgo/data.json" 
+    }
+
+    // Linux
+    {
+        "picgo.configPath": "YOUR_HOME_DIR/.config/picgo/data.json", 
+        "picgo.dataInfoPath": "YOUR_HOME_DIR/.config/picgo/data.json" 
     }
     ```
+    <details>
+    <summary>
+     picgo.configPath and picgo.dataInfoPath can be set in vscode setting
+    </summary>
+
+    ![20190407121921.png](https://i.loli.net/2019/04/07/5ca97a4d9d336.png)
+    </details>
+
+
+
 
     In this way:
 
