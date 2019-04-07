@@ -38,9 +38,10 @@
 <details>
 <summary>
 Selection as image name.
-<b>Notice: These characters: <code>$</code>, <code>:</code>, <code>/</code>, <code>?</code> and newline will be ignored in the image name. </b>(Because they are invalid for file names.)</summary>
+</summary>
 
 ![selection.gif](https://i.loli.net/2019/04/07/5ca9c332bab12.gif)
+<b>Notice: These characters: <code>$</code>, <code>:</code>, <code>/</code>, <code>?</code> and newline will be ignored in the image name. </b>(Because they are invalid for file names.)
 
 </details>
 
@@ -86,7 +87,7 @@ Selection as image name.
 
     <details>
     <summary>
-    Then, input all the info current PicBed needs
+    Then, input all the info the current PicBed needs
     </summary>
 
     ![20190406160045.png](https://i.loli.net/2019/04/06/5ca85cb35667c.png)
@@ -98,10 +99,8 @@ Selection as image name.
     Customize the name of the image to be uploaded
     </summary>
 
-    **Notice: The text you selected will become the fileName of the image to upload.**
-
-    ![20190407162143.png](https://i.loli.net/2019/04/07/5ca9b31b04537.png)
-
+    ![20190407122443.png](https://i.loli.net/2019/04/07/5ca97b8f402b7.png)
+    **Notice: If you selected some text before uploading, the selection will become the `fileName` of the image to be uploaded.**
 
     </details>
     <details>
@@ -137,9 +136,10 @@ Selection as image name.
         "picgo.dataPath": "YOUR_HOME_DIR/.config/picgo/data.json" 
     }
     ```
+
     <details>
     <summary>
-     picgo.configPath and picgo.dataPath can be set in vscode setting
+    <code>picgo.configPath</code> and <code>picgo.dataInfoPath</code> can be set in vscode settings
     </summary>
 
     ![20190407162328.png](https://i.loli.net/2019/04/07/5ca9b383c8299.png)
