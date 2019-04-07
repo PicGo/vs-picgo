@@ -71,7 +71,7 @@
         "picgo.customUploadName": {
           "type": "string",
           "markdownDescription": "%config.customUploadName.description%",
-          "default": "${fileName}"
+          "default": "${fileName}${extName}"
         },
         "picgo.customOutputFormat": {
           "type": "string",
