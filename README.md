@@ -46,14 +46,14 @@
 
   <details>
   <summary>
-  <b>BIG NEWS: from 2.0.0, We can customize the settings in vscode settings</b>
+  <b>BIG NEWS: from 2.0.0, We can customize the settings in VSCode settings</b>
   </summary>
 
   ![20190406155436.png](https://i.loli.net/2019/04/06/5ca85b3f1b952.png)
 
   </details>
 
-  - Use external configuration file
+  - Use an external configuration file
 
     <details>
     <summary>
@@ -64,7 +64,7 @@
 
     </details>
 
-  - Use vscode settings
+  - Use VSCode settings
 
     <details>
     <summary>
@@ -77,7 +77,7 @@
 
     <details>
     <summary>
-    Then, input all the info current PicBed need
+    Then, input all the info the current PicBed needs
     </summary>
 
     ![20190406160045.png](https://i.loli.net/2019/04/06/5ca85cb35667c.png)
@@ -140,21 +140,16 @@
     In this way:
 
     1. `vs-picgo` will use the same configuration as `PicGo-electron`.
-    2. `PicGo-electron` will got all uploaded images by `vs-picgo`.
+    2. `PicGo-electron` will display all the uploaded images by `vs-picgo` in its gallery.
 
 ## Keyboard shortcuts
 
 **You can change all the shortcuts below as you wish.**
 
-- Uploading an image from clipboard
-  - Windows/Unix: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd>
-  - OsX: <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>U</kbd>
-- Uploading images from explorer
-  - Windows/Unix: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>E</kbd>
-  - OsX: <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>E</kbd>
-- Uploading an image from input box
-  - Windows/Unix: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>O</kbd>
-  - OsX: <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>O</kbd>
+|OS|Uploading an image from clipboard|Uploading images from explorer|Uploading an image from input box|
+|----|----|-----|---|
+|Windows/Unix|<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd>|<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>E</kbd>|<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>O</kbd>
+|OsX|<kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>U</kbd>|<kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>E</kbd>|<kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>O</kbd>|
 
 ### Migration
 
