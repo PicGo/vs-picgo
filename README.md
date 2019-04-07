@@ -89,8 +89,8 @@
     Customize the name of the image to be uploaded
     </summary>
 
-    **Notice: The text you selected will become the fileName of the image to upload.**
     ![20190407122443.png](https://i.loli.net/2019/04/07/5ca97b8f402b7.png)
+    **Notice: If you selected some text before uploading, the selection will become the `fileName` of the image to be uploaded.**
 
     </details>
     <details>
@@ -125,9 +125,10 @@
         "picgo.dataInfoPath": "YOUR_HOME_DIR/.config/picgo/data.json" 
     }
     ```
+
     <details>
     <summary>
-     picgo.configPath and picgo.dataInfoPath can be set in vscode setting
+    <code>picgo.configPath</code> and <code>picgo.dataInfoPath</code> can be set in vscode settings
     </summary>
 
     ![20190407121921.png](https://i.loli.net/2019/04/07/5ca97a4d9d336.png)
