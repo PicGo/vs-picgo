@@ -20,7 +20,7 @@ export interface INotice {
   title: string;
 }
 
-export interface UploadNameData {
+export interface IUploadName {
   date: string;
   dateTime: string;
   fileName: string;
@@ -29,7 +29,9 @@ export interface UploadNameData {
   [key: string]: string;
 }
 
-export interface ISomeObject {
+export interface IOutputUrl {
+  uploadedName: string;
+  url: string;
   [key: string]: string;
 }
 
@@ -101,7 +103,7 @@ function getActiveMarkDownEditor(): vscode.TextEditor | undefined {
   return hasActiveMDEditor ? editor : undefined;
 }
 
-function formatParam (file: string, mdFileName: string): UploadNameData {
+function formatParam(file: string, mdFileName: string): IUploadName {
   const dt = new Date();
   const y = dt.getFullYear();
   const m = dt.getMonth() + 1;
@@ -114,19 +116,21 @@ function formatParam (file: string, mdFileName: string): UploadNameData {
   var extName = path.extname(file);
 
   return {
-      date,
-      dateTime: `${date}-${h}-${mm}-${s}`,
-      fileName: path.basename(file, extName),
-      extName,
-      mdFileName
+    date,
+    dateTime: `${date}-${h}-${mm}-${s}`,
+    fileName: path.basename(file, extName),
+    extName,
+    mdFileName
   };
 }
 
-function formatString (tplString: string, data: ISomeObject) {
+function formatString(tplString: string, data: IUploadName | IOutputUrl) {
   const keys = Object.keys(data);
   const values = keys.map(k => data[k]);
-
-  return new Function(keys.join(','), 'return `' + tplString + '`').apply(null, values);
+  return new Function(keys.join(','), 'return `' + tplString + '`').apply(
+    null,
+    values
+  );
 }
 
 /**
@@ -134,7 +138,11 @@ function formatString (tplString: string, data: ISomeObject) {
  * @param original The filename of the original image file.
  * @param template The template string.
  */
-function changeFilename(original: string, template: string, editor: vscode.TextEditor): string {
+function changeFilename(
+  original: string,
+  template: string,
+  editor: vscode.TextEditor
+): string {
   const mdFilePath = editor.document.fileName;
   const mdFileName = path.basename(mdFilePath, path.extname(mdFilePath));
   let uploadNameData = formatParam(original, mdFileName);
@@ -143,39 +151,56 @@ function changeFilename(original: string, template: string, editor: vscode.TextE
 
 function addRenameListener(picgo: PicGo, editor: vscode.TextEditor) {
   picgo.on('beforeUpload', (ctx: PicGo) => {
-    console.log(ctx.output); // [{ base64Image, fileName, width, height, extname }]
-    const uploadNameTemplate = vscode.workspace.getConfiguration('picgo').get<string>('customUploadName')  || "${fileName}";
-    ctx.output.forEach((imgInfo: ImgInfo) => {
-      imgInfo.fileName = changeFilename(imgInfo.fileName || "", uploadNameTemplate, editor);
-    });
-    console.log(ctx.output); // [{ base64Image, fileName, width, height, extname }]
+    const userDefineName = getImageName(editor);
+    const uploadNameTemplate =
+      vscode.workspace
+        .getConfiguration('picgo')
+        .get<string>('customUploadName') || '${fileName}';
+    if (ctx.output.length === 1) {
+      ctx.output[0].fileName = changeFilename(
+        userDefineName || ctx.output[0].fileName || '',
+        uploadNameTemplate,
+        editor
+      );
+    } else {
+      ctx.output.forEach((imgInfo: ImgInfo, index: number) => {
+        imgInfo.fileName = changeFilename(
+          userDefineName ? `${userDefineName}${index}` : imgInfo.fileName || '',
+          uploadNameTemplate,
+          editor
+        );
+      });
+    }
   });
 }
 
 function addGenerateOutputListener(picgo: PicGo, editor: vscode.TextEditor) {
   picgo.on('finished', async (ctx: PicGo) => {
     let urlText = '';
-    const logPath = getLogPath();
-    const outputFormatTemplate = vscode.workspace.getConfiguration('picgo').get<string>('customOutputFormat') || "![${uploadedName}](${url})";
+    const dataPath = getdataPath();
+    const outputFormatTemplate =
+      vscode.workspace
+        .getConfiguration('picgo')
+        .get<string>('customOutputFormat') || '![${uploadedName}](${url})';
     try {
       urlText = ctx.output.reduce((acc: string, cur: ImgInfo): string => {
         // return `${acc}![${cur.fileName}](${cur.imgUrl})\n`;
         return `${acc}${formatString(outputFormatTemplate, {
-          uploadedName: cur.fileName || "",
+          uploadedName: cur.fileName || '',
           url: cur.imgUrl
         })}\n`;
       }, '');
       urlText = urlText.trim();
-      await updateLog(ctx.output, logPath);
+      await updateLog(ctx.output, dataPath);
     } catch (err) {
       if (err instanceof SyntaxError) {
         vscode.window.showErrorMessage(
-          `The log file ${logPath} has syntax error, ` +
+          `The log file ${dataPath} has syntax error, ` +
             `please fix the error by yourself or delete the log file and vs-picgo will recreate for you.`
         );
       } else {
         vscode.window.showErrorMessage(
-          `Failed to read from log file ${logPath}: ${err || ''}`
+          `Failed to read from log file ${dataPath}: ${err || ''}`
         );
       }
       return;
@@ -188,7 +213,9 @@ function addGenerateOutputListener(picgo: PicGo, editor: vscode.TextEditor) {
 }
 
 function getPicgo(editor: vscode.TextEditor): PicGo {
-  const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
+  const picgoConfigPath = vscode.workspace
+    .getConfiguration('picgo')
+    .get<string>('configPath');
   let picgo: PicGo;
   if (picgoConfigPath) {
     picgo = new PicGo(picgoConfigPath);
@@ -205,25 +232,8 @@ function getPicgo(editor: vscode.TextEditor): PicGo {
 }
 
 function upload(editor: vscode.TextEditor, input?: any[]): void {
-  const imageName = getImageName(editor);
   const picgo = getPicgo(editor);
-  // change image fileName to selection text
-  if (imageName) {
-    picgo.helper.beforeUploadPlugins.register('changeFileNameToSelection', {
-      handle(ctx: PicGo) {
-        if (ctx.output.length === 1) {
-          ctx.output[0].fileName = imageName;
-        } else {
-          ctx.output = ctx.output.map((item: ImgInfo, index: number) => {
-            item.fileName = `${imageName}_${index}`;
-            return item;
-          });
-        }
-      }
-    });
-  }
   picgo.upload(input); // Since picgo-core v1.1.5 will upload image from clipboard without input.
-
   // uploading progress
   vscode.window.withProgress(
     {
@@ -240,8 +250,11 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
           }
         });
         picgo.on('notification', (notice: INotice) => {
-          // Waiting for https://github.com/PicGo/PicGo-Core/pull/9 to be published.
-          vscode.window.showErrorMessage(notice.title + '\n' + (notice.body || ''));
+          vscode.window.showErrorMessage(
+            `${notice.title}! ${notice.body || ''}${
+              notice.text ? `, ${notice.text}` : '.'
+            }`
+          );
           reject();
         });
         picgo.on('failed', error => {
@@ -253,18 +266,25 @@ function upload(editor: vscode.TextEditor, input?: any[]): void {
   );
 }
 
-function getLogPath() {
-  const picgoConfig = vscode.workspace.getConfiguration('picgo');
-  return picgoConfig.logPath || path.resolve(os.homedir(), 'vs-picgo-log.json');
+function getdataPath() {
+  let dataPath: string = '';
+  return (() => {
+    if (dataPath !== '') {
+      return dataPath;
+    }
+    const picgoConfig = vscode.workspace.getConfiguration('picgo');
+    return (
+      picgoConfig.dataPath || path.resolve(os.homedir(), 'vs-picgo-data.json')
+    );
+  })();
 }
 
-async function updateLog(picInfos: Array<ImgInfo>, logPath: string) {
-  // debugger;
-  if (!fs.existsSync(logPath)) {
-    await initLogFile(getLogPath());
-    vscode.window.showInformationMessage(`Log file created at ${logPath}.`);
+async function updateLog(picInfos: Array<ImgInfo>, dataPath: string) {
+  if (!fs.existsSync(dataPath)) {
+    await initLogFile(getdataPath());
+    vscode.window.showInformationMessage(`Log file created at ${dataPath}.`);
   }
-  const data = await readFileP(logPath, 'utf8');
+  const data = await readFileP(dataPath, 'utf8');
   const log = JSON.parse(data);
   if (!log.uploaded) {
     log.uploaded = [];
@@ -272,13 +292,13 @@ async function updateLog(picInfos: Array<ImgInfo>, logPath: string) {
   picInfos.forEach(picInfo => {
     _.insert(log['uploaded'], picInfo);
   });
-  await writeFileP(logPath, JSON.stringify(log, null, 2), 'utf8');
+  await writeFileP(dataPath, JSON.stringify(log, null, 2), 'utf8');
 }
 
-async function initLogFile(logPath: string) {
-  if (!fs.existsSync(logPath)) {
+async function initLogFile(dataPath: string) {
+  if (!fs.existsSync(dataPath)) {
     await writeFileP(
-      logPath,
+      dataPath,
       JSON.stringify({ uploaded: [] }, null, 2),
       'utf8'
     );
@@ -299,7 +319,7 @@ export async function activate(context: vscode.ExtensionContext) {
   ];
   context.subscriptions.push(...disposable);
 
-  await initLogFile(getLogPath());
+  await initLogFile(getdataPath());
 }
 
 export function deactivate() {}

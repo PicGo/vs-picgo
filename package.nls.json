@@ -6,7 +6,7 @@
   "command.upload.inputBox.title": "Upload image from inputBox",
   "config.title": "PicGo",
   "config.configPath.description": "The path to your PicGo-Core configuration. PicGo will use `#picgo.picBed#` if this is not specified.",
-  "config.logPath.description": "The path to your log file. PicGo will use `your_home_dir/vs-picgo-log.json` if this is not specified.",
+  "config.dataPath.description": "The path to your data file, including all uploaded images' info. PicGo will use `your_home_dir/vs-picgo-data.json` if this is not specified.",
   "config.customUploadName.description": "Customize the name of the image to be uploaded, image will be renamed before uploading.\n- `${fileName}`: the name of the original image, without extension name.\n- `${extName}`: the extension name of the original image.\n- `${mdFileName}`: the name of the current editing markdown file.\n- `${date}`: YY-MM-DD formatted date.\n- `${dateTime}`: YY-MM-DD-hh-mm-ss formatted date.\n\nExamples:\n- `${fileName}-${date}` -> `picName-2016-07-25.jpg`\n- `${mdFileName}`-`${dateTime}` -> `markdownName-2017-04-12-222810.jpg`",
   "config.customOutputFormat.description": "Customize the output format of the uploaded image.\n- `${url}`: the url of the uploaded image.\n- `${uploadedName}`: the name of the uploaded image, see `#picgo.customUploadName#`.\n\nExamples:\n- `![${uploadedName}](${url})` -> `![picName-2016-07-25](https://example.com/xxx.jpg)`\n- `<img src=\"${url}\" alt=\"${uploadedName}\">` -> `<img src=\"https://example.com/xxx.jpg\" alt=\"picName-2016-07-25\">`",
   "config.picBed.description": "PicGo-Core configuration, please see https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#picbed.",
