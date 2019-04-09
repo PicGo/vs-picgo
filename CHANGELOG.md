@@ -38,8 +38,8 @@
   * Fix a bug caused by settings.json with comments.
 
 * 1.0.0  
-  * Change respotory's url and issus's url.
-  * Upgrade Picgo-Core dependiency: from ^1.1.5 to ^1.1.9. 
+  * Change repository's url and issue's url.
+  * Upgrade PicGo-Core dependency: from ^1.1.5 to ^1.1.9.
   * Add notice in README.md.
 
 * 0.0.3  
