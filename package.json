@@ -4,7 +4,8 @@
   "description": "%ext.description%",
   "repository": "https://github.com/PicGo/vs-picgo",
   "issues": "https://github.com/PicGo/vs-picgo/issues",
-  "version": "2.0.0",
+  "keywords": "%ext.keywords%",
+  "version": "2.0.2",
   "publisher": "Spades",
   "engines": {
     "vscode": "^1.27.0"
@@ -207,7 +208,8 @@
         },
         "picgo.picBed.github.repo": {
           "type": "string",
-          "default": ""
+          "default": "",
+          "markdownDescription": "%config.picBed.github.repo.description%"
         },
         "picgo.picBed.github.token": {
           "type": "string",
@@ -222,10 +224,6 @@
           "default": ""
         },
         "picgo.picBed.github.branch": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.github.username": {
           "type": "string",
           "default": ""
         },

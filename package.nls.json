@@ -1,6 +1,7 @@
 {
   "ext.displayName": "PicGo",
-  "ext.description": "vscode plugin of PicGo",
+  "ext.description": "A fast and powerful image uploading plugin for VSCode based on PicGo. Supports most image types (png, jpg, gif, etc.) and many image hosting services (smms, qiniu, imgur, etc.)!",
+  "ext.keywords": ["image", "picture", "upload", "image upload", "picture upload"],
   "command.upload.clipboard.title": "Upload image from clipboard",
   "command.upload.explorer.title": "Upload image from explorer",
   "command.upload.inputBox.title": "Upload image from inputBox",
@@ -9,13 +10,14 @@
   "config.dataPath.description": "The path to your data file, including all uploaded images' info. PicGo will use `your_home_dir/vs-picgo-data.json` if this is not specified.",
   "config.customUploadName.description": "Customize the name of the image to be uploaded, image will be renamed before uploading.\n- `${fileName}`: the name of the original image, without extension name.\n **Notice: If you selected some text before uploading, the selection will become the `fileName` of the image to be uploaded.**\n- `${extName}`: the extension name of the original image.\n- `${mdFileName}`: the name of the current editing markdown file.\n- `${date}`: YY-MM-DD formatted date.\n- `${dateTime}`: YY-MM-DD-hh-mm-ss formatted date.\n\nExamples:\n- `${fileName}-${date}` -> `picName-2016-07-25.jpg`\n- `${mdFileName}`-`${dateTime}` -> `markdownName-2017-04-12-222810.jpg`",
   "config.customOutputFormat.description": "Customize the output format of the uploaded image.\n- `${url}`: the url of the uploaded image.\n- `${uploadedName}`: the name of the uploaded image, see `#picgo.customUploadName#`.\n\nExamples:\n- `![${uploadedName}](${url})` -> `![picName-2016-07-25](https://example.com/xxx.jpg)`\n- `<img src=\"${url}\" alt=\"${uploadedName}\">` -> `<img src=\"https://example.com/xxx.jpg\" alt=\"picName-2016-07-25\">`",
-  "config.picBed.description": "PicGo-Core configuration, please see https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#picbed.",
+  "config.picBed.description": "PicGo-Core configuration, please see [PicGo Docs](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%9B%BE%E5%BA%8A%E5%8C%BA).",
   "config.picBed.smms.description": "SM.MS picBed configuration.",
   "config.picBed.weibo.description": "Weibo picBed configuration.",
   "config.picBed.qiniu.description": "Qiniu picBed configuration.",
   "config.picBed.upyun.description": "Upyun picBed configuration.",
   "config.picBed.tcyun.description": "Tencent COS picBed configuration.",
   "config.picBed.github.description": "GitHub configuration.",
+  "config.picBed.github.repo.description": "`Username/Repo`. For example, PicGo/Images",
   "config.picBed.aliyun.description": "Aliyun OSS configuration.",
   "config.picBed.imgur.description": "Imgur picBed configuration."
 }

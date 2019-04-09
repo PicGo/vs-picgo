@@ -1,3 +1,14 @@
+* 2.0.3
+  * Update README: optimize the images
+  * Delete `username` property in picgo.picBed.github
+
+* 2.0.2
+  * Fix README format at vscode market.
+  * Change the description, add some keywords.
+
+* 2.0.1
+  * Update README.md.
+
 * 2.0.0
   * Upgrade PicGo-Core to 1.3.4
   * Add the data file which contains the info of images uploaded by `vs-picgo`, which can be used by [picgo-plugin-vscode-migrator](https://github.com/upupming/picgo-plugin-vscode-migrator)
@@ -27,8 +38,8 @@
   * Fix a bug caused by settings.json with comments.
 
 * 1.0.0  
-  * Change repository's url and issue's url.
-  * Upgrade PicGo-Core dependency: from ^1.1.5 to ^1.1.9.
+  * Change respotory's url and issus's url.
+  * Upgrade Picgo-Core dependiency: from ^1.1.5 to ^1.1.9. 
   * Add notice in README.md.
 
 * 0.0.3  
