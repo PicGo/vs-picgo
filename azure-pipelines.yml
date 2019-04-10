@@ -1,3 +1,5 @@
+variables:
+  system.debug: true
 jobs:
   - job: Windows
     pool:
@@ -20,6 +22,17 @@ jobs:
           customCommand: 'run compile'
       - script: 'node node_modules/vscode/bin/test'
         displayName: 'Run tests'
+      - script: 'npm install -g vsce && vsce package'
+        displayName: 'Build artifact'
+      - task: CopyFiles@2
+        inputs:
+          contents: '*.vsix'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: vs-picgo-dev-build-Windows
+
   - job: macOS
     pool:
       name: Hosted macOS
@@ -41,6 +54,16 @@ jobs:
           customCommand: 'run compile'
       - script: 'node node_modules/vscode/bin/test'
         displayName: 'Run tests'
+      - script: 'npm install -g vsce && vsce package'
+        displayName: 'Build artifact'
+      - task: CopyFiles@2
+        inputs:
+          contents: '*.vsix'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: vs-picgo-dev-build-macOS
   - job: Linux
     pool:
       name: Hosted Ubuntu 1604
@@ -69,6 +92,16 @@ jobs:
         displayName: 'Run tests'
         env:
           DISPLAY: :10
+      - script: 'npm install -g vsce && vsce package'
+        displayName: 'Build artifact'
+      - task: CopyFiles@2
+        inputs:
+          contents: '*.vsix'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: vs-picgo-dev-build-Linux
 trigger:
 - master
 - dev
