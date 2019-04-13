@@ -267,7 +267,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test -n",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
     "lint": "prettier --list-different ./src/*.ts package.json package.nls.json",
     "lint:fix": "prettier --write ./src/*.ts package.json package.nls.json",
     "cz": "git-cz",
