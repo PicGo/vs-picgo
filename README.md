@@ -10,7 +10,7 @@
 
 ## Overview
 
-`vs-picgo` is a VSCode extension for uploading images to a remote image hosting service and insert the url into the current editing file. It's much more efficient than other tools. And it can give us better experience of uploading images. `vs-picgo` supports 8 kinds of image hosting services: [weibo](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%BE%AE%E5%8D%9A%E5%9B%BE%E5%BA%8A), [qiniu](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E4%B8%83%E7%89%9B%E5%9B%BE%E5%BA%8A), [tcyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E8%85%BE%E8%AE%AF%E4%BA%91cos), [upyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%8F%88%E6%8B%8D%E4%BA%91), [github](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#github%E5%9B%BE%E5%BA%8A), [aliyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%98%BF%E9%87%8C%E4%BA%91oss), [imgur](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#imgur%E5%9B%BE%E5%BA%8A) and [SM.MS](https://sm.ms/), which are supported by [PicGo-Core](https://github.com/PicGo/PicGo-Core). And the plugin feature of PicGo-Core is working in progress.
+`vs-picgo` is a VSCode extension for uploading images to a remote image hosting service and insert the url into the current editing file. It's much more efficient than other tools. And it can give us the better experience of uploading images. `vs-picgo` supports 8 kinds of image hosting services: [weibo](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%BE%AE%E5%8D%9A%E5%9B%BE%E5%BA%8A), [qiniu](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E4%B8%83%E7%89%9B%E5%9B%BE%E5%BA%8A), [tcyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E8%85%BE%E8%AE%AF%E4%BA%91cos), [upyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%8F%88%E6%8B%8D%E4%BA%91), [github](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#github%E5%9B%BE%E5%BA%8A), [aliyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%98%BF%E9%87%8C%E4%BA%91oss), [imgur](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#imgur%E5%9B%BE%E5%BA%8A) and [SM.MS](https://sm.ms/), which are supported by [PicGo-Core](https://github.com/PicGo/PicGo-Core). And the plugin feature of PicGo-Core is working in progress.
 
 ## Features
 
@@ -90,7 +90,7 @@
 
     <details>
 
-    **Notice: `YOUR_HOME_DIR` should be replaced by the path of current user path.**
+    **Notice: `YOUR_HOME_DIR` should be replaced by the path of your current user path.**
 
     ```json
     // Windows
