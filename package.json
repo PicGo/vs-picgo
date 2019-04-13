@@ -269,17 +269,41 @@
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
     "lint": "prettier --list-different ./src/*.ts package.json package.nls.json",
-    "lint:fix": "prettier --write ./src/*.ts package.json package.nls.json"
+    "lint:fix": "prettier --write ./src/*.ts package.json package.nls.json",
+    "cz": "git-cz",
+    "release": "bump-version"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./node_modules/@picgo/bump-version/.cz-config.js"
+    }
+  },
+  "commitlint": {
+    "extends": ["./node_modules/@picgo/bump-version/commitlint-picgo"]
   },
   "pre-commit": [
     "lint"
   ],
   "devDependencies": {
+    "@commitlint/cli": "^7.5.2",
+    "@picgo/bump-version": "^1.0.2",
     "@types/inquirer": "0.0.42",
     "@types/mocha": "^2.2.42",
     "@types/node": "^8.10.25",
     "@types/request-promise-native": "^1.0.15",
+    "commitizen": "^3.0.7",
+    "conventional-changelog": "^3.1.3",
     "cz-conventional-changelog": "2.1.0",
+    "cz-customizable": "^5.10.0",
+    "husky": "^1.3.1",
     "pre-commit": "1.2.2",
     "prettier": "1.16.4",
     "tslint": "^5.8.0",
@@ -291,10 +315,5 @@
     "lodash-id": "^0.14.0",
     "picgo": "^1.3.4"
   },
-  "license": "MIT",
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  }
+  "license": "MIT"
 }
