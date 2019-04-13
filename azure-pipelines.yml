@@ -103,7 +103,8 @@ jobs:
           pathtoPublish: '$(Build.ArtifactStagingDirectory)'
           artifactName: vs-picgo-dev-build-Linux
 trigger:
-- master
-- dev
-- dev-dora
-- dev-spades
+  branches:
+    include:
+    - '*'  # must quote since "*" is a YAML reserved character; we want a string
+pr:
+- dev*
