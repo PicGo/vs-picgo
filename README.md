@@ -1,18 +1,18 @@
-# vs-picgo (VSCode Plugin of PicGo)
-
-**Guide book can also be found on [PicGo/vs-picgo](https://github.com/PicGo/vs-picgo#vs-picgo-vscode-plugin-of-picgo).**
-
-[![version](https://img.shields.io/vscode-marketplace/v/Spades.vs-picgo.svg?style=flat-square&label=vscode%20marketplace)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
-[![installs](https://img.shields.io/vscode-marketplace/d/Spades.vs-picgo.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
-[![AppVeyor](https://img.shields.io/appveyor/ci/upupming/vs-picgo.svg?style=flat-square&label=appveyor%20build)](https://ci.appveyor.com/project/PicGo/vs-picgo)
-[![GitHub stars](https://img.shields.io/github/stars/PicGo/vs-picgo.svg?style=flat-square&label=github%20stars)](https://github.com/PicGo/vs-picgo)
+# vs-picgo
 
 > The VSCode extension of [PicGo](https://github.com/PicGo).
 
+[![version](https://img.shields.io/vscode-marketplace/v/Spades.vs-picgo.svg?style=flat-square&label=vscode%20marketplace)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
+[![installs](https://img.shields.io/vscode-marketplace/d/Spades.vs-picgo.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
+[![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/PicGo/9bbe4cd2-a9fe-4547-b13a-60ee81f12932/1/dev.svg?label=azure%20pipeline&style=flat-square)](https://dev.azure.com/PicGo/vs-picgo/_build?definitionId=1)
+[![GitHub stars](https://img.shields.io/github/stars/PicGo/vs-picgo.svg?style=flat-square&label=github%20stars)](https://github.com/PicGo/vs-picgo)
+[![PicGo Convention](https://img.shields.io/badge/picgo-convention-blue.svg?style=flat-square)](https://github.com/PicGo/bump-version)
+
 ## Overview
 
-`vs-picgo` is a VSCode extension for uploading images to a remote image hosting service and insert the url into current active MarkDown file. It's much more efficient than other tools. And it can give us better experience of uploading images. `vs-picgo` supports 8 kinds of image hosting services, [weibo](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%BE%AE%E5%8D%9A%E5%9B%BE%E5%BA%8A), [qiniu](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E4%B8%83%E7%89%9B%E5%9B%BE%E5%BA%8A), [tcyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E8%85%BE%E8%AE%AF%E4%BA%91cos), [upyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%8F%88%E6%8B%8D%E4%BA%91), [github](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#github%E5%9B%BE%E5%BA%8A), [aliyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%98%BF%E9%87%8C%E4%BA%91oss), [imgur](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#imgur%E5%9B%BE%E5%BA%8A), [SM.MS](https://sm.ms/), supported by [PicGo-Core](https://github.com/PicGo/PicGo-Core).
+`vs-picgo` is a VSCode extension for uploading images to a remote image hosting service and insert the url into the current editing file. It's much more efficient than other tools. And it can give us the better experience of uploading images. `vs-picgo` supports 8 kinds of image hosting services: [weibo](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%BE%AE%E5%8D%9A%E5%9B%BE%E5%BA%8A), [qiniu](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E4%B8%83%E7%89%9B%E5%9B%BE%E5%BA%8A), [tcyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E8%85%BE%E8%AE%AF%E4%BA%91cos), [upyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%8F%88%E6%8B%8D%E4%BA%91), [github](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#github%E5%9B%BE%E5%BA%8A), [aliyun](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%98%BF%E9%87%8C%E4%BA%91oss), [imgur](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#imgur%E5%9B%BE%E5%BA%8A) and [SM.MS](https://sm.ms/), which are supported by [PicGo-Core](https://github.com/PicGo/PicGo-Core). And the plugin feature of PicGo-Core is working in progress.
 
+## Features
 
 <details>
 <summary>Uploading an image from clipboard</summary>
@@ -30,16 +30,24 @@
 </details>
 
 <details>
-<summary>Selection as image name</summary>
+<summary>Use selection text as the uploaded `fileName`</summary>
 <img src="https://i.loli.net/2019/04/09/5cac180fb1dc7.gif" alt="selection.gif">
 <b>Notice: These characters: <code>\$</code>, <code>:</code>, <code>/</code>, <code>?</code> and newline will be ignored in the image name. </b>(Because they are invalid for file names.)
 </details>
 
+## Keyboard shortcuts
+
+**You can change all the shortcuts below as you wish.**
+
+| OS           | Uploading an image from clipboard               | Uploading images from explorer                  | Uploading an image from input box               |
+| ------------ | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
+| Windows/Unix | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd> | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>E</kbd> | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>O</kbd> |
+| OsX          | <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>U</kbd>  | <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>E</kbd>  | <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>O</kbd>  |
 
 ## Settings
 
 - out of box
-  - We could use `vs-picgo` without any setting.
+  - We could use `vs-picgo` without any settings.
   - The default image hosting is [SM.MS](https://sm.ms/).
 - custom
 
@@ -80,7 +88,9 @@
 
     Suggested settings for [`PicGo-electron`](https://github.com/Molunerfinn/PicGo) users (See [PicGo configuration path](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C) for more information):
 
-    **Notice: `YOUR_HOME_DIR` should be replaced by the path of current user path.**
+    <details>
+
+    **Notice: `YOUR_HOME_DIR` should be replaced by the path of your current user path.**
 
     ```json
     // Windows
@@ -112,23 +122,20 @@
     1. `vs-picgo` will use the same configuration as `PicGo-electron`.
     2. `PicGo-electron` will display all the uploaded images by `vs-picgo` in its gallery.
 
-## Keyboard shortcuts
-
-**You can change all the shortcuts below as you wish.**
-
-| OS           | Uploading an image from clipboard               | Uploading images from explorer                  | Uploading an image from input box               |
-| ------------ | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
-| Windows/Unix | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd> | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>E</kbd> | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>O</kbd> |
-| OsX          | <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>U</kbd>  | <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>E</kbd>  | <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>O</kbd>  |
+    </details>
 
 ## Migration
 
-- From ^1.0.0
+- From ^1.0.0 to ^2.x
   - External configuration file property has changed, from `picgo.path` to `picgo.configPath`.
 
-## Usage
+## Versioning
 
-- Find `vs-picgo` in the extension store, and install `vs-picgo`. You can use `vs-picgo` on installation finished.
+For the versions available, see the [tags on PicGo/vs-picgo](https://github.com/PicGo/vs-picgo/tags). ChangeLogs can be found at [CHANGELOG.md](CHANGELOG.md). All the dev builds can be found on [Azure](https://dev.azure.com/upupming/vs-picgo/_build?definitionId=1), and you can just open the build of a specific commit, and go to the Summary tab to download the artifacts.
+
+## Contributing
+
+Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Contributors
 

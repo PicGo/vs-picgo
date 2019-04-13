@@ -5,3 +5,4 @@ node_modules
 .imgs
 .vscode
 yarn-error.log
+package-lock.json
