@@ -131,7 +131,7 @@
 
 ## Versioning
 
-For the versions available, see the [tags on PicGo/vs-picgo](https://github.com/PicGo/vs-picgo/tags). ChangeLogs can be found at [CHANGELOG.md](CHANGELOG.md). All the dev builds can be found on [Azure](https://dev.azure.com/upupming/vs-picgo/_build?definitionId=1), and you can just open the build of a specific commit, and go to the Summary tab to download the artifacts.
+For the versions available, see the [tags on PicGo/vs-picgo](https://github.com/PicGo/vs-picgo/tags). ChangeLogs can be found at [CHANGELOG.md](CHANGELOG.md). All the dev builds can be found on [Azure](https://dev.azure.com/PicGo/vs-picgo/_build?definitionId=1), and you can just open the build of a specific commit, and go to the Summary tab to download the artifacts.
 
 ## Contributing
 
