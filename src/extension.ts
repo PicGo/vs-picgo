@@ -8,7 +8,7 @@ function uploadImageFromClipboard(vspicgo: VSPicgo): void {
   return vspicgo.upload();
 }
 
-async function uploadImageFromExplorer(picgo: VSPicgo): Promise<any> {
+async function uploadImageFromExplorer(vspicgo: VSPicgo): Promise<any> {
   const result = await vscode.window.showOpenDialog({
     filters: {
       Images: ['png', 'jpg', 'jpeg', 'webp', 'gif', 'bmp', 'tiff', 'ico'],
@@ -18,7 +18,7 @@ async function uploadImageFromExplorer(picgo: VSPicgo): Promise<any> {
 
   if (result) {
     const input = result.map(item => item.fsPath);
-    return picgo.upload(input);
+    return vspicgo.upload(input);
   }
 }
 
