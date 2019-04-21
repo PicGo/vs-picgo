@@ -1,3 +1,9 @@
+* 2.0.4
+  * fix bugs when upload images from clipboard in Windows 7 ([#34](https://github.com/PicGo/vs-picgo/issues/34))
+  * currect azure project name ([#33](https://github.com/PicGo/vs-picgo/issues/33)) ([7082558](https://github.com/PicGo/vs-picgo/commit/7082558))
+  * add bump version ([#32](https://github.com/PicGo/vs-picgo/issues/32)) ([4ec0218](https://github.com/PicGo/vs-picgo/commit/4ec0218))
+  * Setup continuous integration appveyor & azure  ([#31](https://github.com/PicGo/vs-picgo/issues/31)) ([1b6de45](https://github.com/PicGo/vs-picgo/commit/1b6de45))
+
 * 2.0.3
   * Update README: optimize the images
   * Delete `username` property in picgo.picBed.github
