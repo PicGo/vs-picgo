@@ -73,7 +73,7 @@ export default class VSPicgo {
           })}\n`;
         }, '');
         urlText = urlText.trim();
-        await this.updateLog(ctx.output);
+        await this.updateData(ctx.output);
       } catch (err) {
         if (err instanceof SyntaxError) {
           vscode.window.showErrorMessage(
@@ -139,7 +139,7 @@ export default class VSPicgo {
     return selectedString;
   }
 
-  async initLogFile(dataPath: string) {
+  async initDataFile(dataPath: string) {
     if (!fs.existsSync(dataPath)) {
       await writeFileP(dataPath, JSON.stringify({ uploaded: [] }, null, 2), 'utf8');
     }
@@ -177,19 +177,19 @@ export default class VSPicgo {
     );
   }
 
-  async updateLog(picInfos: Array<ImgInfo>) {
+  async updateData(picInfos: Array<ImgInfo>) {
     if (!fs.existsSync(this.dataPath)) {
-      await this.initLogFile(this.dataPath);
+      await this.initDataFile(this.dataPath);
       vscode.window.showInformationMessage(`Data file created at ${this.dataPath}.`);
     }
-    const data = await readFileP(this.dataPath, 'utf8');
-    const log = JSON.parse(data);
-    if (!log.uploaded) {
-      log.uploaded = [];
+    const dataRaw = await readFileP(this.dataPath, 'utf8');
+    const data = JSON.parse(dataRaw);
+    if (!data.uploaded) {
+      data.uploaded = [];
     }
     picInfos.forEach(picInfo => {
-      _.insert(log['uploaded'], picInfo);
+      _.insert(data['uploaded'], picInfo);
     });
-    await writeFileP(this.dataPath, JSON.stringify(log, null, 2), 'utf8');
+    await writeFileP(this.dataPath, JSON.stringify(data, null, 2), 'utf8');
   }
 }
