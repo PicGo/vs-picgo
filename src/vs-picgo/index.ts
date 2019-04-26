@@ -4,7 +4,7 @@ import * as os from 'os';
 import * as vscode from 'vscode';
 
 import PicGo from 'picgo/dist/core/PicGo';
-import { ImgInfo } from 'picgo/dist/utils/interfaces';
+import { ImgInfo, Plugin } from 'picgo/dist/utils/interfaces';
 
 import { promisify } from 'util';
 
@@ -55,7 +55,7 @@ export default class VSPicgo {
     this.editor = editor;
     this.dataPath = this.getDataPath();
     // Before upload, we change names of the images.
-    this.addRenameListener();
+    this.registerRenamePlugin();
     // After upload, we use the custom output format.
     this.addGenerateOutputListener();
   }
@@ -92,25 +92,28 @@ export default class VSPicgo {
     });
   }
 
-  addRenameListener() {
-    this.picgo.on('beforeUpload', (ctx: PicGo) => {
-      const userDefineName = this.getImageName();
-      const uploadNameTemplate =
-        vscode.workspace.getConfiguration('picgo').get<string>('customUploadName') || '${fileName}';
-      if (ctx.output.length === 1) {
-        ctx.output[0].fileName = this.changeFilename(
-          userDefineName || ctx.output[0].fileName || '',
-          uploadNameTemplate,
-        );
-      } else {
-        ctx.output.forEach((imgInfo: ImgInfo, index: number) => {
-          imgInfo.fileName = this.changeFilename(
-            userDefineName ? `${userDefineName}${index}` : imgInfo.fileName || '',
+  registerRenamePlugin() {
+    let beforeUploadPlugin: Plugin = {
+      handle: (ctx: PicGo) => {
+        const userDefineName = this.getImageName();
+        const uploadNameTemplate =
+          vscode.workspace.getConfiguration('picgo').get<string>('customUploadName') || '${fileName}';
+        if (ctx.output.length === 1) {
+          ctx.output[0].fileName = this.changeFilename(
+            userDefineName || ctx.output[0].fileName || '',
             uploadNameTemplate,
           );
-        });
-      }
-    });
+        } else {
+          ctx.output.forEach((imgInfo: ImgInfo, index: number) => {
+            imgInfo.fileName = this.changeFilename(
+              userDefineName ? `${userDefineName}${index}` : imgInfo.fileName || '',
+              uploadNameTemplate,
+            );
+          });
+        }
+      },
+    };
+    this.picgo.helper.beforeUploadPlugins.register('vsPicgoRenamePlugin', beforeUploadPlugin);
   }
 
   /**
