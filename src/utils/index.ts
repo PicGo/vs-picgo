@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { IUploadName, IOutputUrl } from '../vs-picgo';
 import { window } from 'vscode';
+import { ImgInfo } from 'picgo/dist/utils/interfaces';
 
 export function formatParam(file: string, mdFileName: string): IUploadName {
   const dt = new Date();
@@ -51,4 +52,20 @@ export function showError(messgae: string) {
 export function showInfo(messgae: string) {
   messgae = addPeriod(messgae);
   window.showInformationMessage(`${nls['ext.displayName']}: ${messgae}`);
+}
+
+/**
+ * Return uploaded name accrding to `imgInfo.fileName`,
+ * extname will be removed for the sake of simplicity when used as alt.
+ * @param imgInfo 
+ */
+export function getUploadedName(imgInfo: ImgInfo): string {
+  let fullName
+  if (!imgInfo.fileName) {
+    fullName = '';
+  } else {
+    fullName = imgInfo.fileName as string;
+  }
+  let basename = path.basename(fullName , path.extname(fullName));
+  return basename;
 }

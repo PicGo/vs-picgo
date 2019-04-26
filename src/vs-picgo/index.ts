@@ -8,7 +8,7 @@ import { ImgInfo, Plugin } from 'picgo/dist/utils/interfaces';
 
 import { promisify } from 'util';
 
-import { formatParam, formatString, showInfo, showError } from '../utils';
+import { formatParam, formatString, showInfo, showError, getUploadedName } from '../utils';
 
 const _ = require('lodash');
 const _db = require('lodash-id');
@@ -65,10 +65,10 @@ export default class VSPicgo {
       const outputFormatTemplate =
         vscode.workspace.getConfiguration('picgo').get<string>('customOutputFormat') || '![${uploadedName}](${url})';
       try {
-        urlText = ctx.output.reduce((acc: string, cur: ImgInfo): string => {
+        urlText = ctx.output.reduce((acc: string, imgInfo: ImgInfo): string => {
           return `${acc}${formatString(outputFormatTemplate, {
-            uploadedName: cur.fileName || '',
-            url: cur.imgUrl,
+            uploadedName: getUploadedName(imgInfo),
+            url: imgInfo.imgUrl,
           })}\n`;
         }, '');
         urlText = urlText.trim();
@@ -86,7 +86,7 @@ export default class VSPicgo {
       }
       this.editor.edit(textEditor => {
         textEditor.replace(this.editor.selection, urlText);
-        showInfo(`image uploaded successfully.`)
+        showInfo(`image uploaded successfully.`);
       });
     });
   }
@@ -94,20 +94,13 @@ export default class VSPicgo {
   registerRenamePlugin() {
     let beforeUploadPlugin: Plugin = {
       handle: (ctx: PicGo) => {
-        const userDefineName = this.imageName;
         const uploadNameTemplate =
           vscode.workspace.getConfiguration('picgo').get<string>('customUploadName') || '${fileName}';
         if (ctx.output.length === 1) {
-          ctx.output[0].fileName = this.changeFilename(
-            userDefineName || ctx.output[0].fileName || '',
-            uploadNameTemplate,
-          );
+          ctx.output[0].fileName = this.changeFilename(ctx.output[0].fileName || '', uploadNameTemplate, undefined);
         } else {
           ctx.output.forEach((imgInfo: ImgInfo, index: number) => {
-            imgInfo.fileName = this.changeFilename(
-              userDefineName ? `${userDefineName}${index}` : imgInfo.fileName || '',
-              uploadNameTemplate,
-            );
+            imgInfo.fileName = this.changeFilename(imgInfo.fileName || '', uploadNameTemplate, index);
           });
         }
       },
@@ -120,7 +113,10 @@ export default class VSPicgo {
    * @param original The filename of the original image file.
    * @param template The template string.
    */
-  changeFilename(original: string, template: string) {
+  changeFilename(original: string, template: string, index: number|undefined) {
+    if (this.userDefineName) {
+      original = this.userDefineName + (index || '') +  path.extname(original);
+    }
     const mdFilePath = this.editor.document.fileName;
     const mdFileName = path.basename(mdFilePath, path.extname(mdFilePath));
     let uploadNameData = formatParam(original, mdFileName);
@@ -130,7 +126,7 @@ export default class VSPicgo {
   get editor(): vscode.TextEditor {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
-      showError('no active markdown editor!')
+      showError('no active markdown editor!');
     }
     return editor as vscode.TextEditor;
   }
@@ -138,7 +134,7 @@ export default class VSPicgo {
     const picgoConfig = vscode.workspace.getConfiguration('picgo');
     return picgoConfig.dataPath || path.resolve(os.homedir(), 'vs-picgo-data.json');
   }
-  get imageName(): string {
+  get userDefineName(): string {
     let selectedString = this.editor.document.getText(this.editor.selection);
     const nameReg = /[:\/\?\$]+/g; // limitations of name
     selectedString = selectedString.replace(nameReg, () => '');
@@ -173,9 +169,7 @@ export default class VSPicgo {
             }
           });
           this.picgo.on('notification', (notice: INotice) => {
-            showError(
-              `${notice.title}! ${notice.body || ''}${notice.text || ''}`,
-            );
+            showError(`${notice.title}! ${notice.body || ''}${notice.text || ''}`);
             reject();
           });
           this.picgo.on('failed', error => {
@@ -191,7 +185,7 @@ export default class VSPicgo {
     const dataPath = this.dataPath;
     if (!fs.existsSync(dataPath)) {
       await this.initDataFile(dataPath);
-      showInfo('data file created at ${dataPath}.')
+      showInfo('data file created at ${dataPath}.');
     }
     const dataRaw = await readFileP(dataPath, 'utf8');
     const data = JSON.parse(dataRaw);
