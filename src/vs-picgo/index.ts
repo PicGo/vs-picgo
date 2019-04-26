@@ -39,21 +39,24 @@ export interface IOutputUrl {
 }
 
 export default class VSPicgo {
-  private picgo: PicGo;
+  private picgo: PicGo = new PicGo();
 
   constructor() {
-    const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
-    if (picgoConfigPath) {
-      this.picgo = new PicGo(picgoConfigPath);
-    } else {
-      this.picgo = new PicGo();
-      const picBed = vscode.workspace.getConfiguration('picgo.picBed');
-      this.picgo.setConfig({ picBed });
-    }
+    this.configPicgo();
     // Before upload, we change names of the images.
     this.registerRenamePlugin();
     // After upload, we use the custom output format.
     this.addGenerateOutputListener();
+  }
+
+  configPicgo() {
+    const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
+    if (picgoConfigPath) {
+      this.picgo = new PicGo(picgoConfigPath);
+    } else {
+      const picBed = vscode.workspace.getConfiguration('picgo.picBed');
+      this.picgo.setConfig({ picBed });
+    }
   }
 
   addGenerateOutputListener() {
@@ -149,6 +152,9 @@ export default class VSPicgo {
   }
 
   upload(input?: string[]) {
+    // This is necessary, because user may have changed settings
+    this.configPicgo();
+
     this.picgo.upload(input);
     // uploading progress
     const nls = require('../../package.nls.json');
