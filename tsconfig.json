@@ -7,6 +7,7 @@
             "es6"
         ],
         "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
         "sourceMap": true,
         "rootDir": "src",
         /* Strict Type-Checking Option */

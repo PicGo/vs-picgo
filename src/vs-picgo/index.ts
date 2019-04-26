@@ -8,7 +8,7 @@ import { ImgInfo, Plugin } from 'picgo/dist/utils/interfaces';
 
 import { promisify } from 'util';
 
-import { formatParam, formatString } from '../utils';
+import { formatParam, formatString, showInfo, showError } from '../utils';
 
 const _ = require('lodash');
 const _db = require('lodash-id');
@@ -72,18 +72,18 @@ export default class VSPicgo {
         await this.updateData(ctx.output);
       } catch (err) {
         if (err instanceof SyntaxError) {
-          vscode.window.showErrorMessage(
-            `The data file ${this.dataPath} has syntax error, ` +
+          showError(
+            `the data file ${this.dataPath} has syntax error, ` +
               `please fix the error by yourself or delete the data file and vs-picgo will recreate for you.`,
           );
         } else {
-          vscode.window.showErrorMessage(`Failed to read from data file ${this.dataPath}: ${err || ''}`);
+          showError(`failed to read from data file ${this.dataPath}: ${err || ''}`);
         }
         return;
       }
       this.editor.edit(textEditor => {
         textEditor.replace(this.editor.selection, urlText);
-        vscode.window.showInformationMessage('Upload successfully');
+        showInfo(`image uploaded successfully.`)
       });
     });
   }
@@ -127,7 +127,7 @@ export default class VSPicgo {
   get editor(): vscode.TextEditor {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
-      vscode.window.showErrorMessage('No active markdown editor!');
+      showError('no active markdown editor!')
     }
     return editor as vscode.TextEditor;
   }
@@ -151,10 +151,11 @@ export default class VSPicgo {
   upload(input?: string[]) {
     this.picgo.upload(input);
     // uploading progress
+    const nls = require('../../package.nls.json');
     vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: 'Image Uploading...',
+        title: `${nls['ext.displayName']}: image uploading...`,
         cancellable: false,
       },
       progress => {
@@ -166,13 +167,13 @@ export default class VSPicgo {
             }
           });
           this.picgo.on('notification', (notice: INotice) => {
-            vscode.window.showErrorMessage(
-              `${notice.title}! ${notice.body || ''}${notice.text ? `, ${notice.text}.` : '.'}`,
+            showError(
+              `${notice.title}! ${notice.body || ''}${notice.text || ''}`,
             );
             reject();
           });
           this.picgo.on('failed', error => {
-            vscode.window.showErrorMessage(error.message);
+            showError(error.message);
             reject();
           });
         });
@@ -184,7 +185,7 @@ export default class VSPicgo {
     const dataPath = this.dataPath;
     if (!fs.existsSync(dataPath)) {
       await this.initDataFile(dataPath);
-      vscode.window.showInformationMessage(`Data file created at ${dataPath}.`);
+      showInfo('data file created at ${dataPath}.')
     }
     const dataRaw = await readFileP(dataPath, 'utf8');
     const data = JSON.parse(dataRaw);
