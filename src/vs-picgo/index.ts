@@ -39,11 +39,9 @@ export interface IOutputUrl {
 }
 
 export default class VSPicgo {
-  private dataPath: string;
-  private editor: vscode.TextEditor;
   private picgo: PicGo;
 
-  constructor(editor: vscode.TextEditor) {
+  constructor() {
     const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
     if (picgoConfigPath) {
       this.picgo = new PicGo(picgoConfigPath);
@@ -52,8 +50,6 @@ export default class VSPicgo {
       const picBed = vscode.workspace.getConfiguration('picgo.picBed');
       this.picgo.setConfig({ picBed });
     }
-    this.editor = editor;
-    this.dataPath = this.getDataPath();
     // Before upload, we change names of the images.
     this.registerRenamePlugin();
     // After upload, we use the custom output format.
@@ -95,7 +91,7 @@ export default class VSPicgo {
   registerRenamePlugin() {
     let beforeUploadPlugin: Plugin = {
       handle: (ctx: PicGo) => {
-        const userDefineName = this.getImageName();
+        const userDefineName = this.imageName;
         const uploadNameTemplate =
           vscode.workspace.getConfiguration('picgo').get<string>('customUploadName') || '${fileName}';
         if (ctx.output.length === 1) {
@@ -128,11 +124,18 @@ export default class VSPicgo {
     return formatString(template, uploadNameData);
   }
 
-  getDataPath() {
+  get editor(): vscode.TextEditor {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+      vscode.window.showErrorMessage('No active markdown editor!');
+    }
+    return editor as vscode.TextEditor;
+  }
+  get dataPath(): string {
     const picgoConfig = vscode.workspace.getConfiguration('picgo');
     return picgoConfig.dataPath || path.resolve(os.homedir(), 'vs-picgo-data.json');
   }
-  getImageName() {
+  get imageName(): string {
     let selectedString = this.editor.document.getText(this.editor.selection);
     const nameReg = /[:\/\?\$]+/g; // limitations of name
     selectedString = selectedString.replace(nameReg, () => '');
@@ -178,11 +181,12 @@ export default class VSPicgo {
   }
 
   async updateData(picInfos: Array<ImgInfo>) {
-    if (!fs.existsSync(this.dataPath)) {
-      await this.initDataFile(this.dataPath);
-      vscode.window.showInformationMessage(`Data file created at ${this.dataPath}.`);
+    const dataPath = this.dataPath;
+    if (!fs.existsSync(dataPath)) {
+      await this.initDataFile(dataPath);
+      vscode.window.showInformationMessage(`Data file created at ${dataPath}.`);
     }
-    const dataRaw = await readFileP(this.dataPath, 'utf8');
+    const dataRaw = await readFileP(dataPath, 'utf8');
     const data = JSON.parse(dataRaw);
     if (!data.uploaded) {
       data.uploaded = [];
@@ -190,6 +194,6 @@ export default class VSPicgo {
     picInfos.forEach(picInfo => {
       _.insert(data['uploaded'], picInfo);
     });
-    await writeFileP(this.dataPath, JSON.stringify(data, null, 2), 'utf8');
+    await writeFileP(dataPath, JSON.stringify(data, null, 2), 'utf8');
   }
 }
