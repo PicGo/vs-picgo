@@ -39,7 +39,7 @@ export interface IOutputUrl {
 }
 
 export default class VSPicgo {
-  private picgo: PicGo = new PicGo();
+  private static picgo: PicGo = new PicGo();
 
   constructor() {
     this.configPicgo();
@@ -50,17 +50,19 @@ export default class VSPicgo {
   }
 
   configPicgo() {
-    const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
+    let picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
     if (picgoConfigPath) {
-      this.picgo = new PicGo(picgoConfigPath);
+      picgoConfigPath = path.resolve(picgoConfigPath);
+      delete require.cache[picgoConfigPath];
+      VSPicgo.picgo.setConfig(require(picgoConfigPath));
     } else {
       const picBed = vscode.workspace.getConfiguration('picgo.picBed');
-      this.picgo.setConfig({ picBed });
+      VSPicgo.picgo.setConfig({ picBed });
     }
   }
 
   addGenerateOutputListener() {
-    this.picgo.on('finished', async (ctx: PicGo) => {
+    VSPicgo.picgo.on('finished', async (ctx: PicGo) => {
       let urlText = '';
       const outputFormatTemplate =
         vscode.workspace.getConfiguration('picgo').get<string>('customOutputFormat') || '![${uploadedName}](${url})';
@@ -105,7 +107,7 @@ export default class VSPicgo {
         }
       },
     };
-    this.picgo.helper.beforeUploadPlugins.register('vsPicgoRenamePlugin', beforeUploadPlugin);
+    VSPicgo.picgo.helper.beforeUploadPlugins.register('vsPicgoRenamePlugin', beforeUploadPlugin);
   }
 
   /**
@@ -151,7 +153,7 @@ export default class VSPicgo {
     // This is necessary, because user may have changed settings
     this.configPicgo();
 
-    this.picgo.upload(input);
+    VSPicgo.picgo.upload(input);
     // uploading progress
     const nls = require('../../package.nls.json');
     vscode.window.withProgress(
@@ -162,17 +164,17 @@ export default class VSPicgo {
       },
       progress => {
         return new Promise((resolve, reject) => {
-          this.picgo.on('uploadProgress', (p: number) => {
+          VSPicgo.picgo.on('uploadProgress', (p: number) => {
             progress.report({ increment: p });
             if (p === 100) {
               resolve();
             }
           });
-          this.picgo.on('notification', (notice: INotice) => {
+          VSPicgo.picgo.on('notification', (notice: INotice) => {
             showError(`${notice.title}! ${notice.body || ''}${notice.text || ''}`);
             reject();
           });
-          this.picgo.on('failed', error => {
+          VSPicgo.picgo.on('failed', error => {
             showError(error.message);
             reject();
           });
