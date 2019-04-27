@@ -133,6 +133,13 @@
         },
         "picgo.picBed.qiniu.area": {
           "type": "string",
+          "enum": [
+            "z0",
+            "z1",
+            "z2",
+            "na0",
+            "as0"
+          ],
           "default": "z0"
         },
         "picgo.picBed.qiniu.options": {
