@@ -12,6 +12,7 @@ import { formatParam, formatString, showInfo, showError, getUploadedName } from 
 
 const _ = require('lodash');
 const _db = require('lodash-id');
+const nls = require('../../package.nls.json');
 _.mixin(_db);
 
 const writeFileP = promisify(fs.writeFile);
@@ -50,11 +51,11 @@ export default class VSPicgo {
   }
 
   configPicgo() {
-    let picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
+    const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
     if (picgoConfigPath) {
-      picgoConfigPath = path.resolve(picgoConfigPath);
-      delete require.cache[picgoConfigPath];
-      VSPicgo.picgo.setConfig(require(picgoConfigPath));
+      VSPicgo.picgo.setConfig(JSON.parse(fs.readFileSync(picgoConfigPath, {
+        encoding: 'utf-8'
+      })));
     } else {
       const picBed = vscode.workspace.getConfiguration('picgo.picBed');
       VSPicgo.picgo.setConfig({ picBed });
@@ -79,7 +80,7 @@ export default class VSPicgo {
         if (err instanceof SyntaxError) {
           showError(
             `the data file ${this.dataPath} has syntax error, ` +
-              `please fix the error by yourself or delete the data file and vs-picgo will recreate for you.`,
+            `please fix the error by yourself or delete the data file and vs-picgo will recreate for you.`,
           );
         } else {
           showError(`failed to read from data file ${this.dataPath}: ${err || ''}`);
@@ -115,9 +116,9 @@ export default class VSPicgo {
    * @param original The filename of the original image file.
    * @param template The template string.
    */
-  changeFilename(original: string, template: string, index: number|undefined) {
+  changeFilename(original: string, template: string, index: number | undefined) {
     if (this.userDefineName) {
-      original = this.userDefineName + (index || '') +  path.extname(original);
+      original = this.userDefineName + (index || '') + path.extname(original);
     }
     const mdFilePath = this.editor.document.fileName;
     const mdFileName = path.basename(mdFilePath, path.extname(mdFilePath));
@@ -155,7 +156,6 @@ export default class VSPicgo {
 
     VSPicgo.picgo.upload(input);
     // uploading progress
-    const nls = require('../../package.nls.json');
     vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
