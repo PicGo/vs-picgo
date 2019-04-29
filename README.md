@@ -86,9 +86,12 @@
     <img src="https://i.loli.net/2019/04/09/5cac18a5c9def.png" alt="output-format.png">
     </details>
 
-    Suggested settings for [`PicGo-electron`](https://github.com/Molunerfinn/PicGo) users (See [PicGo configuration path](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C) for more information):
+ 
 
     <details>
+    <summary>
+       Suggested settings for  <a href='https://github.com/Molunerfinn/PicGo'>PicGo-electron</a> users (See <a href='https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C'> PicGo configuration path</a> for more information):
+    </summary>
 
     **Notice: `YOUR_HOME_DIR` should be replaced by the path of your current user path.**
 
