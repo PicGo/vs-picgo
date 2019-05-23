@@ -30,7 +30,7 @@
 </details>
 
 <details>
-<summary>Use selection text as the uploaded `fileName`</summary>
+<summary>Use selection text as the uploaded <code>fileName</code></summary>
 <img src="https://i.loli.net/2019/04/09/5cac180fb1dc7.gif" alt="selection.gif">
 <b>Notice: These characters: <code>\$</code>, <code>:</code>, <code>/</code>, <code>?</code> and newline will be ignored in the image name. </b>(Because they are invalid for file names.)
 </details>
