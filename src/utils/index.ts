@@ -34,7 +34,7 @@ export function formatString(tplString: string, data: IUploadName | IOutputUrl) 
   return new Function(keys.join(','), 'return `' + tplString + '`').apply(null, values);
 }
 
-import * as nls from '../../package.nls.json';
+import nls = require('../../package.nls.json');
 
 function addPeriod(messgae: string) {
   if (!messgae.endsWith('.') && !messgae.endsWith('!')) {

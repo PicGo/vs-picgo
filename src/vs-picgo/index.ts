@@ -12,7 +12,7 @@ import { formatParam, formatString, showInfo, showError, getUploadedName } from 
 
 const _ = require('lodash');
 const _db = require('lodash-id');
-import * as nls from '../../package.nls.json';
+import nls = require('../../package.nls.json');
 _.mixin(_db);
 
 const writeFileP = promisify(fs.writeFile);
