@@ -272,7 +272,7 @@
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && istanbul cover ./node_modules/vscode/bin/test",
-    "coveralls": "type ./coverage/lcov.info | coveralls",
+    "coveralls": "type ./coverage/lcov.info | npx coveralls",
     "lint": "prettier --list-different ./src/*.ts package.json package.nls.json",
     "lint:fix": "prettier --write ./src/*.ts package.json package.nls.json",
     "cz": "git-cz",
