@@ -12,7 +12,7 @@ import { formatParam, formatString, showInfo, showError, getUploadedName } from 
 
 const _ = require('lodash');
 const _db = require('lodash-id');
-const nls = require('../../package.nls.json');
+import * as nls from '../../package.nls.json';
 _.mixin(_db);
 
 const writeFileP = promisify(fs.writeFile);
@@ -150,11 +150,10 @@ export default class VSPicgo {
     }
   }
 
-  upload(input?: string[]) {
+  upload(input?: string[]): Promise<string | void | Error> {
     // This is necessary, because user may have changed settings
     this.configPicgo();
 
-    VSPicgo.picgo.upload(input);
     // uploading progress
     vscode.window.withProgress(
       {
@@ -181,6 +180,8 @@ export default class VSPicgo {
         });
       },
     );
+
+    return VSPicgo.picgo.upload(input);
   }
 
   async updateData(picInfos: Array<ImgInfo>) {
