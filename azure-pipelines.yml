@@ -22,7 +22,8 @@ jobs:
           verbose: false
           customCommand: 'run test'
       
-      - script: 'npm run coveralls'
+      # https://stackoverflow.com/questions/45602358/lcov-info-has-absolute-path-for-sf
+      - script: 'sed -i -- s/..\\..\\//g coverage/lcov.info && npm run coveralls'
         displayName: 'Publish code coverage'  
         env:
           COVERALLS_SERVICE_NAME: $(COVERALLS_SERVICE_NAME)
