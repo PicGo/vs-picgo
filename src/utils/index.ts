@@ -12,12 +12,16 @@ export function formatParam(file: string, mdFileName: string): IUploadName {
   const mm = dt.getMinutes();
   const s = dt.getSeconds();
 
-  const date = `${y}-${m}-${d}`;
+  let pad = function (x: number) {
+    return ('00' + x).slice(-2);
+  }
+
+  const date = `${y}-${pad(m)}-${pad(d)}`;
   var extName = path.extname(file);
 
   return {
     date,
-    dateTime: `${date}-${h}-${mm}-${s}`,
+    dateTime: `${date}-${pad(h)}-${pad(mm)}-${pad(s)}`,
     fileName: path.basename(file, extName),
     extName,
     mdFileName,
@@ -30,10 +34,10 @@ export function formatString(tplString: string, data: IUploadName | IOutputUrl) 
   return new Function(keys.join(','), 'return `' + tplString + '`').apply(null, values);
 }
 
-const nls = require('../../package.nls.json');
+import nls = require('../../package.nls.json');
 
 function addPeriod(messgae: string) {
-  if (!messgae.endsWith('.') && !messgae.endsWith('!') ) {
+  if (!messgae.endsWith('.') && !messgae.endsWith('!')) {
     messgae = messgae + '.';
   }
   return messgae;
@@ -66,6 +70,6 @@ export function getUploadedName(imgInfo: ImgInfo): string {
   } else {
     fullName = imgInfo.fileName as string;
   }
-  let basename = path.basename(fullName , path.extname(fullName));
+  let basename = path.basename(fullName, path.extname(fullName));
   return basename;
 }
