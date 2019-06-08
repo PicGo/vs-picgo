@@ -5,7 +5,7 @@
 [![version](https://img.shields.io/vscode-marketplace/v/Spades.vs-picgo.svg?style=flat-square&label=vscode%20marketplace)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
 [![installs](https://img.shields.io/vscode-marketplace/d/Spades.vs-picgo.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
 [![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/PicGo/9bbe4cd2-a9fe-4547-b13a-60ee81f12932/1/dev.svg?label=azure%20pipeline&style=flat-square)](https://dev.azure.com/PicGo/vs-picgo/_build?definitionId=1)
-[![Coveralls github branch](https://img.shields.io/coveralls/github/PicGo/vs-picgo/dev.svg?style=flat-square)](https://coveralls.io/github/PicGo/vs-picgo)
+[![Coveralls github branch](https://img.shields.io/coveralls/github/PicGo/vs-picgo/refs/heads/dev.svg?style=flat-square)](https://coveralls.io/github/PicGo/vs-picgo?branch=refs/heads/dev)
 [![GitHub stars](https://img.shields.io/github/stars/PicGo/vs-picgo.svg?style=flat-square&label=github%20stars)](https://github.com/PicGo/vs-picgo)
 [![PicGo Convention](https://img.shields.io/badge/picgo-convention-blue.svg?style=flat-square)](https://github.com/PicGo/bump-version)
 
