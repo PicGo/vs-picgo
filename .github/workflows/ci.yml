@@ -1,0 +1,31 @@
+name: 测试并打包 Artifact
+on:
+  push:
+    branches:
+      - dev
+      - master
+jobs:
+  build-and-prerelease:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: npm install, make test-coverage
+        run: |
+          npm install
+          npm run test
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build artifact
+        run: |
+          npm install -g vsce && vsce package
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: vs-picgo dev release
+          path: '*.vsix'
