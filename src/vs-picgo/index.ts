@@ -3,8 +3,8 @@ import * as path from 'path';
 import * as os from 'os';
 import * as vscode from 'vscode';
 
-import PicGo from 'picgo/dist/core/PicGo';
-import { ImgInfo, Plugin } from 'picgo/dist/utils/interfaces';
+import PicGo from 'picgo/dist/src/core/PicGo';
+import { ImgInfo, Plugin } from 'picgo/dist/src/utils/interfaces';
 
 import { promisify } from 'util';
 
@@ -53,9 +53,13 @@ export default class VSPicgo {
   configPicgo() {
     const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
     if (picgoConfigPath) {
-      VSPicgo.picgo.setConfig(JSON.parse(fs.readFileSync(picgoConfigPath, {
-        encoding: 'utf-8'
-      })));
+      VSPicgo.picgo.setConfig(
+        JSON.parse(
+          fs.readFileSync(picgoConfigPath, {
+            encoding: 'utf-8',
+          }),
+        ),
+      );
     } else {
       const picBed = vscode.workspace.getConfiguration('picgo.picBed');
       VSPicgo.picgo.setConfig({ picBed });
@@ -80,7 +84,7 @@ export default class VSPicgo {
         if (err instanceof SyntaxError) {
           showError(
             `the data file ${this.dataPath} has syntax error, ` +
-            `please fix the error by yourself or delete the data file and vs-picgo will recreate for you.`,
+              `please fix the error by yourself or delete the data file and vs-picgo will recreate for you.`,
           );
         } else {
           showError(`failed to read from data file ${this.dataPath}: ${err || ''}`);
@@ -171,10 +175,6 @@ export default class VSPicgo {
           });
           VSPicgo.picgo.on('notification', (notice: INotice) => {
             showError(`${notice.title}! ${notice.body || ''}${notice.text || ''}`);
-            reject();
-          });
-          VSPicgo.picgo.on('failed', error => {
-            showError(error.message);
             reject();
           });
         });

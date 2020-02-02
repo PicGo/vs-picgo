@@ -941,12 +941,15 @@ commander@~2.8.1:
   dependencies:
     graceful-readlink ">= 1.0.0"
 
-comment-json@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.npm.taobao.org/comment-json/download/comment-json-1.1.3.tgz#6986c3330fee0c4c9e00c2398cd61afa5d8f239e"
-  integrity sha1-aYbDMw/uDEyeAMI5jNYa+l2PI54=
+comment-json@^2.3.1:
+  version "2.4.1"
+  resolved "https://registry.npm.taobao.org/comment-json/download/comment-json-2.4.1.tgz#2b4223550dc2ec66d147fa43070a77228c86ff33"
+  integrity sha1-K0IjVQ3C7GbRR/pDBwp3IoyG/zM=
   dependencies:
-    json-parser "^1.0.0"
+    core-util-is "^1.0.2"
+    esprima "^4.0.1"
+    has-own-prop "^2.0.0"
+    repeat-string "^1.6.1"
 
 commitizen@^3.0.7:
   version "3.1.1"
@@ -1225,7 +1228,7 @@ core-js@^2.4.0, core-js@^2.5.0:
   resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.8.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-2.6.8.tgz#dc3a1e633a04267944e0cb850d3880f340248139"
   integrity sha1-3DoeYzoEJnlE4MuFDTiA80AkgTk=
 
-core-util-is@1.0.2, core-util-is@~1.0.0:
+core-util-is@1.0.2, core-util-is@^1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/core-util-is/download/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
@@ -1677,12 +1680,12 @@ escodegen@1.8.x:
   optionalDependencies:
     source-map "~0.2.0"
 
-esprima@2.7.x, esprima@^2.7.0, esprima@^2.7.1:
+esprima@2.7.x, esprima@^2.7.1:
   version "2.7.3"
   resolved "https://registry.npm.taobao.org/esprima/download/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
   integrity sha1-luO3DVd59q1JzQMmc9HDEnZ7pYE=
 
-esprima@^4.0.0:
+esprima@^4.0.0, esprima@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npm.taobao.org/esprima/download/esprima-4.0.1.tgz#13b04cdb3e6c5d19df91ab6987a8695619b0aa71"
   integrity sha1-E7BM2z5sXRnfkatph6hpVhmwqnE=
@@ -2328,6 +2331,11 @@ has-flag@^3.0.0:
   resolved "https://registry.npm.taobao.org/has-flag/download/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
   integrity sha1-tdRU3CGZriJWmfNGfloH87lVuv0=
 
+has-own-prop@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/has-own-prop/download/has-own-prop-2.0.0.tgz#f0f95d58f65804f5d218db32563bb85b8e0417af"
+  integrity sha1-8PldWPZYBPXSGNsyVju4W44EF68=
+
 has-symbol-support-x@^1.4.1:
   version "1.4.2"
   resolved "https://registry.npm.taobao.org/has-symbol-support-x/download/has-symbol-support-x-1.4.2.tgz#1409f98bc00247da45da67cee0a36f282ff26455"
@@ -2828,13 +2836,6 @@ json-parse-better-errors@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/json-parse-better-errors/download/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
   integrity sha1-u4Z8+zRQ5pEHwTHRxRS6s9yLyqk=
-
-json-parser@^1.0.0:
-  version "1.1.5"
-  resolved "https://registry.npm.taobao.org/json-parser/download/json-parser-1.1.5.tgz#e62ec5261d1a6a5fc20e812a320740c6d9005677"
-  integrity sha1-5i7FJh0aal/CDoEqMgdAxtkAVnc=
-  dependencies:
-    esprima "^2.7.0"
 
 json-schema-traverse@^0.4.1:
   version "0.4.1"
@@ -3656,14 +3657,14 @@ performance-now@^2.1.0:
   resolved "https://registry.npm.taobao.org/performance-now/download/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-picgo@^1.3.6:
-  version "1.3.6"
-  resolved "https://registry.npm.taobao.org/picgo/download/picgo-1.3.6.tgz#61e7127fb3e161cc1b031df33294d313b79d88df"
-  integrity sha1-YecSf7PhYcwbAx3zMpTTE7ediN8=
+picgo@1.4.4:
+  version "1.4.4"
+  resolved "https://registry.npm.taobao.org/picgo/download/picgo-1.4.4.tgz#4fd2d51793a7f90a144a816c60035ed1f2f76bf2"
+  integrity sha1-T9LVF5On+QoUSoFsYANe0fL3a/I=
   dependencies:
     chalk "^2.4.1"
     commander "^2.17.0"
-    comment-json "^1.1.3"
+    comment-json "^2.3.1"
     cross-spawn "^6.0.5"
     dayjs "^1.7.4"
     download-git-repo "^1.1.0"

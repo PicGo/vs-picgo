@@ -1,0 +1,33 @@
+name: Build
+on:
+  push:
+    branches:
+      - dev
+      - master
+jobs:
+  build-and-prerelease:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: npm install, make test-coverage
+        run: |
+          npm install
+          npm run test
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build artifact
+        run: |
+          mkdir artifact
+          npm install -g vsce
+          rm README.md && vsce package -o artifact
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: vs-picgo dev release
+          path: artifact

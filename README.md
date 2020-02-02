@@ -4,7 +4,7 @@
 
 [![version](https://img.shields.io/vscode-marketplace/v/Spades.vs-picgo.svg?style=flat-square&label=vscode%20marketplace)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
 [![installs](https://img.shields.io/vscode-marketplace/d/Spades.vs-picgo.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
-[![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/PicGo/9bbe4cd2-a9fe-4547-b13a-60ee81f12932/1/dev.svg?label=azure%20pipeline&style=flat-square)](https://dev.azure.com/PicGo/vs-picgo/_build?definitionId=1)
+[![Build](https://github.com/PicGo/vs-picgo/workflows/Build/badge.svg?sanitize=true)](https://github.com/PicGo/vs-picgo/actions?query=workflow%3A%22Build%22)
 [![Coveralls github branch](https://img.shields.io/coveralls/github/PicGo/vs-picgo/refs/heads/dev.svg?style=flat-square)](https://coveralls.io/github/PicGo/vs-picgo?branch=refs/heads/dev)
 [![GitHub stars](https://img.shields.io/github/stars/PicGo/vs-picgo.svg?style=flat-square&label=github%20stars)](https://github.com/PicGo/vs-picgo)
 [![PicGo Convention](https://img.shields.io/badge/picgo-convention-blue.svg?style=flat-square)](https://github.com/PicGo/bump-version)
@@ -87,7 +87,7 @@
     <img src="https://i.loli.net/2019/04/09/5cac18a5c9def.png" alt="output-format.png">
     </details>
 
- 
+
 
     <details>
     <summary>
@@ -135,7 +135,7 @@
 
 ## Versioning
 
-For the versions available, see the [tags on PicGo/vs-picgo](https://github.com/PicGo/vs-picgo/tags). ChangeLogs can be found at [CHANGELOG.md](CHANGELOG.md). All the dev builds can be found on [Azure](https://dev.azure.com/PicGo/vs-picgo/_build?definitionId=1), and you can just open the build of a specific commit, and go to the Summary tab to download the artifacts.
+For the versions available, see the [tags on PicGo/vs-picgo](https://github.com/PicGo/vs-picgo/tags). ChangeLogs can be found at [CHANGELOG.md](CHANGELOG.md). All the dev builds can be found on [GitHub Actions](https://github.com/PicGo/vs-picgo/actions/), and you can just open the build of a specific commit, and go to the Summary tab to download the artifacts.
 
 ## Contributing
 

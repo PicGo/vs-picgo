@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { IUploadName, IOutputUrl } from '../vs-picgo';
 import { window } from 'vscode';
-import { ImgInfo } from 'picgo/dist/utils/interfaces';
+import { ImgInfo } from 'picgo/dist/src/utils/interfaces';
 
 export function formatParam(file: string, mdFileName: string): IUploadName {
   const dt = new Date();
@@ -12,9 +12,9 @@ export function formatParam(file: string, mdFileName: string): IUploadName {
   const mm = dt.getMinutes();
   const s = dt.getSeconds();
 
-  let pad = function (x: number) {
+  let pad = function(x: number) {
     return ('00' + x).slice(-2);
-  }
+  };
 
   const date = `${y}-${pad(m)}-${pad(d)}`;
   var extName = path.extname(file);
@@ -61,10 +61,10 @@ export function showInfo(messgae: string) {
 /**
  * Return uploaded name accrding to `imgInfo.fileName`,
  * extname will be removed for the sake of simplicity when used as alt.
- * @param imgInfo 
+ * @param imgInfo
  */
 export function getUploadedName(imgInfo: ImgInfo): string {
-  let fullName
+  let fullName;
   if (!imgInfo.fileName) {
     fullName = '';
   } else {
