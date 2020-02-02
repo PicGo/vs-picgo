@@ -324,7 +324,7 @@
     "vscode": "^1.1.34"
   },
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "lodash-id": "^0.14.0",
     "picgo": "^1.3.6"
   },
