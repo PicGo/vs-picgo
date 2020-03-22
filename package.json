@@ -8,7 +8,7 @@
   "version": "2.0.4",
   "publisher": "Spades",
   "engines": {
-    "vscode": "^1.27.0"
+    "vscode": "^1.43.0"
   },
   "categories": [
     "Other"
@@ -19,7 +19,7 @@
     "onCommand:picgo.uploadImageFromExplorer",
     "onCommand:picgo.uploadImageFromInputBox"
   ],
-  "main": "./out/src/extension",
+  "main": "./out/src/extension.js",
   "contributes": {
     "commands": [
       {
@@ -94,24 +94,60 @@
           "default": "smms",
           "markdownDescription": "%config.picBed.description%"
         },
-        "picgo.picBed.weibo.chooseCookie": {
-          "type": "boolean",
-          "default": true
-        },
-        "picgo.picBed.weibo.username": {
+        "picgo.picBed.smms.token": {
           "type": "string",
           "default": ""
         },
-        "picgo.picBed.weibo.quality": {
+        "picgo.picBed.aliyun.accessKeyId": {
           "type": "string",
-          "enum": [
-            "thumbnail",
-            "mw690",
-            "large"
-          ],
-          "default": "large"
+          "default": ""
         },
-        "picgo.picBed.weibo.cookie": {
+        "picgo.picBed.aliyun.accessKeySecret": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.bucket": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.area": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.path": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.aliyun.customUrl": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.repo": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "%config.picBed.github.repo.description%"
+        },
+        "picgo.picBed.github.token": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.path": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.customUrl": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.github.branch": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.imgur.clientId": {
+          "type": "string",
+          "default": ""
+        },
+        "picgo.picBed.imgur.proxy": {
           "type": "string",
           "default": ""
         },
@@ -147,30 +183,6 @@
           "default": ""
         },
         "picgo.picBed.qiniu.path": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.upyun.bucket": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.upyun.operator": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.upyun.password": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.upyun.options": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.upyun.path": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.upyun.url": {
           "type": "string",
           "default": ""
         },
@@ -210,56 +222,48 @@
           "type": "string",
           "default": ""
         },
-        "picgo.picBed.github.repo": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%config.picBed.github.repo.description%"
-        },
-        "picgo.picBed.github.token": {
+        "picgo.picBed.upyun.bucket": {
           "type": "string",
           "default": ""
         },
-        "picgo.picBed.github.path": {
+        "picgo.picBed.upyun.operator": {
           "type": "string",
           "default": ""
         },
-        "picgo.picBed.github.customUrl": {
+        "picgo.picBed.upyun.password": {
           "type": "string",
           "default": ""
         },
-        "picgo.picBed.github.branch": {
+        "picgo.picBed.upyun.options": {
           "type": "string",
           "default": ""
         },
-        "picgo.picBed.aliyun.accessKeyId": {
+        "picgo.picBed.upyun.path": {
           "type": "string",
           "default": ""
         },
-        "picgo.picBed.aliyun.accessKeySecret": {
+        "picgo.picBed.upyun.url": {
           "type": "string",
           "default": ""
         },
-        "picgo.picBed.aliyun.bucket": {
+        "picgo.picBed.weibo.chooseCookie": {
+          "type": "boolean",
+          "default": true
+        },
+        "picgo.picBed.weibo.username": {
           "type": "string",
           "default": ""
         },
-        "picgo.picBed.aliyun.area": {
+        "picgo.picBed.weibo.quality": {
           "type": "string",
-          "default": ""
+          "enum": [
+            "thumbnail",
+            "mw690",
+            "large"
+          ],
+          "default": "large"
         },
-        "picgo.picBed.aliyun.path": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.aliyun.customUrl": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.imgur.clientId": {
-          "type": "string",
-          "default": ""
-        },
-        "picgo.picBed.imgur.proxy": {
+        "picgo.picBed.weibo.cookie": {
           "type": "string",
           "default": ""
         }
@@ -270,12 +274,12 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "test": "node ./out/test/runTest.js",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "coveralls:windows": "powershell type ./coverage/lcov.info | coveralls",
-    "lint": "prettier --list-different ./src/*.ts package.json package.nls.json",
-    "lint:fix": "prettier --write ./src/*.ts package.json package.nls.json",
+    "lint": "eslint ./src --ext ts",
+    "codestyle:check": "prettier --check ./src/**/*.ts **/**.json **/**.js",
+    "codestyle:fix": "prettier --write ./src/**/*.ts **/**.json **/**.js",
     "cz": "git-cz",
     "release": "bump-version"
   },
@@ -299,34 +303,38 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^7.5.2",
-    "@picgo/bump-version": "^1.0.2",
-    "@types/glob": "7.1.1",
-    "@types/inquirer": "0.0.42",
-    "@types/mocha": "^2.2.42",
-    "@types/node": "^8.10.25",
-    "@types/request-promise-native": "^1.0.15",
-    "commitizen": "^3.0.7",
-    "conventional-changelog": "^3.1.3",
-    "copy-webpack-plugin": "5.0.3",
-    "coveralls": "3.0.3",
-    "cz-conventional-changelog": "2.1.0",
-    "cz-customizable": "^5.10.0",
-    "decache": "4.5.1",
-    "glob": "7.1.4",
-    "husky": "^1.3.1",
-    "istanbul": "0.4.5",
-    "prettier": "1.16.4",
-    "remap-istanbul": "0.13.0",
-    "ts-loader": "6.0.1",
-    "tslint": "^5.8.0",
-    "typescript": "^2.6.1",
-    "vscode": "^1.1.34"
+    "@commitlint/cli": "^8.3.5",
+    "@picgo/bump-version": "^1.0.3",
+    "@types/glob": "^7.1.1",
+    "@types/inquirer": "^6.5.0",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^12.11.7",
+    "@types/request-promise-native": "^1.0.17",
+    "@types/vscode": "^1.43.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "coveralls": "^3.0.11",
+    "cz-conventional-changelog": "^3.1.0",
+    "cz-customizable": "6.2.0",
+    "decache": "^4.5.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "glob": "^7.1.6",
+    "husky": "^4.2.3",
+    "istanbul": "^0.4.5",
+    "mocha": "^7.0.1",
+    "prettier": "1.19.1",
+    "remap-istanbul": "^0.13.0",
+    "ts-loader": "6.2.1",
+    "typescript": "^3.7.5",
+    "vscode-test": "^1.3.0"
   },
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "lodash-id": "^0.14.0",
-    "picgo": "1.4.4"
+    "picgo": "^1.4.7"
   },
   "license": "MIT"
 }
