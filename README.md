@@ -47,10 +47,10 @@
 
 ## Settings
 
-- out of box
-  - We could use `vs-picgo` without any settings.
+- Default
   - The default image hosting is [SM.MS](https://sm.ms/).
-- custom
+  
+- Custom
 
     <details>
     <summary><b>BIG NEWS: from 2.0.0, We can customize the settings in VSCode settings</b></summary>

@@ -1,3 +1,7 @@
+
+* 2.1.0
+  * upgrade dependencies, support sm.ms V2
+
 * 2.0.4
   * fix bugs when upload images from clipboard in Windows 7 ([#34](https://github.com/PicGo/vs-picgo/issues/34))
   * currect azure project name ([#33](https://github.com/PicGo/vs-picgo/issues/33)) ([7082558](https://github.com/PicGo/vs-picgo/commit/7082558))
