@@ -1,8 +1,8 @@
 // @ts-check
-'use strict'
+'use strict';
 
-const path = require('path')
-const CopyPlugin = require('copy-webpack-plugin')
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 /** @type {import('webpack').Configuration} */
 const config = {
@@ -12,18 +12,18 @@ const config = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'extension.js',
     libraryTarget: 'commonjs2',
-    devtoolModuleFilenameTemplate: '../[resource-path]'
+    devtoolModuleFilenameTemplate: '../[resource-path]',
   },
   node: {
     // See https://webpack.js.org/configuration/node/#node__dirname
-    __dirname: 'mock'
+    __dirname: 'mock',
   },
   devtool: 'source-map',
   externals: {
-    vscode: 'commonjs vscode'
+    vscode: 'commonjs vscode',
   },
   resolve: {
-    extensions: ['.ts', '.js', '.json']
+    extensions: ['.ts', '.js', '.json'],
   },
   module: {
     rules: [
@@ -32,21 +32,21 @@ const config = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'ts-loader'
-          }
-        ]
-      }
-    ]
+            loader: 'ts-loader',
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new CopyPlugin([
       {
         from: 'node_modules/picgo/dist/utils/clipboard/*',
         to: 'clipboard',
-        flatten: true
-      }
-    ])
-  ]
-}
+        flatten: true,
+      },
+    ]),
+  ],
+};
 
-module.exports = config
+module.exports = config;
