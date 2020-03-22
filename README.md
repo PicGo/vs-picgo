@@ -93,6 +93,7 @@
     <summary>
        Suggested settings for  <a href='https://github.com/Molunerfinn/PicGo'>PicGo-electron</a> users (See <a href='https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C'> PicGo configuration path</a> for more information):
     </summary>
+    </details>
 
     **Notice: `YOUR_HOME_DIR` should be replaced by the path of your current user path.**
 
