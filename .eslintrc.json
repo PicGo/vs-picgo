@@ -1,0 +1,19 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": ["prettier/@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/class-name-casing": "error",
+    "@typescript-eslint/semi": "error",
+    "no-throw-literal": "error",
+    "no-unused-expressions": "error",
+    "no-redeclare": "error",
+    "curly": "error",
+    "eqeqeq": "error"
+  }
+}
