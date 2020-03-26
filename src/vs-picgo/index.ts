@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
@@ -39,10 +40,15 @@ export interface IOutputUrl {
   [key: string]: string;
 }
 
-export default class VSPicgo {
+export enum EVSPicgoHooks {
+  updated = 'updated',
+}
+
+export default class VSPicgo extends EventEmitter {
   private static picgo: PicGo = new PicGo();
 
   constructor() {
+    super();
     this.configPicgo();
     // Before upload, we change names of the images.
     this.registerRenamePlugin();
@@ -94,6 +100,7 @@ export default class VSPicgo {
       this.editor.edit(textEditor => {
         textEditor.replace(this.editor.selection, urlText);
         showInfo(`image uploaded successfully.`);
+        this.emit(EVSPicgoHooks.updated, urlText);
       });
     });
   }
@@ -154,7 +161,7 @@ export default class VSPicgo {
     }
   }
 
-  upload(input?: string[]): Promise<string | void | Error> {
+  async upload(input?: string[]): Promise<string | void | Error> {
     // This is necessary, because user may have changed settings
     this.configPicgo();
 
