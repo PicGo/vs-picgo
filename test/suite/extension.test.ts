@@ -52,7 +52,7 @@ describe('VSPicgo', async function() {
       },
       vspicgo,
     });
-    console.log('output' + res);
+    console.log('output: ' + res);
     assert.equal(REG4CUSTOM_OUTPUT_FORMAT.test(res), true);
   });
 
@@ -69,7 +69,7 @@ describe('VSPicgo', async function() {
       },
       vspicgo,
     });
-    console.log('uploadName' + res);
+    console.log('uploadName: ' + res);
     assert.equal(REG4CUSTOM_FILE_FORMAT.test(res), true);
   });
 
@@ -84,7 +84,7 @@ describe('VSPicgo', async function() {
       },
       vspicgo,
     });
-    console.log('selection' + res);
+    console.log('selection: ' + res);
     assert.equal(res.indexOf('TEST'), 2);
   });
 });

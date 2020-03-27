@@ -1,6 +1,14 @@
+import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
 import * as Mocha from 'mocha';
+
+import {
+  COVERAGE_COLLECTOR_CONFIG_FILE_PATH,
+  DEFAULT_COVERAGE_CONFIGURATION,
+  ICoverageCollectorOptions,
+  CoverageCollector,
+} from '../utils';
 
 export function run(): Promise<void> {
   // Create the mocha test
@@ -11,7 +19,20 @@ export function run(): Promise<void> {
 
   const testsRoot = path.resolve(__dirname, '../suite');
 
+  // collect coverage
+
+  let coverageCollectorOptions: ICoverageCollectorOptions = DEFAULT_COVERAGE_CONFIGURATION;
+  if (fs.existsSync(COVERAGE_COLLECTOR_CONFIG_FILE_PATH)) {
+    coverageCollectorOptions = require(COVERAGE_COLLECTOR_CONFIG_FILE_PATH);
+  }
+
+  const coverageCollector = new CoverageCollector(
+    path.dirname(COVERAGE_COLLECTOR_CONFIG_FILE_PATH),
+    coverageCollectorOptions,
+  );
+
   return new Promise((resolve, reject) => {
+    coverageCollector.setup();
     glob('**/**test.js', { cwd: testsRoot }, (err, files) => {
       if (err) {
         return reject(err);
@@ -24,6 +45,7 @@ export function run(): Promise<void> {
           if (failures > 0) {
             reject(new Error(`${failures} tests failed.`));
           }
+          coverageCollector.report();
           resolve();
         });
       } catch (err) {
