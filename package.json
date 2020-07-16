@@ -328,7 +328,7 @@
     "vscode-test": "^1.3.0"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "lodash-id": "^0.14.0",
     "picgo": "^1.4.7"
   },
