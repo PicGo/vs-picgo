@@ -11,7 +11,7 @@ function uploadImageFromClipboard(vspicgo: VSPicgo): Promise<string | void | Err
 async function uploadImageFromExplorer(vspicgo: VSPicgo): Promise<string | void | Error> {
   const result = await vscode.window.showOpenDialog({
     filters: {
-      Images: ['png', 'jpg', 'jpeg', 'webp', 'gif', 'bmp', 'tiff', 'ico'],
+      Images: ['png', 'jpg', 'jpeg', 'webp', 'gif', 'bmp', 'tiff', 'ico', 'svg'],
     },
     canSelectMany: true,
   });
@@ -27,7 +27,7 @@ async function uploadImageFromInputBox(vspicgo: VSPicgo): Promise<string | void 
     placeHolder: 'Please input an image location path',
   });
   // check if `result` is a path of image file
-  const imageReg = /\.(png|jpg|jpeg|webp|gif|bmp|tiff|ico)$/;
+  const imageReg = /\.(png|jpg|jpeg|webp|gif|bmp|tiff|ico|svg)$/;
   if (result && imageReg.test(result)) {
     result = path.isAbsolute(result) ? result : path.join(vspicgo.editor.document.uri.fsPath, '../', result);
     if (fs.existsSync(result)) {
