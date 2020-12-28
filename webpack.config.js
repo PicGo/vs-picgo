@@ -4,6 +4,8 @@
 'use strict';
 
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /**@type {import('webpack').Configuration}*/
 const config = {
@@ -23,7 +25,7 @@ const config = {
   },
   resolve: {
     // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.json'],
   },
   module: {
     rules: [
@@ -38,5 +40,11 @@ const config = {
       },
     ],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [{ from: 'node_modules/picgo/dist/src/utils/clipboard', to: 'clipboard' }],
+    }),
+    new CleanWebpackPlugin(),
+  ],
 };
 module.exports = config;

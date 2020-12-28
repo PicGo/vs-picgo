@@ -22,6 +22,7 @@ jobs:
 
       - name: Build artifact
         run: |
+          mkdir artifact
           rm README.md && yarn vsce package --yarn -o artifact
 
       - name: Upload artifact

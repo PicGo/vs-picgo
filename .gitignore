@@ -9,3 +9,4 @@ package-lock.json
 coverage
 .coveralls.yml
 .DS_Store
+dist
