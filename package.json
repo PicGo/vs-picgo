@@ -79,6 +79,21 @@
           "markdownDescription": "%config.customOutputFormat.description%",
           "default": "![${uploadedName}](${url})"
         },
+        "picgo.picBed.uploader": {
+          "type": "string",
+          "enum": [
+            "smms",
+            "aliyun",
+            "github",
+            "imgur",
+            "qiniu",
+            "tcyun",
+            "upyun",
+            "weibo"
+          ],
+          "default": "smms",
+          "markdownDescription": "%config.picBed.uploader%"
+        },
         "picgo.picBed.current": {
           "type": "string",
           "enum": [
@@ -92,7 +107,7 @@
             "weibo"
           ],
           "default": "smms",
-          "markdownDescription": "%config.picBed.description%"
+          "markdownDescription": "%config.picBed.current%"
         },
         "picgo.picBed.smms.token": {
           "type": "string",
@@ -330,7 +345,7 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "lodash-id": "^0.14.0",
-    "picgo": "^1.4.7"
+    "picgo": "1.4.14"
   },
   "license": "MIT"
 }

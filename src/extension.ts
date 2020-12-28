@@ -4,11 +4,11 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import VSPicgo from './vs-picgo';
 
-function uploadImageFromClipboard(vspicgo: VSPicgo): Promise<string | void | Error> {
+function uploadImageFromClipboard(vspicgo: VSPicgo) {
   return vspicgo.upload();
 }
 
-async function uploadImageFromExplorer(vspicgo: VSPicgo): Promise<string | void | Error> {
+async function uploadImageFromExplorer(vspicgo: VSPicgo) {
   const result = await vscode.window.showOpenDialog({
     filters: {
       Images: ['png', 'jpg', 'jpeg', 'webp', 'gif', 'bmp', 'tiff', 'ico', 'svg'],
@@ -22,7 +22,7 @@ async function uploadImageFromExplorer(vspicgo: VSPicgo): Promise<string | void 
   }
 }
 
-async function uploadImageFromInputBox(vspicgo: VSPicgo): Promise<string | void | Error> {
+async function uploadImageFromInputBox(vspicgo: VSPicgo) {
   let result = await vscode.window.showInputBox({
     placeHolder: 'Please input an image location path',
   });

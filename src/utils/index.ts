@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { IUploadName, IOutputUrl } from '../vs-picgo';
 import { window } from 'vscode';
-import { ImgInfo } from 'picgo/dist/src/utils/interfaces';
+import { IImgInfo } from 'picgo/dist/src/utils/interfaces';
 
 export function formatParam(file: string, mdFileName: string): IUploadName {
   const dt = new Date();
@@ -63,7 +63,7 @@ export function showInfo(messgae: string) {
  * extname will be removed for the sake of simplicity when used as alt.
  * @param imgInfo
  */
-export function getUploadedName(imgInfo: ImgInfo): string {
+export function getUploadedName(imgInfo: IImgInfo): string {
   let fullName;
   if (!imgInfo.fileName) {
     fullName = '';
