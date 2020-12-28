@@ -5,7 +5,7 @@
   "repository": "https://github.com/PicGo/vs-picgo",
   "issues": "https://github.com/PicGo/vs-picgo/issues",
   "keywords": "%ext.keywords%",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "publisher": "Spades",
   "engines": {
     "vscode": "^1.43.0"
@@ -286,7 +286,7 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "yarn compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "test": "node ./out/test/run-test.js",
@@ -298,7 +298,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run codestyle:check && npm run lint",
+      "pre-commit": "yarn codestyle:check && yarn lint",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
