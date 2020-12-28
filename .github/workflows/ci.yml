@@ -22,9 +22,7 @@ jobs:
 
       - name: Build artifact
         run: |
-          mkdir artifact
-          yarn global add vsce
-          rm README.md && vsce package -o artifact
+          rm README.md && yarn vsce package --yarn -o artifact
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1
