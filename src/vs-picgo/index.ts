@@ -5,7 +5,7 @@ import * as os from 'os';
 import * as vscode from 'vscode';
 
 import PicGo from 'picgo/dist/src/core/PicGo';
-import { ImgInfo, Plugin } from 'picgo/dist/src/utils/interfaces';
+import { IImgInfo, IPlugin, IConfig as IPicGoConfig } from 'picgo/dist/src/utils/interfaces';
 
 import { promisify } from 'util';
 
@@ -58,18 +58,22 @@ export default class VSPicgo extends EventEmitter {
 
   configPicgo() {
     const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
+    let config: Partial<IPicGoConfig>;
     if (picgoConfigPath) {
-      VSPicgo.picgo.setConfig(
-        JSON.parse(
-          fs.readFileSync(picgoConfigPath, {
-            encoding: 'utf-8',
-          }),
-        ),
+      config = JSON.parse(
+        fs.readFileSync(picgoConfigPath, {
+          encoding: 'utf-8',
+        }),
       );
     } else {
-      const picBed = vscode.workspace.getConfiguration('picgo.picBed');
-      VSPicgo.picgo.setConfig({ picBed });
+      const picBed = (vscode.workspace.getConfiguration('picgo.picBed') as any) as IPicGoConfig['picBed'];
+      config = { picBed };
     }
+
+    // `PICGO_ENV` is used only by Electron version, should be disabled here,
+    // see https://github.com/PicGo/vs-picgo/issues/75 for more detail
+    (config as any)['PICGO_ENV'] = 'CLI';
+    VSPicgo.picgo.setConfig(config);
   }
 
   addGenerateOutputListener() {
@@ -78,7 +82,7 @@ export default class VSPicgo extends EventEmitter {
       const outputFormatTemplate =
         vscode.workspace.getConfiguration('picgo').get<string>('customOutputFormat') || '![${uploadedName}](${url})';
       try {
-        urlText = ctx.output.reduce((acc: string, imgInfo: ImgInfo): string => {
+        urlText = ctx.output.reduce((acc: string, imgInfo: IImgInfo): string => {
           return `${acc}${formatString(outputFormatTemplate, {
             uploadedName: getUploadedName(imgInfo),
             url: imgInfo.imgUrl,
@@ -106,14 +110,14 @@ export default class VSPicgo extends EventEmitter {
   }
 
   registerRenamePlugin() {
-    let beforeUploadPlugin: Plugin = {
+    let beforeUploadPlugin: IPlugin = {
       handle: (ctx: PicGo) => {
         const uploadNameTemplate =
           vscode.workspace.getConfiguration('picgo').get<string>('customUploadName') || '${fileName}';
         if (ctx.output.length === 1) {
           ctx.output[0].fileName = this.changeFilename(ctx.output[0].fileName || '', uploadNameTemplate, undefined);
         } else {
-          ctx.output.forEach((imgInfo: ImgInfo, index: number) => {
+          ctx.output.forEach((imgInfo: IImgInfo, index: number) => {
             imgInfo.fileName = this.changeFilename(imgInfo.fileName || '', uploadNameTemplate, index);
           });
         }
@@ -161,7 +165,7 @@ export default class VSPicgo extends EventEmitter {
     }
   }
 
-  async upload(input?: string[]): Promise<string | void | Error> {
+  async upload(input?: string[]) {
     // This is necessary, because user may have changed settings
     this.configPicgo();
 
@@ -173,12 +177,16 @@ export default class VSPicgo extends EventEmitter {
         cancellable: false,
       },
       progress => {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
           VSPicgo.picgo.on('uploadProgress', (p: number) => {
             progress.report({ increment: p });
             if (p === 100) {
               resolve();
             }
+          });
+          VSPicgo.picgo.on('failed', (error: Error) => {
+            showError(error.message || 'Unknown error');
+            reject();
           });
           VSPicgo.picgo.on('notification', (notice: INotice) => {
             showError(`${notice.title}! ${notice.body || ''}${notice.text || ''}`);
@@ -188,10 +196,11 @@ export default class VSPicgo extends EventEmitter {
       },
     );
 
-    return VSPicgo.picgo.upload(input);
+    // Error has been handled in on 'failed'
+    return VSPicgo.picgo.upload(input).catch(() => {});
   }
 
-  async updateData(picInfos: Array<ImgInfo>) {
+  async updateData(picInfos: Array<IImgInfo>) {
     const dataPath = this.dataPath;
     if (!fs.existsSync(dataPath)) {
       await this.initDataFile(dataPath);

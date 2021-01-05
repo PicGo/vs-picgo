@@ -7,3 +7,6 @@ src/**
 **/.eslintrc.json
 **/*.map
 **/*.ts
+node_modules
+out/
+webpack.config.js
