@@ -1,7 +1,13 @@
 {
   "ext.displayName": "PicGo",
   "ext.description": "A fast and powerful image uploading plugin for VSCode based on PicGo. Supports most image types (png, jpg, gif, etc.) and many image hosting services (smms, qiniu, imgur, etc.)!",
-  "ext.keywords": ["image", "picture", "upload", "image upload", "picture upload"],
+  "ext.keywords": [
+    "image",
+    "picture",
+    "upload",
+    "image upload",
+    "picture upload"
+  ],
   "command.upload.clipboard.title": "Upload image from clipboard",
   "command.upload.explorer.title": "Upload image from explorer",
   "command.upload.inputBox.title": "Upload image from inputBox",
@@ -12,6 +18,7 @@
   "config.customOutputFormat.description": "Customize the output format of the uploaded image.\n- `${url}`: the url of the uploaded image.\n- `${uploadedName}`: the name of the uploaded image without extension name, see `#picgo.customUploadName#`, note that even if you used `${extName}` in `#picgo.customUploadName#`, there still will be no extension name in the output.\n\nExamples:\n- `![${uploadedName}](${url})` -> `![picName-2016-07-25](https://example.com/xxx.jpg)`\n- `<img src=\"${url}\" alt=\"${uploadedName}\">` -> `<img src=\"https://example.com/xxx.jpg\" alt=\"picName-2016-07-25\">`",
   "config.picBed.uploader": "Please see [`picBed.uploader`](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#picbed-uploader).",
   "config.picBed.current": "Please see [`picBed.current`](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#picbed-current).",
+  "picgo.picBed.proxy": "Proxy for `request`, see [`picBed.proxy`](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#picbed-proxy) for more detail.",
   "config.picBed.smms.description": "SM.MS picBed configuration.",
   "config.picBed.weibo.description": "Weibo picBed configuration.",
   "config.picBed.qiniu.description": "Qiniu picBed configuration.",

@@ -109,6 +109,11 @@
           "default": "smms",
           "markdownDescription": "%config.picBed.current%"
         },
+        "picgo.picBed.proxy": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "%config.picBed.proxy%"
+        },
         "picgo.picBed.smms.token": {
           "type": "string",
           "default": ""
