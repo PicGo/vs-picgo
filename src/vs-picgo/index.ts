@@ -4,9 +4,6 @@ import * as path from 'path';
 import * as os from 'os';
 import * as vscode from 'vscode';
 
-import PicGo from 'picgo/dist/src/core/PicGo';
-import { IImgInfo, IPlugin, IConfig as IPicGoConfig } from 'picgo/dist/src/utils/interfaces';
-
 import { promisify } from 'util';
 
 import { formatParam, formatString, showInfo, showError, getUploadedName } from '../utils';
@@ -14,6 +11,8 @@ import { formatParam, formatString, showInfo, showError, getUploadedName } from 
 const _ = require('lodash');
 const _db = require('lodash-id');
 import nls = require('../../package.nls.json');
+import { IImgInfo, IPlugin, IPicGo, IConfig } from 'picgo/dist/src/types';
+import PicGo = require('picgo');
 _.mixin(_db);
 
 const writeFileP = promisify(fs.writeFile);
@@ -45,7 +44,7 @@ export enum EVSPicgoHooks {
 }
 
 export default class VSPicgo extends EventEmitter {
-  private static picgo: PicGo = new PicGo();
+  private static picgo: IPicGo = new PicGo();
 
   constructor() {
     super();
@@ -58,7 +57,7 @@ export default class VSPicgo extends EventEmitter {
 
   configPicgo() {
     const picgoConfigPath = vscode.workspace.getConfiguration('picgo').get<string>('configPath');
-    let config: Partial<IPicGoConfig>;
+    let config: Partial<IConfig>;
     if (picgoConfigPath) {
       config = JSON.parse(
         fs.readFileSync(picgoConfigPath, {
@@ -66,7 +65,7 @@ export default class VSPicgo extends EventEmitter {
         }),
       );
     } else {
-      const picBed = (vscode.workspace.getConfiguration('picgo.picBed') as any) as IPicGoConfig['picBed'];
+      const picBed = (vscode.workspace.getConfiguration('picgo.picBed') as any) as IConfig['picBed'];
       config = { picBed };
     }
 
@@ -111,7 +110,7 @@ export default class VSPicgo extends EventEmitter {
 
   registerRenamePlugin() {
     let beforeUploadPlugin: IPlugin = {
-      handle: (ctx: PicGo) => {
+      handle: (ctx: IPicGo) => {
         const uploadNameTemplate =
           vscode.workspace.getConfiguration('picgo').get<string>('customUploadName') || '${fileName}';
         if (ctx.output.length === 1) {

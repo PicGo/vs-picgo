@@ -4142,10 +4142,10 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/performance-now/download/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
 
-picgo@1.4.14:
-  version "1.4.14"
-  resolved "https://registry.npm.taobao.org/picgo/download/picgo-1.4.14.tgz#312a1814d35eb8e326587d5cd99316b09a2882cc"
-  integrity sha1-MSoYFNNeuOMmWH1c2ZMWsJoogsw=
+picgo@1.4.17:
+  version "1.4.17"
+  resolved "https://registry.npm.taobao.org/picgo/download/picgo-1.4.17.tgz#db8f019c061b2bc96b71072760066b3dd829c774"
+  integrity sha1-248BnAYbK8lrcQcnYAZrPdgpx3Q=
   dependencies:
     chalk "^2.4.1"
     commander "^2.17.0"
