@@ -1,13 +1,13 @@
-//@ts-check
+// @ts-check
 // https://code.visualstudio.com/api/working-with-extensions/bundling-extension#configure-webpack
 
-'use strict';
+'use strict'
 
-const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require('path')
+const CopyPlugin = require('copy-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-/**@type {import('webpack').Configuration}*/
+/** @type {import('webpack').Configuration} */
 const config = {
   target: 'node', // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
 
@@ -17,15 +17,15 @@ const config = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'extension.js',
     libraryTarget: 'commonjs2',
-    devtoolModuleFilenameTemplate: '../[resource-path]',
+    devtoolModuleFilenameTemplate: '../[resource-path]'
   },
   devtool: 'source-map',
   externals: {
-    vscode: 'commonjs vscode', // the vscode-module is created on-the-fly and must be excluded. Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/
+    vscode: 'commonjs vscode' // the vscode-module is created on-the-fly and must be excluded. Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/
   },
   resolve: {
     // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
-    extensions: ['.ts', '.js', '.json'],
+    extensions: ['.ts', '.js', '.json']
   },
   module: {
     rules: [
@@ -34,17 +34,23 @@ const config = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'ts-loader',
-          },
-        ],
-      },
-    ],
+            loader: 'ts-loader'
+          }
+        ]
+      }
+    ]
   },
   plugins: [
+    // @ts-ignore
     new CopyPlugin({
-      patterns: [{ from: 'node_modules/picgo/dist/src/utils/clipboard', to: 'clipboard' }],
+      patterns: [
+        {
+          from: 'node_modules/picgo/dist/src/utils/clipboard',
+          to: 'clipboard'
+        }
+      ]
     }),
-    new CleanWebpackPlugin(),
-  ],
-};
-module.exports = config;
+    new CleanWebpackPlugin()
+  ]
+}
+module.exports = config

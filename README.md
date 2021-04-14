@@ -4,10 +4,11 @@
 
 [![version](https://img.shields.io/vscode-marketplace/v/Spades.vs-picgo.svg?style=flat-square&label=vscode%20marketplace)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
 [![installs](https://img.shields.io/vscode-marketplace/d/Spades.vs-picgo.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
-[![Build](https://github.com/PicGo/vs-picgo/workflows/Build/badge.svg?sanitize=true)](https://github.com/PicGo/vs-picgo/actions?query=workflow%3A%22Build%22)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FPicGo%2Fvs-picgo%2Fbadge%3Fref%3Ddev&style=flat-square)](https://actions-badge.atrox.dev/PicGo/vs-picgo/goto?ref=dev)
 [![Coveralls github branch](https://img.shields.io/coveralls/github/PicGo/vs-picgo/refs/heads/dev.svg?style=flat-square)](https://coveralls.io/github/PicGo/vs-picgo?branch=refs/heads/dev)
 [![GitHub stars](https://img.shields.io/github/stars/PicGo/vs-picgo.svg?style=flat-square&label=github%20stars)](https://github.com/PicGo/vs-picgo)
 [![PicGo Convention](https://img.shields.io/badge/picgo-convention-blue.svg?style=flat-square)](https://github.com/PicGo/bump-version)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)
 
 ## Overview
 
@@ -49,7 +50,7 @@
 
 - Default
   - The default image hosting is [SM.MS](https://sm.ms/).
-  
+
 - Custom
 
     <details>
