@@ -1,7 +1,7 @@
 import * as fs from 'fs'
-import * as glob from 'glob'
+import glob from 'glob'
 import * as path from 'path'
-import * as Mocha from 'mocha'
+import Mocha from 'mocha'
 
 import {
   COVERAGE_COLLECTOR_CONFIG_FILE_PATH,

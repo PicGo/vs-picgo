@@ -17,9 +17,13 @@ import {
 import { IImgInfo, IPlugin, IPicGo, IConfig } from 'picgo/dist/src/types'
 
 import _ from '../utils/lodash-mixins'
+import PicGoCore from 'picgo'
 
 import nls = require('../../package.nls.json')
-import PicGo = require('picgo')
+// https://github.com/PicGo/PicGo-Core/issues/71
+// eslint-disable-next-line
+const requireFunc = typeof __webpack_require__ === 'function' ? __non_webpack_require__ : require
+const PicGo = requireFunc('picgo') as typeof PicGoCore
 
 const writeFileP = promisify(fs.writeFile)
 const readFileP = promisify(fs.readFile)
@@ -88,7 +92,7 @@ export default class VSPicgo extends EventEmitter {
   addGenerateOutputListener() {
     VSPicgo.picgo.on(
       'finished',
-      asyncWrapper(async (ctx: PicGo) => {
+      asyncWrapper(async (ctx: PicGoCore) => {
         let urlText = ''
         const outputFormatTemplate =
           vscode.workspace
@@ -224,45 +228,51 @@ export default class VSPicgo extends EventEmitter {
     // This is necessary, because user may have changed settings
     this.configPicgo()
 
-    // uploading progress
-    await vscode.window.withProgress(
-      {
-        location: vscode.ProgressLocation.Notification,
-        title: `${nls['ext.displayName']}: image uploading...`,
-        cancellable: false
-      },
-      async (progress) => {
-        return await new Promise<void>((resolve, reject) => {
-          VSPicgo.picgo.on('uploadProgress', (p: number) => {
-            progress.report({ increment: p })
-            if (p === 100) {
-              resolve()
+    return await Promise.allSettled([
+      // Error has been handled in on 'failed'
+      // uploading progress, must be parallel with `picgo.upload` to catch events
+      vscode.window.withProgress(
+        {
+          location: vscode.ProgressLocation.Notification,
+          title: `${nls['ext.displayName']}: image uploading...`,
+          cancellable: false
+        },
+        async (progress) => {
+          return await new Promise<void>((resolve, reject) => {
+            const onUploadProgress = (p: number) => {
+              progress.report({ increment: p })
+              if (p === 100) {
+                cancelListeners()
+                resolve()
+              }
             }
-          })
-          VSPicgo.picgo.on(
-            'failed',
-            asyncWrapper(async (error: Error) => {
+            const onFailed = asyncWrapper(async (error: Error) => {
               const errorReason = error.message || 'Unknown error'
-              await showError(errorReason)
+              cancelListeners()
               reject(errorReason)
+              await showError(errorReason)
             })
-          )
-          VSPicgo.picgo.on(
-            'notification',
-            asyncWrapper(async (notice: INotice) => {
+            const onNotification = asyncWrapper(async (notice: INotice) => {
               const errorReason = `${notice.title}! ${notice.body || ''}${
                 notice.text || ''
               }`
-              await showError(errorReason)
+              cancelListeners()
               reject(errorReason)
+              await showError(errorReason)
             })
-          )
-        })
-      }
-    )
-
-    // Error has been handled in on 'failed'
-    return await VSPicgo.picgo.upload(input).catch(() => {})
+            VSPicgo.picgo.on('uploadProgress', onUploadProgress)
+            VSPicgo.picgo.on('failed', onFailed)
+            VSPicgo.picgo.on('notification', onNotification)
+            function cancelListeners() {
+              VSPicgo.picgo.off('uploadProgress', onUploadProgress)
+              VSPicgo.picgo.off('failed', onFailed)
+              VSPicgo.picgo.off('notification', onNotification)
+            }
+          })
+        }
+      ),
+      VSPicgo.picgo.upload(input)
+    ]).catch(() => {})
   }
 
   async updateData(picInfos: IImgInfo[]) {
