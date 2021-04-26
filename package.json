@@ -8,7 +8,7 @@
   "version": "2.1.0",
   "publisher": "Spades",
   "engines": {
-    "vscode": "^1.43.0"
+    "vscode": "^1.55.0"
   },
   "categories": [
     "Other"
@@ -294,19 +294,23 @@
     "vscode:prepublish": "webpack --mode production",
     "compile": "webpack --mode development",
     "watch": "webpack --mode development --watch",
-    "test-compile": "tsc -p ./",
     "test": "tsc -p ./ && node ./out/test/run-test.js",
-    "lint": "eslint ./src --ext ts",
-    "codestyle:check": "prettier --check ./src/**/*.ts **/**.json",
-    "codestyle:fix": "prettier --write ./src/**/*.ts **/**.json",
-    "cz": "git-cz",
+    "test-compile": "tsc -p ./",
+    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "cz": "lint-staged && git-cz",
     "release": "run bump-version"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn codestyle:check && yarn lint",
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,mjsx,cjs,cjsx}": [
+      "eslint --fix --color",
+      "git add"
+    ]
   },
   "config": {
     "commitizen": {
@@ -323,29 +327,38 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
-    "@picgo/bump-version": "^1.0.3",
+    "@picgo/bump-version": "https://github.com/PicGo/bump-version",
     "@types/glob": "^7.1.1",
     "@types/inquirer": "^6.5.0",
     "@types/istanbul": "^0.4.30",
+    "@types/lodash": "4.14.168",
     "@types/mocha": "^7.0.1",
     "@types/node": "^12.11.7",
     "@types/request-promise-native": "^1.0.17",
-    "@types/vscode": "^1.43.0",
-    "@typescript-eslint/eslint-plugin": "^2.18.0",
-    "@typescript-eslint/parser": "^2.18.0",
+    "@types/vscode": "1.55.0",
+    "@types/webpack-env": "1.16.0",
+    "@typescript-eslint/eslint-plugin": "4.1.0",
     "clean-webpack-plugin": "3.0.0",
-    "copy-webpack-plugin": "7.0.0",
+    "copy-webpack-plugin": "8.1.1",
     "cz-conventional-changelog": "^3.1.0",
     "cz-customizable": "6.2.0",
     "decache": "^4.5.1",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-prettier": "^3.1.2",
+    "eslint": "7.24.0",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-config-prettier-standard": "4.0.1",
+    "eslint-config-standard-with-typescript": "20.0.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "3.3.1",
+    "eslint-plugin-promise": "5.1.0",
+    "eslint-plugin-standard": "5.0.0",
     "glob": "^7.1.6",
     "husky": "^4.2.3",
     "istanbul": "^0.4.5",
+    "lint-staged": "10.5.4",
     "mocha": "^7.0.1",
-    "prettier": "^1.19.1",
+    "prettier": "2.2.1",
+    "prettier-config-standard": "4.0.0",
     "remap-istanbul": "^0.13.0",
     "ts-loader": "8.0.12",
     "typescript": "^3.7.5",
