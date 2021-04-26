@@ -295,6 +295,7 @@
     "compile": "webpack --mode development",
     "watch": "webpack --mode development --watch",
     "test": "tsc -p ./ && node ./out/test/run-test.js",
+    "test-compile": "tsc -p ./",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "cz": "lint-staged && git-cz",
     "release": "run bump-version"

@@ -7,7 +7,7 @@ async function main() {
     const extensionDevelopmentPath = path.resolve(__dirname, '../../')
 
     // The path to test runner
-    const extensionTestsPath = path.resolve(__dirname, './runner')
+    const extensionTestsPath = path.resolve(__dirname, './runner/index')
 
     // Download VS code, unzip it and run the integration test
     await runTests({ extensionDevelopmentPath, extensionTestsPath })

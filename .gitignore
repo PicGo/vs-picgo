@@ -10,3 +10,5 @@ coverage
 .coveralls.yml
 .DS_Store
 dist
+tmp
+assets/test.md

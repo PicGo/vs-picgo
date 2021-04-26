@@ -130,8 +130,8 @@ export default class VSPicgo extends EventEmitter {
         await editor?.edit(
           asyncWrapper(async (textEditor) => {
             textEditor.replace(editor.selection, urlText)
-            await showInfo(`image uploaded successfully.`)
             this.emit(EVSPicgoHooks.updated, urlText)
+            await showInfo(`image uploaded successfully.`)
           })
         )
       })
