@@ -50,19 +50,27 @@ function addPeriod(message: string) {
   return message
 }
 
-export function showWarning(message: string) {
+function decorateMessage(message: string): string {
   message = addPeriod(message)
-  return window.showWarningMessage(`${nls['ext.displayName']}: ${message}`)
+  return `${nls['ext.displayName']}: ${message}`
+}
+
+export function showWarning(message: string) {
+  message = decorateMessage(message)
+  console.warn(message)
+  return window.showWarningMessage(message)
 }
 
 export function showError(message: string) {
-  message = addPeriod(message)
-  return window.showErrorMessage(`${nls['ext.displayName']}: ${message}`)
+  message = decorateMessage(message)
+  console.error(message)
+  return window.showErrorMessage(message)
 }
 
 export function showInfo(message: string) {
-  message = addPeriod(message)
-  return window.showInformationMessage(`${nls['ext.displayName']}: ${message}`)
+  message = decorateMessage(message)
+  console.info(message)
+  return window.showInformationMessage(message)
 }
 
 /**
