@@ -113,12 +113,12 @@ export default class VSPicgo extends EventEmitter {
           await this.updateData(ctx.output)
         } catch (err) {
           if (err instanceof SyntaxError) {
-            await showError(
+            showError(
               `the data file ${this.dataPath} has syntax error, ` +
                 `please fix the error by yourself or delete the data file and vs-picgo will recreate for you.`
             )
           } else {
-            await showError(
+            showError(
               `failed to read from data file ${this.dataPath}: ${String(
                 err ?? ''
               )}`
@@ -131,7 +131,7 @@ export default class VSPicgo extends EventEmitter {
           asyncWrapper(async (textEditor) => {
             textEditor.replace(editor.selection, urlText)
             this.emit(EVSPicgoHooks.updated, urlText)
-            await showInfo(`image uploaded successfully.`)
+            showInfo(`image uploaded successfully.`)
           })
         )
       })
@@ -193,7 +193,7 @@ export default class VSPicgo extends EventEmitter {
     const editor = vscode.window.activeTextEditor
     if (editor == null) {
       asyncWrapper(async () => {
-        await showError('no active markdown editor!')
+        showError('no active markdown editor!')
       })()
       return null
     }
@@ -250,7 +250,7 @@ export default class VSPicgo extends EventEmitter {
               const errorReason = error.message || 'Unknown error'
               cancelListeners()
               reject(errorReason)
-              await showError(errorReason)
+              showError(errorReason)
             })
             const onNotification = asyncWrapper(async (notice: INotice) => {
               const errorReason = `${notice.title}! ${notice.body || ''}${
@@ -258,7 +258,7 @@ export default class VSPicgo extends EventEmitter {
               }`
               cancelListeners()
               reject(errorReason)
-              await showError(errorReason)
+              showError(errorReason)
             })
             VSPicgo.picgo.on('uploadProgress', onUploadProgress)
             VSPicgo.picgo.on('failed', onFailed)
@@ -279,7 +279,7 @@ export default class VSPicgo extends EventEmitter {
     const dataPath = this.dataPath
     if (!fs.existsSync(dataPath)) {
       await this.initDataFile(dataPath)
-      await showInfo(`data file created at ${dataPath}.`)
+      showInfo(`data file created at ${dataPath}.`)
     }
     const dataRaw = await readFileP(dataPath, 'utf8')
     const data = JSON.parse(dataRaw)

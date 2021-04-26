@@ -55,23 +55,23 @@ function decorateMessage(message: string): string {
   return `${nls['ext.displayName']}: ${message}`
 }
 
-export function showWarning(message: string) {
+export const showWarning = asyncWrapper(async (message: string) => {
   message = decorateMessage(message)
   console.warn(message)
-  return window.showWarningMessage(message)
-}
+  return await window.showWarningMessage(message)
+})
 
-export function showError(message: string) {
+export const showError = asyncWrapper(async (message: string) => {
   message = decorateMessage(message)
-  console.error(message)
-  return window.showErrorMessage(message)
-}
+  console.warn(message)
+  return await window.showErrorMessage(message)
+})
 
-export function showInfo(message: string) {
+export const showInfo = asyncWrapper(async (message: string) => {
   message = decorateMessage(message)
-  console.info(message)
-  return window.showInformationMessage(message)
-}
+  console.warn(message)
+  return await window.showInformationMessage(message)
+})
 
 /**
  * Return uploaded name accrding to `imgInfo.fileName`,
