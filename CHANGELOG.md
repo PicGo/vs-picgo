@@ -1,3 +1,43 @@
+## :tada: 2.1.1 (2021-07-25)
+
+
+### :sparkles: Features
+
+* **package.json:** support sm.ms V2 ([2b40945](https://github.com/PicGo/vs-picgo/commit/2b40945)), closes [#57](https://github.com/PicGo/vs-picgo/issues/57)
+
+
+### :bug: Bug Fixes
+
+* add tencent cos path option ([606b9d4](https://github.com/PicGo/vs-picgo/commit/606b9d4))
+* azure pipeline + coveralls ([c8129ed](https://github.com/PicGo/vs-picgo/commit/c8129ed))
+* **ci:** github actions use yarn to lock versions ([#77](https://github.com/PicGo/vs-picgo/issues/77)) ([3347690](https://github.com/PicGo/vs-picgo/commit/3347690))
+* **clipboard:** set `PICGO_ENV` to `CLI`, fixes [#75](https://github.com/PicGo/vs-picgo/issues/75) ([#78](https://github.com/PicGo/vs-picgo/issues/78)) ([9aff38e](https://github.com/PicGo/vs-picgo/commit/9aff38e))
+* **proxy:** add proxy config, fixes [#79](https://github.com/PicGo/vs-picgo/issues/79) ([5cd019d](https://github.com/PicGo/vs-picgo/commit/5cd019d))
+
+
+### :package: Chore
+
+* **.vscode:** update .vscode ([65f8157](https://github.com/PicGo/vs-picgo/commit/65f8157))
+* add bump version ([#32](https://github.com/PicGo/vs-picgo/issues/32)) ([4ec0218](https://github.com/PicGo/vs-picgo/commit/4ec0218))
+* add coverage collector ([e8b30b7](https://github.com/PicGo/vs-picgo/commit/e8b30b7))
+* azure -> github actions ([5ae4ec2](https://github.com/PicGo/vs-picgo/commit/5ae4ec2))
+* migrate to standardjs ([#83](https://github.com/PicGo/vs-picgo/issues/83)) ([75c8c97](https://github.com/PicGo/vs-picgo/commit/75c8c97))
+* replace tslint with eslint ([ce3fe27](https://github.com/PicGo/vs-picgo/commit/ce3fe27))
+* Setup continuous integration appveyor & azure  ([#31](https://github.com/PicGo/vs-picgo/issues/31)) ([1b6de45](https://github.com/PicGo/vs-picgo/commit/1b6de45))
+
+
+### :pencil: Documentation
+
+* code format ([fc2a965](https://github.com/PicGo/vs-picgo/commit/fc2a965))
+* currect azure project name ([#33](https://github.com/PicGo/vs-picgo/issues/33)) ([7082558](https://github.com/PicGo/vs-picgo/commit/7082558))
+* fix custom upload name & custom output format docs ([f067c74](https://github.com/PicGo/vs-picgo/commit/f067c74))
+* readme.md ([ee2f389](https://github.com/PicGo/vs-picgo/commit/ee2f389))
+* update docs: README.md, CHANGELOG.md ([02a2e76](https://github.com/PicGo/vs-picgo/commit/02a2e76))
+* update issue templates ([0056092](https://github.com/PicGo/vs-picgo/commit/0056092))
+* update README.md ([55ffbbc](https://github.com/PicGo/vs-picgo/commit/55ffbbc))
+
+
+
 
 * 2.1.0
   * upgrade dependencies, support sm.ms V2
