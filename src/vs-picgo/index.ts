@@ -129,6 +129,7 @@ export default class VSPicgo extends EventEmitter {
         const editor = this.editor
         await editor?.edit(
           asyncWrapper(async (textEditor) => {
+            console.log(`urlText: ${urlText}`)
             textEditor.replace(editor.selection, urlText)
             this.emit(EVSPicgoHooks.updated, urlText)
             showInfo(`image uploaded successfully.`)
@@ -181,8 +182,10 @@ export default class VSPicgo extends EventEmitter {
   ) {
     if (this.userDefineName) {
       original = `${this.userDefineName}${index ?? ''}${path.extname(original)}`
+      console.log('original filename', original)
     }
     const mdFilePath = this.editor?.document.fileName
+    console.log('mdFilePath', mdFilePath)
     if (!mdFilePath) return
     const mdFileName = path.basename(mdFilePath, path.extname(mdFilePath))
     const uploadNameData = formatParam(original, mdFileName)

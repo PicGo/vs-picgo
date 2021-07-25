@@ -42,9 +42,8 @@ export async function VSPicgoUploadStarter(
   return new Promise((resolve, reject) => {
     options.vspicgo.on(EVSPicgoHooks.updated, async (res: string) => {
       console.log('updated: ' + res)
-      const { document } = editor
-      await document.save()
-      resolve(document.getText())
+
+      resolve(res)
     })
   })
 }

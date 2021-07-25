@@ -327,7 +327,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
-    "@picgo/bump-version": "https://github.com/PicGo/bump-version",
+    "@picgo/bump-version": "^1.1.0",
     "@types/glob": "^7.1.1",
     "@types/inquirer": "^6.5.0",
     "@types/istanbul": "^0.4.30",
