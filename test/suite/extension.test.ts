@@ -67,7 +67,7 @@ describe('VSPicgo', async function () {
       },
       vspicgo
     })
-    console.log('output: ' + res)
+    console.log('customOutputFormat result: ' + res)
     assert.equal(REG4CUSTOM_OUTPUT_FORMAT.test(res), true)
   })
 
@@ -84,7 +84,7 @@ describe('VSPicgo', async function () {
       },
       vspicgo
     })
-    console.log('uploadName: ' + res)
+    console.log('customUploadName result: ' + res)
     assert.equal(REG4CUSTOM_FILE_FORMAT.test(res), true)
   })
 
@@ -99,7 +99,7 @@ describe('VSPicgo', async function () {
       },
       vspicgo
     })
-    console.log('selection: ' + res)
+    console.log('selection as fileName result: ' + res)
     assert.equal(res.indexOf('TEST'), 2)
   })
 })
