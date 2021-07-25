@@ -298,7 +298,8 @@
     "test-compile": "tsc -p ./",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "cz": "lint-staged && git-cz",
-    "release": "bump-version"
+    "release": "bump-version",
+    "build": "yarn vsce package --yarn -o vs-picgo.vsix"
   },
   "husky": {
     "hooks": {

@@ -20,10 +20,8 @@ import _ from '../utils/lodash-mixins'
 import PicGoCore from 'picgo'
 
 import nls = require('../../package.nls.json')
-// https://github.com/PicGo/PicGo-Core/issues/71
 // eslint-disable-next-line
-const requireFunc = typeof __webpack_require__ === 'function' ? __non_webpack_require__ : require
-const PicGo = requireFunc('picgo') as typeof PicGoCore
+const PicGo = require('picgo') as typeof PicGoCore
 
 const writeFileP = promisify(fs.writeFile)
 const readFileP = promisify(fs.readFile)
