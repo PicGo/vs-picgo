@@ -1,3 +1,12 @@
+## :tada: 2.1.2 (2021-07-25)
+
+
+### :bug: Bug Fixes
+
+* **dep:** bundle picgo-core to dist ([5c523ed](https://github.com/PicGo/vs-picgo/commit/5c523ed))
+
+
+
 ## :tada: 2.1.1 (2021-07-25)
 
 

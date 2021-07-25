@@ -5,7 +5,7 @@
   "repository": "https://github.com/PicGo/vs-picgo",
   "issues": "https://github.com/PicGo/vs-picgo/issues",
   "keywords": "%ext.keywords%",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "publisher": "Spades",
   "engines": {
     "vscode": "^1.55.0"
