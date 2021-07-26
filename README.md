@@ -4,9 +4,11 @@
 
 [![version](https://img.shields.io/vscode-marketplace/v/Spades.vs-picgo.svg?style=flat-square&label=vscode%20marketplace)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
 [![installs](https://img.shields.io/vscode-marketplace/d/Spades.vs-picgo.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
-[![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/PicGo/9bbe4cd2-a9fe-4547-b13a-60ee81f12932/1/dev.svg?label=azure%20pipeline&style=flat-square)](https://dev.azure.com/PicGo/vs-picgo/_build?definitionId=1)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FPicGo%2Fvs-picgo%2Fbadge%3Fref%3Ddev&style=flat-square)](https://actions-badge.atrox.dev/PicGo/vs-picgo/goto?ref=dev)
+[![Coveralls github branch](https://img.shields.io/coveralls/github/PicGo/vs-picgo/refs/heads/dev.svg?style=flat-square)](https://coveralls.io/github/PicGo/vs-picgo?branch=refs/heads/dev)
 [![GitHub stars](https://img.shields.io/github/stars/PicGo/vs-picgo.svg?style=flat-square&label=github%20stars)](https://github.com/PicGo/vs-picgo)
 [![PicGo Convention](https://img.shields.io/badge/picgo-convention-blue.svg?style=flat-square)](https://github.com/PicGo/bump-version)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)
 
 ## Overview
 
@@ -30,7 +32,7 @@
 </details>
 
 <details>
-<summary>Use selection text as the uploaded `fileName`</summary>
+<summary>Use selection text as the uploaded <code>fileName</code></summary>
 <img src="https://i.loli.net/2019/04/09/5cac180fb1dc7.gif" alt="selection.gif">
 <b>Notice: These characters: <code>\$</code>, <code>:</code>, <code>/</code>, <code>?</code> and newline will be ignored in the image name. </b>(Because they are invalid for file names.)
 </details>
@@ -46,10 +48,10 @@
 
 ## Settings
 
-- out of box
-  - We could use `vs-picgo` without any settings.
+- Default
   - The default image hosting is [SM.MS](https://sm.ms/).
-- custom
+
+- Custom
 
     <details>
     <summary><b>BIG NEWS: from 2.0.0, We can customize the settings in VSCode settings</b></summary>
@@ -86,9 +88,11 @@
     <img src="https://i.loli.net/2019/04/09/5cac18a5c9def.png" alt="output-format.png">
     </details>
 
-    Suggested settings for [`PicGo-electron`](https://github.com/Molunerfinn/PicGo) users (See [PicGo configuration path](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C) for more information):
-
     <details>
+    <summary>
+       Suggested settings for  <a href='https://github.com/Molunerfinn/PicGo'>PicGo-electron</a> users (See <a href='https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C'> PicGo configuration path</a> for more information):
+    </summary>
+    </details>
 
     **Notice: `YOUR_HOME_DIR` should be replaced by the path of your current user path.**
 
@@ -131,7 +135,7 @@
 
 ## Versioning
 
-For the versions available, see the [tags on PicGo/vs-picgo](https://github.com/PicGo/vs-picgo/tags). ChangeLogs can be found at [CHANGELOG.md](CHANGELOG.md). All the dev builds can be found on [Azure](https://dev.azure.com/PicGo/vs-picgo/_build?definitionId=1), and you can just open the build of a specific commit, and go to the Summary tab to download the artifacts.
+For the versions available, see the [tags on PicGo/vs-picgo](https://github.com/PicGo/vs-picgo/tags). ChangeLogs can be found at [CHANGELOG.md](CHANGELOG.md). All the dev builds can be found on [GitHub Actions](https://github.com/PicGo/vs-picgo/actions/), and you can just open the build of a specific commit, and go to the Summary tab to download the artifacts.
 
 ## Contributing
 

@@ -6,3 +6,9 @@ node_modules
 .vscode
 yarn-error.log
 package-lock.json
+coverage
+.coveralls.yml
+.DS_Store
+dist
+tmp
+assets/test.md

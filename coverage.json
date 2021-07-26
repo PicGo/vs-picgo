@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "sourceRoot": "./out/src",
+  "output": "./coverage",
+  "ignorePatterns": ["**/node_modules/**"],
+  "includePid": false,
+  "reports": ["html", "lcov", "text"],
+  "verbose": false
+}

@@ -1,0 +1,32 @@
+name: Build
+on: [push, pull_request]
+jobs:
+  build-and-prerelease:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: yarn install, compile, and test coverage
+        run: |
+          yarn install
+          yarn compile
+          yarn test
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build artifact
+        run: |
+          mkdir artifact
+          rm README.md && yarn vsce package --yarn -o artifact
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: vs-picgo CI built release
+          path: artifact
