@@ -1,3 +1,16 @@
+## :tada: 2.1.3 (2021-08-13)
+
+
+### :sparkles: Features
+
+* **core:** merge Master into feat/dev ([a741ff9](https://github.com/PicGo/vs-picgo/commit/a741ff9))
+
+
+
+## :tada: 2.0.4 (2019-04-21)
+
+
+
 ## :tada: 2.1.2 (2021-07-25)
 
 

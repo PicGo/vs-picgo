@@ -5,7 +5,7 @@
   "repository": "https://github.com/PicGo/vs-picgo",
   "issues": "https://github.com/PicGo/vs-picgo/issues",
   "keywords": "%ext.keywords%",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "publisher": "Spades",
   "engines": {
     "vscode": "^1.55.0"
@@ -299,7 +299,7 @@
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "cz": "lint-staged && git-cz",
     "release": "bump-version",
-    "build": "yarn vsce package --yarn -o vs-picgo.vsix"
+    "build": "yarn vsce package --yarn"
   },
   "husky": {
     "hooks": {
