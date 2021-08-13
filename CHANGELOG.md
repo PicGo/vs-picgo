@@ -3,7 +3,7 @@
 
 ### :sparkles: Features
 
-* **core:** merge Master into feat/dev ([a741ff9](https://github.com/PicGo/vs-picgo/commit/a741ff9))
+* **:arrow_up:** Upgrade(picgo-core): update picgo core to 1.4.24 (#97)
 
 
 
@@ -109,12 +109,12 @@
 * 1.0.1
   * Fix a bug caused by settings.json with comments.
 
-* 1.0.0  
+* 1.0.0
   * Change repository's url and issue's url.
   * Upgrade PicGo-Core dependency: from ^1.1.5 to ^1.1.9.
   * Add notice in README.md.
 
-* 0.0.3  
+* 0.0.3
   * Display a progress bar when uploading the image(s).
 
 * 0.0.2
