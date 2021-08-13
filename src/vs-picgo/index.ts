@@ -38,13 +38,11 @@ export interface IUploadName {
   fileName: string
   extName: string
   mdFileName: string
-  [key: string]: string
 }
 
 export interface IOutputUrl {
   uploadedName: string
   url: string
-  [key: string]: string
 }
 
 export enum EVSPicgoHooks {
@@ -102,7 +100,7 @@ export default class VSPicgo extends EventEmitter {
             (acc: string, imgInfo: IImgInfo): string => {
               return `${acc}${formatString(outputFormatTemplate, {
                 uploadedName: getUploadedName(imgInfo),
-                url: imgInfo.imgUrl
+                url: imgInfo.imgUrl ?? ''
               })}\n`
             },
             ''

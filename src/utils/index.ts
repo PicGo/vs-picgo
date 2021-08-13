@@ -32,7 +32,7 @@ export function formatString(
   tplString: string,
   data: IUploadName | IOutputUrl
 ): string {
-  const keys = Object.keys(data)
+  const keys = Object.keys(data) as Array<keyof typeof data>
   const values = keys.map((k) => data[k])
   // eslint-disable-next-line no-new-func, @typescript-eslint/no-implied-eval
   return new Function(keys.join(','), 'return `' + tplString + '`').apply(
