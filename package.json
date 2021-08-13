@@ -91,7 +91,7 @@
             "upyun",
             "weibo"
           ],
-          "default": "smms",
+          "default": "",
           "markdownDescription": "%config.picBed.uploader%"
         },
         "picgo.picBed.current": {
@@ -366,12 +366,12 @@
     "vsce": "1.83.0",
     "vscode-test": "^1.3.0",
     "webpack": "5.11.0",
-    "webpack-cli": "4.3.0"
+    "webpack-cli": "4.2.0"
   },
   "dependencies": {
     "lodash": "^4.17.19",
     "lodash-id": "^0.14.0",
-    "picgo": "1.4.17"
+    "picgo": "1.4.24"
   },
   "license": "MIT"
 }
