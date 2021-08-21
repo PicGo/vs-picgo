@@ -291,7 +291,7 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "webpack --mode production",
+    "vscode:prepublish": "yarn && webpack --mode production",
     "compile": "webpack --mode development",
     "watch": "webpack --mode development --watch",
     "test": "tsc -p ./ && node ./out/test/run-test.js",
@@ -304,7 +304,8 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "post-merge": "sh .scripts/update_dependencies.sh"
     }
   },
   "lint-staged": {

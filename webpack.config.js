@@ -40,6 +40,10 @@ const config = {
       }
     ]
   },
+  optimization: {
+    // We no not want to minimize our code.
+    minimize: false
+  },
   plugins: [
     // @ts-ignore
     new CopyPlugin({
