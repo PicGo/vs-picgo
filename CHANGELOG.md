@@ -1,3 +1,12 @@
+## :tada: 2.1.5 (2021-08-21)
+
+
+### :bug: Bug Fixes
+
+* **ci:** change runs-on to macos-latest to avoid vscode install error ([f2e2715](https://github.com/PicGo/vs-picgo/commit/f2e2715))
+
+
+
 ## :tada: 2.1.4 (2021-08-21)
 
 
