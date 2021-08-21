@@ -1,3 +1,12 @@
+## :tada: 2.1.6-alpha.0 (2021-08-21)
+
+
+### :bug: Bug Fixes
+
+* **ci:** vsce-action only supported on linux ([62a2d34](https://github.com/PicGo/vs-picgo/commit/62a2d34))
+
+
+
 ## :tada: 2.1.5 (2021-08-21)
 
 
