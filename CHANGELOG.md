@@ -1,3 +1,28 @@
+## :tada: 2.1.4 (2021-08-21)
+
+
+### :sparkles: Features
+
+* **error:** throw error when no url found in output ([#101](https://github.com/PicGo/vs-picgo/issues/101)) ([e141afe](https://github.com/PicGo/vs-picgo/commit/e141afe))
+
+
+### :bug: Bug Fixes
+
+* **changelog:** fix changelog ([5560298](https://github.com/PicGo/vs-picgo/commit/5560298))
+* **ci:** fix release-tag.yml ([bd72133](https://github.com/PicGo/vs-picgo/commit/bd72133))
+
+
+### :package: Chore
+
+* **ci:** auto release to marketplace & update picgo core to 1.4.25 ([0940b69](https://github.com/PicGo/vs-picgo/commit/0940b69))
+
+
+### :pencil: Documentation
+
+* **changelog:** fix changelog history ([90665eb](https://github.com/PicGo/vs-picgo/commit/90665eb))
+
+
+
 ## :tada: 2.1.3 (2021-08-13)
 
 
