@@ -10,8 +10,21 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@master
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: yarn install, compile, and test coverage
+        run: |
+          yarn install
+          yarn compile
+          yarn test
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release for Tag
         id: release_tag
@@ -23,10 +36,9 @@ jobs:
           body: |
             Please refer to [CHANGELOG.md](https://github.com/PicGo/vs-picgo/blob/${{ github.ref }}/CHANGELOG.md) for details.
 
-      - uses: actions/checkout@v2
-        - run: npm install
-        - uses: lannonbr/vsce-action@master
-          with:
-            args: "publish -p $VSCE_TOKEN"
-          env:
-            VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+      - name: Publish to VSCode Marketplace
+        uses: lannonbr/vsce-action@master
+        with:
+          args: 'publish -p $VSCE_TOKEN'
+        env:
+          VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
