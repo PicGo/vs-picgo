@@ -8,18 +8,21 @@ name: Create Release
 jobs:
   build:
     name: Create Release
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
 
+      # https://github.com/juliangruber/browser-run/issues/147#issuecomment-580958935
+      - run: sudo apt-get install xvfb
+
       - name: yarn install, compile, and test coverage
         run: |
           yarn install
           yarn compile
-          yarn test
+          xvfb-run --auto-servernum yarn test
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
