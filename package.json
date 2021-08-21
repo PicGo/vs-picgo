@@ -372,7 +372,7 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "lodash-id": "^0.14.0",
-    "picgo": "1.4.24"
+    "picgo": "1.4.25"
   },
   "license": "MIT"
 }
