@@ -12,3 +12,4 @@ coverage
 dist
 tmp
 assets/test.md
+*.zip
