@@ -1,3 +1,12 @@
+## :tada: 2.1.6 (2021-08-21)
+
+
+### :bug: Bug Fixes
+
+* **ci:** fix changelog link ([fcd7c0d](https://github.com/PicGo/vs-picgo/commit/fcd7c0d))
+
+
+
 ## :tada: 2.1.6-alpha.0 (2021-08-21)
 
 
