@@ -29,6 +29,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
       - name: Create Release for Tag
         id: release_tag
         uses: yyx990803/release-tag@master
@@ -37,7 +41,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           body: |
-            Please refer to [CHANGELOG.md](https://github.com/PicGo/vs-picgo/blob/${{ github.ref }}/CHANGELOG.md) for details.
+            Please refer to [CHANGELOG.md](https://github.com/PicGo/vs-picgo/blob/${{ steps.get_version.outputs.VERSION }}/CHANGELOG.md) for details.
 
       - name: Publish to VSCode Marketplace
         uses: lannonbr/vsce-action@master
