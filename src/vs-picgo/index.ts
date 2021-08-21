@@ -106,6 +106,9 @@ export default class VSPicgo extends EventEmitter {
             ''
           )
           urlText = urlText.trim()
+          if (!urlText) {
+            throw new Error('no image URL found in the output')
+          }
           await this.updateData(ctx.output)
         } catch (err) {
           if (err instanceof SyntaxError) {
