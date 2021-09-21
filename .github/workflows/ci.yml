@@ -1,5 +1,14 @@
 name: Build
-on: [push, pull_request]
+# Avoid triggering two build on PR
+# https://github.community/t/how-to-trigger-an-action-on-push-or-pull-request-but-not-both/16662/2
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
   build-and-prerelease:
     runs-on: macos-latest

@@ -10,6 +10,7 @@ import inlineImportPlugin from 'esbuild-plugin-inline-import'
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
+const isTest = args.test || args.t
 
 // Following the log format of https://github.com/connor4312/esbuild-problem-matchers
 const status = (msg) => console.log(`${isWatch ? '[watch] ' : ''}${msg}`)
@@ -76,7 +77,7 @@ esbuild
   .build({
     ...commonOptions,
     outdir,
-    entryPoints: ['src/extension.ts'],
+    entryPoints: [isTest ? 'test/run-test.ts' : 'src/extension.ts'],
     external: ['vscode'],
     format: 'cjs',
     platform: 'node',

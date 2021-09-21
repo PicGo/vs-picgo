@@ -304,7 +304,7 @@
     "build": "node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
     "audit:fix": "yarn-audit-fix",
-    "test": "tsc -p ./ && node ./out/test/run-test.js",
+    "test": "node esbuild.mjs --test && node dist/run-test.js",
     "test-compile": "tsc -p ./",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "cz": "lint-staged && git-cz",
