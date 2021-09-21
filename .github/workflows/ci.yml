@@ -12,7 +12,7 @@ jobs:
       - name: yarn install, compile, and test coverage
         run: |
           yarn install
-          yarn compile
+          yarn build
           yarn test
 
       - name: Coveralls

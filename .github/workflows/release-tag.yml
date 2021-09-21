@@ -21,7 +21,7 @@ jobs:
       - name: yarn install, compile, and test coverage
         run: |
           yarn install
-          yarn compile
+          yarn build
           xvfb-run --auto-servernum yarn test
 
       - name: Coveralls

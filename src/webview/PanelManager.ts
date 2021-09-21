@@ -79,13 +79,13 @@ export class PanelManager {
         // Enable javascript in the webview
         enableScripts: true,
 
-        // // And restrict the webview to only loading content from our extension's `dist` directory.
-        // localResourceRoots: [
-        //   vscode.Uri.joinPath(
-        //     this.context.extensionUri,
-        //     PanelManager.DIST_FOLDER
-        //   )
-        // ],
+        // And restrict the webview to only loading content from our extension's `dist` directory.
+        localResourceRoots: [
+          vscode.Uri.joinPath(
+            this.context.extensionUri,
+            PanelManager.DIST_FOLDER
+          )
+        ],
         retainContextWhenHidden: true
       }
     )
