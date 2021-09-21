@@ -1,6 +1,10 @@
 module.exports = {
   root: true,
-  extends: ['standard-with-typescript', 'prettier-standard'],
+  extends: [
+    'standard-with-typescript',
+    'prettier-standard',
+    'plugin:react/recommended'
+  ],
   parserOptions: {
     project: './tsconfig.json'
   },
@@ -18,7 +22,11 @@ module.exports = {
     ],
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/strict-boolean-expressions': 0,
-    'no-console': 'warn'
+    'no-console': 'warn',
+    // https://stackoverflow.com/a/64024916/8242705
+    'no-use-before-define': 'off',
+    'react/jsx-sort-props': 'error',
+    'react/jsx-boolean-value': 'error'
   },
   overrides: [
     {

@@ -3,7 +3,6 @@ node_modules
 .vscode-test/
 *.vsix
 .imgs
-.vscode
 yarn-error.log
 package-lock.json
 coverage

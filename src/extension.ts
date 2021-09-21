@@ -3,6 +3,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as vscode from 'vscode'
 import VSPicgo from './vs-picgo'
+import { PanelManager } from './webview/PanelManager'
 
 async function uploadImageFromClipboard(vspicgo: VSPicgo) {
   return await vspicgo.upload()
@@ -44,6 +45,7 @@ async function uploadImageFromInputBox(vspicgo: VSPicgo) {
 
 export async function activate(context: vscode.ExtensionContext) {
   const vspicgo = new VSPicgo()
+  const panelManager = new PanelManager(context)
   const disposable = [
     vscode.commands.registerCommand(
       'picgo.uploadImageFromClipboard',
@@ -56,6 +58,10 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       'picgo.uploadImageFromInputBox',
       async () => await uploadImageFromInputBox(vspicgo)
+    ),
+
+    vscode.commands.registerCommand('picgo.webviewDemo', () =>
+      panelManager.createOrShowWebviewPanel('Demo')
     )
   ]
   context.subscriptions.push(...disposable)

@@ -29,7 +29,16 @@
   "eslint.packageManager": "yarn",
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "editor.tabSize": 2,
-  "cSpell.words": ["Mixins", "picgo", "vspicgo"],
+  "cSpell.words": [
+    "esbuild",
+    "globby",
+    "iife",
+    "metafile",
+    "Mixins",
+    "outdir",
+    "picgo",
+    "vspicgo"
+  ],
   "[markdown]": {
     "editor.tabSize": 4
   }
