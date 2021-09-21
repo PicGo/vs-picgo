@@ -23,10 +23,10 @@
         "--disable-extensions",
         "--user-data-dir=tmp",
         "--extensionDevelopmentPath=${workspaceFolder}",
-        "--extensionTestsPath=${workspaceFolder}/out/test/runner/index"
+        "--extensionTestsPath=${workspaceFolder}/dist/runner/index"
       ],
-      "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
-      "preLaunchTask": "npm: test-compile"
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "npm: build:test"
     }
   ]
 }

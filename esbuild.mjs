@@ -77,8 +77,8 @@ esbuild
   .build({
     ...commonOptions,
     outdir,
-    entryPoints: [isTest ? 'test/run-test.ts' : 'src/extension.ts'],
-    external: ['vscode'],
+    entryPoints: isTest ? globbySync('test/**/*.ts') : ['src/extension.ts'],
+    external: isTest ? ['vscode', 'mocha', 'istanbul'] : ['vscode'],
     format: 'cjs',
     platform: 'node',
     plugins: [watchPlugin('extension'), inlineImportPlugin()]
