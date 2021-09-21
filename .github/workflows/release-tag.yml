@@ -24,10 +24,11 @@ jobs:
           yarn build
           xvfb-run --auto-servernum yarn test
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # TODO: add coverage info
+      # - name: Coveralls
+      #   uses: coverallsapp/github-action@master
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get the version
         id: get_version
