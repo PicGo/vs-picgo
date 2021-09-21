@@ -300,10 +300,11 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "yarn && yarn build",
+    "vscode:prepublish": "yarn && yarn build:prod",
     "build": "node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
     "build:test": "node esbuild.mjs --test",
+    "build:prod": "node esbuild.mjs --production",
     "audit:fix": "yarn-audit-fix",
     "test": "yarn build:test && node dist/run-test.js",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",

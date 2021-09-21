@@ -11,6 +11,7 @@ import inlineImportPlugin from 'esbuild-plugin-inline-import'
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
 const isTest = args.test || args.t
+const isProduction = args.production
 
 // Following the log format of https://github.com/connor4312/esbuild-problem-matchers
 const status = (msg) => console.log(`${isWatch ? '[watch] ' : ''}${msg}`)
@@ -60,16 +61,16 @@ fse.rmdirSync(outdir, { recursive: true })
 /** @type {import('esbuild').BuildOptions} */
 const commonOptions = {
   bundle: true,
-  sourcemap: true,
+  sourcemap: !isProduction,
   watch: isWatch,
   loader: {
     '.js': 'jsx',
     '.png': 'file',
     '.jpg': 'file',
     '.svg': 'file'
-  }
+  },
+  minify: isProduction
   // metafile: true,
-  // minify: true,
 }
 
 // build extension (node app)
