@@ -346,10 +346,10 @@
   resolved "https://registry.yarnpkg.com/@hutson/parse-repository-url/-/parse-repository-url-3.0.2.tgz#98c23c950a3d9b6c8f0daed06da6c3af06981340"
   integrity sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==
 
-"@luozhu/vscode-channel@0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@luozhu/vscode-channel/-/vscode-channel-0.6.2.tgz#a7d9a8b351735a04ce96a34f44883e69909bf6ad"
-  integrity sha512-NiULj9lmPV75ZV23C0fLFw/T8w/ComRfDsHUgfFcE0UcZoDQO0kpzWr/Y3YJQPyk+EOI4o1JVX6hPovSaH3UAg==
+"@luozhu/vscode-channel@0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@luozhu/vscode-channel/-/vscode-channel-0.7.0.tgz#1071f0743cc6d98db972b7f29b07399bab5a9df7"
+  integrity sha512-vzjAKvNcmgrgv1AmBUbhoVKySQcl3ooSiB04qV782/1gBgOfIV2Vy8q5MHxvZNi4Zq/zR4EkqDRqpedwR95E4g==
   dependencies:
     nanoid "^3.1.25"
 

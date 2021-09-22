@@ -13,10 +13,10 @@ import {
   showError,
   getUploadedName,
   asyncWrapper
-} from '../utils'
+} from './utils'
 import { IImgInfo, IPlugin, IPicGo, IConfig } from 'picgo/dist/src/types'
 
-import _ from '../utils/lodash-mixins'
+import _ from './utils/lodash-mixins'
 import PicGoCore from 'picgo'
 
 import nls = require('../../package.nls.json')

@@ -2,15 +2,17 @@ import vscode from 'vscode'
 import path from 'path'
 import pupa from 'pupa'
 import templateHtml from 'inline:./template.html'
-import Logo from './images/logo.png'
+import logo from './images/squareLogo.png'
 import Channel from '@luozhu/vscode-channel'
-import { W2V_GET_WEBVIEW_URI } from './message-method'
+import { W2V_GET_WEBVIEW_URI, W2V_SHOW_MESSAGE } from './message-method'
+import { showMessage } from '../vs-picgo/utils'
+import { IMessageToShow } from '../utils'
 
 /**
  * Type of variables that will be passed to the html template
  */
 export interface IHtmlConfig {
-  title: string
+  pageId: string
   jsSrc: string
   cssHref: string
   vscodeEnv: string
@@ -36,24 +38,22 @@ export class PanelManager {
    * @returns Html constructed for this page
    */
   getPageHtml(webview: vscode.Webview, pageId: string) {
-    const pagePath = path.join(
+    const webviewIndex = path.join(
       this.context.extensionPath,
       PanelManager.WEBVIEW_FOLDER,
-      pageId
+      'index'
     )
     const getUriStr = (type: string) =>
-      webview.asWebviewUri(vscode.Uri.file(`${pagePath}.${type}`)).toString()
+      webview
+        .asWebviewUri(vscode.Uri.file(`${webviewIndex}.${type}`))
+        .toString()
     const htmlConfig: IHtmlConfig = {
-      title: this.getTitle(pageId),
+      pageId: pageId,
       jsSrc: getUriStr('js'),
       cssHref: getUriStr('css'),
       vscodeEnv: JSON.stringify(vscode.env)
     }
     return pupa(templateHtml, htmlConfig)
-  }
-
-  getTitle(pageId: string) {
-    return pageId
   }
 
   getViewType(pageId: string) {
@@ -73,7 +73,7 @@ export class PanelManager {
     // Otherwise, create a new panel.
     const panel = vscode.window.createWebviewPanel(
       this.getViewType(pageId),
-      this.getTitle(pageId),
+      pageId,
       column ?? vscode.ViewColumn.One,
       {
         // Enable javascript in the webview
@@ -89,9 +89,7 @@ export class PanelManager {
         retainContextWhenHidden: true
       }
     )
-    panel.iconPath = vscode.Uri.file(
-      path.join(this.context.extensionPath, PanelManager.DIST_FOLDER, Logo)
-    )
+    panel.iconPath = vscode.Uri.parse(logo)
     panel.webview.html = this.getPageHtml(panel.webview, pageId)
     panel.onDidDispose(
       () => {
@@ -115,6 +113,9 @@ export class PanelManager {
         )
         .toString()
     })
+    channel.bind<IMessageToShow>(W2V_SHOW_MESSAGE, (message) =>
+      showMessage(message.params)
+    )
 
     this.pageId2WebviewPanel.set(pageId, [panel, channel])
   }

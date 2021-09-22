@@ -4,15 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{title}}</title>
+    <title>{{pageId}}</title>
     <link rel="stylesheet" href="{{cssHref}}" />
-    <script>
-      // prettier-ignore
-      window.vscodeEnv = {vscodeEnv};
-    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script src="{{jsSrc}}"></script>
+    <script src="{{jsSrc}}" type="module"></script>
+    <script type="module">
+      import { renderApp } from '{jsSrc}';
+      // prettier-ignore
+      window.vscodeEnv = {vscodeEnv}
+      // prettier-ignore
+      renderApp('{pageId}')
+    </script>
   </body>
 </html>

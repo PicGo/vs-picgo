@@ -65,9 +65,9 @@ const commonOptions = {
   watch: isWatch,
   loader: {
     '.js': 'jsx',
-    '.png': 'file',
-    '.jpg': 'file',
-    '.svg': 'file'
+    '.png': 'dataurl',
+    '.jpg': 'dataurl',
+    '.svg': 'dataurl'
   },
   minify: isProduction
   // metafile: true,
@@ -98,8 +98,9 @@ esbuild
   .build({
     ...commonOptions,
     outdir: `${outdir}/webview`,
-    entryPoints: globbySync('src/webview/pages/*.tsx'),
+    entryPoints: globbySync('src/webview/pages/index.tsx'),
     target: ['chrome58'],
+    format: 'esm',
     plugins: [lessLoader(), watchPlugin('webview')]
     // publicPath: 'https://www.example.com/v1',
   })

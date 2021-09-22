@@ -1,25 +1,23 @@
-import React, { useState } from 'react'
-import Logo from './logo.svg'
-import { renderApp } from '../render'
-import { getWebviewUri } from '.'
-import { useAsync } from 'react-use'
+import React, { useEffect, useState } from 'react'
+import logo from './logo.svg'
+import { showMessage } from './channel'
 
 import './Demo.less'
 
-export const Welcome = () => {
+export const Demo = () => {
   const [count, setCount] = useState(0)
 
-  // Simply pass `Logo` string imported from file loader will not work because local assets in vscode's webview must use vscode's Uri schema
-  // So we use an extra getWebviewUri call to get the Uri path
-  const [logo, setLogo] = useState<string>('')
-  useAsync(async () => {
-    setLogo(await getWebviewUri(Logo))
+  useEffect(() => {
+    showMessage({
+      type: 'info',
+      message: 'Hello from webview Demo page'
+    })
   }, [])
 
   return (
     <div className="App">
       <header className="App-header">
-        {logo ? <img alt="logo" className="App-logo" src={logo} /> : null}
+        <img alt="logo" className="App-logo" src={logo} />
         <p>Hello esbuild + React!</p>
         <p>
           <button onClick={() => setCount((count) => count + 1)} type="button">
@@ -50,5 +48,3 @@ export const Welcome = () => {
     </div>
   )
 }
-
-renderApp(Welcome)
