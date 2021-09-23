@@ -1,6 +1,9 @@
 import Channel from '@luozhu/vscode-channel'
 import { IMessageToShow } from '../../utils'
-import { W2V_GET_WEBVIEW_URI, W2V_SHOW_MESSAGE } from '../message-method'
+import {
+  W2V_GET_WEBVIEW_URI,
+  W2V_SHOW_MESSAGE
+} from '../../utils/message-method'
 import { asyncWrapper } from '../utils'
 export const channel = new Channel()
 

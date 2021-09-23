@@ -2,17 +2,18 @@ import vscode from 'vscode'
 import path from 'path'
 import pupa from 'pupa'
 import templateHtml from 'inline:./template.html'
-import logo from './images/squareLogo.png'
+import logo from '../images/squareLogo.png'
 import Channel from '@luozhu/vscode-channel'
-import { W2V_GET_WEBVIEW_URI, W2V_SHOW_MESSAGE } from './message-method'
-import { showMessage } from '../vs-picgo/utils'
+import { W2V_GET_WEBVIEW_URI, W2V_SHOW_MESSAGE } from '../utils/message-method'
+import { showMessage } from './utils'
+import { PageId, pageMap } from '../utils/page'
 import { IMessageToShow } from '../utils'
 
 /**
  * Type of variables that will be passed to the html template
  */
 export interface IHtmlConfig {
-  pageId: string
+  pageId: PageId
   jsSrc: string
   cssHref: string
   vscodeEnv: string
@@ -37,7 +38,7 @@ export class PanelManager {
    * @param pageId The id of the page respect to in webview/pages/pageId.tsx
    * @returns Html constructed for this page
    */
-  getPageHtml(webview: vscode.Webview, pageId: string) {
+  getPageHtml(webview: vscode.Webview, pageId: PageId) {
     const webviewIndex = path.join(
       this.context.extensionPath,
       PanelManager.WEBVIEW_FOLDER,
@@ -56,11 +57,15 @@ export class PanelManager {
     return pupa(templateHtml, htmlConfig)
   }
 
-  getViewType(pageId: string) {
+  getViewType(pageId: PageId) {
     return `vs-picgo:${pageId}`
   }
 
-  createOrShowWebviewPanel(pageId: string) {
+  getTitle(pageId: PageId) {
+    return pageMap[pageId]
+  }
+
+  createOrShowWebviewPanel(pageId: PageId) {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
       : undefined
@@ -73,7 +78,7 @@ export class PanelManager {
     // Otherwise, create a new panel.
     const panel = vscode.window.createWebviewPanel(
       this.getViewType(pageId),
-      pageId,
+      this.getTitle(pageId),
       column ?? vscode.ViewColumn.One,
       {
         // Enable javascript in the webview

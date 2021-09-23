@@ -18,7 +18,8 @@
     "onCommand:picgo.uploadImageFromClipboard",
     "onCommand:picgo.uploadImageFromExplorer",
     "onCommand:picgo.uploadImageFromInputBox",
-    "onCommand:picgo.webviewDemo"
+    "onCommand:picgo.webviewDemo",
+    "onCommand:picgo.webviewPicGoControlPanel"
   ],
   "main": "./dist/extension",
   "contributes": {
@@ -41,6 +42,11 @@
       {
         "command": "picgo.webviewDemo",
         "title": "%command.webview.demo.title%",
+        "category": "PicGo"
+      },
+      {
+        "command": "picgo.webviewPicGoControlPanel",
+        "title": "%command.webview.picGoControlPanel.title%",
         "category": "PicGo"
       }
     ],

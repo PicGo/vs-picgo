@@ -12,6 +12,7 @@
   "command.upload.explorer.title": "Upload image from explorer",
   "command.upload.inputBox.title": "Upload image from inputBox",
   "command.webview.demo.title": "Open demo page",
+  "command.webview.picGoControlPanel.title": "Open PicGo Control Panel",
   "config.title": "PicGo",
   "config.configPath.description": "The path to your PicGo-Core configuration. PicGo will use `#picgo.picBed#` if this is not specified. Please see [PicGo-Core Docs](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6) and [PicGo Docs](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E5%9B%BE%E5%BA%8A%E5%8C%BA) for more detail about configuration file.",
   "config.dataPath.description": "The path to your data file, including all uploaded images' info. PicGo will use `your_home_dir/vs-picgo-data.json` if this is not specified.",
