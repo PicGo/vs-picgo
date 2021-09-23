@@ -1,7 +1,8 @@
 import React from 'react'
+import Dashboard from '../components/dashboard/Dashboard'
 
 import './PicGoControlPanel.less'
 
 export const PicGoControlPanel = () => {
-  return <div className="picgo-control-panel">PicGo</div>
+  return <Dashboard />
 }

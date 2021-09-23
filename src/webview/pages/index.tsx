@@ -7,6 +7,7 @@ import { showMessage } from './channel'
 import { Demo } from './Demo'
 import { PicGoControlPanel } from './PicGoControlPanel'
 import { PageId } from '../../utils/page'
+import { ThemeWrapper } from './ThemeWrapper'
 
 import './index.less'
 
@@ -27,10 +28,9 @@ export const renderApp = (pageId: PageId) => {
   }
 
   ReactDOM.unmountComponentAtNode(root)
-  const App = pages[pageId]
   ReactDOM.render(
     <React.StrictMode>
-      <App />
+      <ThemeWrapper App={pages[pageId]} />
     </React.StrictMode>,
     root
   )

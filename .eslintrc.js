@@ -25,6 +25,7 @@ module.exports = {
     'no-console': 'warn',
     // https://stackoverflow.com/a/64024916/8242705
     'no-use-before-define': 'off',
+    'no-undef': 'off',
     'react/jsx-sort-props': 'error',
     'react/jsx-boolean-value': 'error'
   },

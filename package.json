@@ -392,7 +392,11 @@
     "yarn-audit-fix": "7.0.4"
   },
   "dependencies": {
+    "@emotion/react": "11.4.1",
+    "@emotion/styled": "11.3.0",
     "@luozhu/vscode-channel": "0.7.0",
+    "@mui/icons-material": "5.0.1",
+    "@mui/material": "5.0.1",
     "lodash": "^4.17.19",
     "lodash-id": "^0.14.0",
     "picgo": "1.4.25",

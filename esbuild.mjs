@@ -67,7 +67,12 @@ const commonOptions = {
     '.js': 'jsx',
     '.png': 'dataurl',
     '.jpg': 'dataurl',
-    '.svg': 'dataurl'
+    '.svg': 'dataurl',
+    '.woff': 'dataurl',
+    '.woff2': 'dataurl'
+  },
+  define: {
+    'process.env.NODE_ENV': isProduction ? '"production"' : '"development"'
   },
   minify: isProduction
   // metafile: true,
