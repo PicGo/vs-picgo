@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
@@ -80,16 +80,21 @@ export interface IThemeWrapperProps {
 export const ThemeWrapper = ({ App }: IThemeWrapperProps) => {
   const [theme, setTheme] = useState(calculateTheme())
 
-  const onVSCodeColorThemeChanged = () => {
-    setTheme(calculateTheme())
-  }
-  const observer = new MutationObserver(onVSCodeColorThemeChanged)
-  observer.observe(document.body, {
-    attributes: true,
-    attributeFilter: ['class']
-  })
+  useEffect(() => {
+    const onVSCodeColorThemeChanged = () => {
+      setTheme(() => {
+        const theme = calculateTheme()
+        console.log('new theme:\n', theme)
+        return theme
+      })
+    }
+    const observer = new MutationObserver(onVSCodeColorThemeChanged)
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+  }, [])
 
-  console.log('theme', theme)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
