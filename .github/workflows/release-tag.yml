@@ -20,7 +20,8 @@ jobs:
 
       - name: yarn install, compile, and test coverage
         run: |
-          yarn install
+          # https://github.com/mui-org/material-ui/issues/12432#issuecomment-411046157
+          yarn install --network-timeout 500000
           yarn build
           xvfb-run --auto-servernum yarn test
 
