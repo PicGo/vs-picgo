@@ -10,7 +10,6 @@
     "wix.vscode-import-cost",
     "pkief.material-icon-theme",
     "eamodio.gitlens",
-    "eamodio.tsl-problem-matcher",
     "connor4312.esbuild-problem-matchers"
   ]
 }
