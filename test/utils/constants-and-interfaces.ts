@@ -79,26 +79,9 @@ export interface IVSPicgoUploadStarterOptions {
   }
 }
 
-export interface ICoverageCollectorOptions {
-  enabled: boolean
-  ignorePatterns: string[]
-  sourceRoot: string
-  includePid: boolean
-  output: string
-  reports: string[]
-  verbose: boolean
-}
+export const TEST_MD_FILE_PATH = path.join(__dirname, '../../assets/test.md')
+export const TEST_PICTURE_PATH = path.join(__dirname, '../../assets/test.png')
 
-export const TEST_MD_FILE_PATH = path.join(__dirname, '../../../assets/test.md')
-export const TEST_PICTURE_PATH = path.join(
-  __dirname,
-  '../../../assets/test.png'
-)
-
-export const COVERAGE_COLLECTOR_CONFIG_FILE_PATH = path.join(
-  __dirname,
-  '../../../coverage.json'
-)
 export const DEFAULT_CONFIGS: IVSPicgoConfiguration = {
   'picgo.configPath': '',
   'picgo.dataPath': '',
@@ -161,14 +144,4 @@ export const DEFAULT_CONFIGS: IVSPicgoConfiguration = {
   'picgo.picBed.weibo.username': '',
   'picgo.picBed.weibo.quality': 'large',
   'picgo.picBed.weibo.cookie': ''
-}
-
-export const DEFAULT_COVERAGE_CONFIGURATION: ICoverageCollectorOptions = {
-  enabled: true,
-  sourceRoot: './out/src',
-  output: './coverage',
-  ignorePatterns: ['**/node_modules/**'],
-  includePid: false,
-  reports: ['html', 'lcov', 'text-summary'],
-  verbose: false
 }

@@ -20,14 +20,16 @@ jobs:
 
       - name: yarn install, compile, and test coverage
         run: |
-          yarn install
-          yarn compile
+          # https://github.com/mui-org/material-ui/issues/12432#issuecomment-411046157
+          yarn install --network-timeout 500000
+          yarn build
           xvfb-run --auto-servernum yarn test
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # TODO: add coverage info
+      # - name: Coveralls
+      #   uses: coverallsapp/github-action@master
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get the version
         id: get_version

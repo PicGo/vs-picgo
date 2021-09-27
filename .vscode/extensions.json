@@ -9,6 +9,7 @@
     "yzhang.markdown-all-in-one",
     "wix.vscode-import-cost",
     "pkief.material-icon-theme",
-    "eamodio.gitlens"
+    "eamodio.gitlens",
+    "connor4312.esbuild-problem-matchers"
   ]
 }
