@@ -2,9 +2,18 @@
   "name": "vs-picgo",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "repository": "https://github.com/PicGo/vs-picgo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PicGo/vs-picgo.git"
+  },
   "issues": "https://github.com/PicGo/vs-picgo/issues",
-  "keywords": "%ext.keywords%",
+  "keywords": [
+    "image",
+    "picture",
+    "upload",
+    "image upload",
+    "picture upload"
+  ],
   "version": "2.1.6",
   "publisher": "Spades",
   "engines": {
@@ -19,7 +28,8 @@
     "onCommand:picgo.uploadImageFromExplorer",
     "onCommand:picgo.uploadImageFromInputBox",
     "onCommand:picgo.webviewDemo",
-    "onCommand:picgo.webviewPicGoControlPanel"
+    "onCommand:picgo.webviewPicGoControlPanel",
+    "workspaceContains:vs-picgo-auto-launch.txt"
   ],
   "main": "./dist/extension",
   "contributes": {

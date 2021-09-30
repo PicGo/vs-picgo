@@ -30,15 +30,27 @@
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "editor.tabSize": 2,
   "cSpell.words": [
+    "aliyun",
+    "cjsx",
+    "commitlint",
     "esbuild",
     "globby",
     "iife",
+    "imgur",
     "luozhu",
     "metafile",
     "Mixins",
+    "mjsx",
+    "Molunerfinn",
     "outdir",
     "picgo",
-    "vspicgo"
+    "qiniu",
+    "smms",
+    "tcyun",
+    "upupming",
+    "upyun",
+    "vspicgo",
+    "weibo"
   ],
   "[markdown]": {
     "editor.tabSize": 4

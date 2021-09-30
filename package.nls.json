@@ -1,13 +1,6 @@
 {
   "ext.displayName": "PicGo",
   "ext.description": "A fast and powerful image uploading plugin for VSCode based on PicGo. Supports most image types (png, jpg, gif, etc.) and many image hosting services (smms, qiniu, imgur, etc.)!",
-  "ext.keywords": [
-    "image",
-    "picture",
-    "upload",
-    "image upload",
-    "picture upload"
-  ],
   "command.upload.clipboard.title": "Upload image from clipboard",
   "command.upload.explorer.title": "Upload image from explorer",
   "command.upload.inputBox.title": "Upload image from inputBox",
