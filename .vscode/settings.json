@@ -33,6 +33,7 @@
     "esbuild",
     "globby",
     "iife",
+    "luozhu",
     "metafile",
     "Mixins",
     "outdir",

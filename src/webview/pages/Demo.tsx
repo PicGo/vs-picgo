@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import logo from './logo.svg'
-import { showMessage } from './channel'
+import logo from '../../images/roundLogo.png'
+import { showMessage } from '../utils/channel'
 
 import './Demo.less'
 

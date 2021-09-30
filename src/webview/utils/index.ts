@@ -2,7 +2,7 @@
  * Utils that can only work in webview
  */
 
-import { showMessage } from '../pages/channel'
+import { showMessage } from './channel'
 
 // Turn an async function to an ordinary function to avoid ESLint complaints
 // This function will turn an async function from return promise to return void, in this way you don't need to wait the async function finished

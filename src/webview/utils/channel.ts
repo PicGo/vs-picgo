@@ -4,7 +4,7 @@ import {
   W2V_GET_WEBVIEW_URI,
   W2V_SHOW_MESSAGE
 } from '../../utils/message-method'
-import { asyncWrapper } from '../utils'
+import { asyncWrapper } from '.'
 export const channel = new Channel()
 
 /**

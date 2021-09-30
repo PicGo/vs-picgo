@@ -3,11 +3,11 @@
  */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { showMessage } from './channel'
+import { showMessage } from '../utils/channel'
 import { Demo } from './Demo'
 import { PicGoControlPanel } from './PicGoControlPanel'
 import { PageId } from '../../utils/page'
-import { ThemeWrapper } from './ThemeWrapper'
+import { ThemeWrapper } from '../components/ThemeWrapper'
 
 import './index.less'
 
