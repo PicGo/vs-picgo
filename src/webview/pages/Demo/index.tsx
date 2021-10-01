@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import logo from '../../images/roundLogo.png'
-import { showMessage } from '../utils/channel'
+import logo from '../../../images/roundLogo.png'
+import { showMessage } from '../../utils/channel'
 
-import './Demo.less'
+import './index.less'
 
 export const Demo = () => {
   const [count, setCount] = useState(0)

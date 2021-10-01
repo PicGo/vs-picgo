@@ -73,18 +73,14 @@ const calculateTheme = () => {
   })
 }
 
-export interface IThemeWrapperProps {
-  App: () => JSX.Element
-}
-
-export const ThemeWrapper = ({ App }: IThemeWrapperProps) => {
+export const ThemeWrapper: React.FunctionComponent = (props) => {
   const [theme, setTheme] = useState(calculateTheme())
+  console.log('using theme', theme)
 
   useEffect(() => {
     const onVSCodeColorThemeChanged = () => {
       setTheme(() => {
         const theme = calculateTheme()
-        console.log('new theme:\n', theme)
         return theme
       })
     }
@@ -98,7 +94,7 @@ export const ThemeWrapper = ({ App }: IThemeWrapperProps) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      {props.children}
     </ThemeProvider>
   )
 }

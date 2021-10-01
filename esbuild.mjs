@@ -103,7 +103,7 @@ esbuild
   .build({
     ...commonOptions,
     outdir: `${outdir}/webview`,
-    entryPoints: globbySync('src/webview/pages/index.tsx'),
+    entryPoints: ['src/webview/pages/index.tsx'],
     target: ['chrome58'],
     format: 'esm',
     plugins: [lessLoader(), watchPlugin('webview')]

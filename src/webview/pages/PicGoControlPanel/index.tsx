@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import {
-  CssBaseline,
   Drawer as MuiDrawer,
   AppBar as MuiAppBar,
   AppBarProps as MuiAppBarProps,
@@ -14,9 +13,11 @@ import {
   Paper
 } from '@mui/material'
 import * as MuiIconsMaterial from '@mui/icons-material'
-import logo from '../../images/squareLogo.png'
+import logo from '../../../images/squareLogo.png'
 
-import { Copyright } from '../components/Copyright'
+import { Copyright } from '../../components/Copyright'
+
+import 'index.less'
 
 const drawerWidth: number = 240
 
@@ -74,7 +75,6 @@ export const PicGoControlPanel = () => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
       <Drawer open={open} variant="permanent">
         <Toolbar
           sx={{

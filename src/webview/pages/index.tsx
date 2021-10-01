@@ -27,10 +27,13 @@ export const renderApp = (pageId: PageId) => {
     return
   }
 
+  const App = pages[pageId]
   ReactDOM.unmountComponentAtNode(root)
   ReactDOM.render(
     <React.StrictMode>
-      <ThemeWrapper App={pages[pageId]} />
+      <ThemeWrapper>
+        <App />
+      </ThemeWrapper>
     </React.StrictMode>,
     root
   )
