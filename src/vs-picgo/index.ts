@@ -51,7 +51,7 @@ export default class VSPicgo extends EventEmitter {
   private static readonly picgo = new PicGo()
   static vspicgo: VSPicgo = new VSPicgo()
 
-  constructor() {
+  private constructor() {
     super()
     this.configPicgo()
     // Before upload, we change names of the images.

@@ -16,7 +16,7 @@ import {
   VSPicgoUploadStarter
 } from '../utils'
 
-const vspicgo = new VSPicgo()
+const vspicgo = VSPicgo.vspicgo
 const previousConfigs: IVSPicgoConfiguration = Object.assign(
   {},
   DEFAULT_CONFIGS

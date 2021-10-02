@@ -30,7 +30,7 @@ export class PanelManager {
   pageId2WebviewPanel: Map<string, [vscode.WebviewPanel, Channel]>
   static WEBVIEW_FOLDER = 'dist/webview'
   static DIST_FOLDER = 'dist'
-  constructor(context: vscode.ExtensionContext) {
+  private constructor(context: vscode.ExtensionContext) {
     this.context = context
     this.pageId2WebviewPanel = new Map()
   }
