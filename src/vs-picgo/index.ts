@@ -17,11 +17,9 @@ import {
 import { IImgInfo, IPlugin, IPicGo, IConfig } from 'picgo/dist/src/types'
 
 import _ from './utils/lodash-mixins'
-import PicGoCore from 'picgo'
+import PicGo = require('picgo')
 
 import nls = require('../../package.nls.json')
-// eslint-disable-next-line
-const PicGo = require('picgo') as typeof PicGoCore
 
 const writeFileP = promisify(fs.writeFile)
 const readFileP = promisify(fs.readFile)
@@ -50,7 +48,8 @@ export enum EVSPicgoHooks {
 }
 
 export default class VSPicgo extends EventEmitter {
-  private static readonly picgo: IPicGo = new PicGo()
+  private static readonly picgo = new PicGo()
+  static vspicgo: VSPicgo = new VSPicgo()
 
   constructor() {
     super()
@@ -88,7 +87,7 @@ export default class VSPicgo extends EventEmitter {
   addGenerateOutputListener() {
     VSPicgo.picgo.on(
       'finished',
-      asyncWrapper(async (ctx: PicGoCore) => {
+      asyncWrapper(async (ctx: PicGo) => {
         let urlText = ''
         const outputFormatTemplate =
           vscode.workspace
@@ -179,27 +178,21 @@ export default class VSPicgo extends EventEmitter {
     template: string,
     index: number | undefined
   ) {
-    if (this.userDefineName) {
-      original = `${this.userDefineName}${index ?? ''}${path.extname(original)}`
+    if (this.userSelectionAsName) {
+      original = `${this.userSelectionAsName}${index ?? ''}${path.extname(
+        original
+      )}`
       console.log('original filename', original)
     }
-    const mdFilePath = this.editor?.document.fileName
+    const mdFilePath = this.editor?.document.fileName ?? ''
     console.log('mdFilePath', mdFilePath)
-    if (!mdFilePath) return
     const mdFileName = path.basename(mdFilePath, path.extname(mdFilePath))
     const uploadNameData = formatParam(original, mdFileName)
     return formatString(template, uploadNameData)
   }
 
   get editor() {
-    const editor = vscode.window.activeTextEditor
-    if (editor == null) {
-      asyncWrapper(async () => {
-        showError('no active markdown editor!')
-      })()
-      return null
-    }
-    return editor
+    return vscode.window.activeTextEditor
   }
 
   get dataPath(): string {
@@ -209,7 +202,7 @@ export default class VSPicgo extends EventEmitter {
     )
   }
 
-  get userDefineName() {
+  get userSelectionAsName() {
     let selectedString = this.editor?.document.getText(this.editor.selection)
     const nameReg = /[:/?$]+/g // limitations of name
     selectedString = selectedString?.replace(nameReg, () => '')
@@ -230,51 +223,50 @@ export default class VSPicgo extends EventEmitter {
     // This is necessary, because user may have changed settings
     this.configPicgo()
 
-    return await Promise.allSettled([
-      // Error has been handled in on 'failed'
-      // uploading progress, must be parallel with `picgo.upload` to catch events
-      vscode.window.withProgress(
-        {
-          location: vscode.ProgressLocation.Notification,
-          title: `${nls['ext.displayName']}: image uploading...`,
-          cancellable: false
-        },
-        async (progress) => {
-          return await new Promise<void>((resolve, reject) => {
-            const onUploadProgress = (p: number) => {
-              progress.report({ increment: p })
-              if (p === 100) {
-                cancelListeners()
-                resolve()
-              }
-            }
-            const onFailed = asyncWrapper(async (error: Error) => {
-              const errorReason = error.message || 'Unknown error'
+    // Error has been handled in on 'failed'
+    // uploading progress, must be parallel with `picgo.upload` to catch events
+    void vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.Notification,
+        title: `${nls['ext.displayName']}: image uploading...`,
+        cancellable: false
+      },
+      async (progress) => {
+        return await new Promise<void>((resolve, reject) => {
+          const onUploadProgress = (p: number) => {
+            progress.report({ increment: p })
+            if (p === 100) {
               cancelListeners()
-              reject(errorReason)
-              showError(errorReason)
-            })
-            const onNotification = asyncWrapper(async (notice: INotice) => {
-              const errorReason = `${notice.title}! ${notice.body || ''}${
-                notice.text || ''
-              }`
-              cancelListeners()
-              reject(errorReason)
-              showError(errorReason)
-            })
-            VSPicgo.picgo.on('uploadProgress', onUploadProgress)
-            VSPicgo.picgo.on('failed', onFailed)
-            VSPicgo.picgo.on('notification', onNotification)
-            function cancelListeners() {
-              VSPicgo.picgo.off('uploadProgress', onUploadProgress)
-              VSPicgo.picgo.off('failed', onFailed)
-              VSPicgo.picgo.off('notification', onNotification)
+              resolve()
             }
+          }
+          const onFailed = asyncWrapper(async (error: Error) => {
+            const errorReason = error.message || 'Unknown error'
+            cancelListeners()
+            reject(errorReason)
+            showError(errorReason)
           })
-        }
-      ),
-      VSPicgo.picgo.upload(input)
-    ]).catch(() => {})
+          const onNotification = asyncWrapper(async (notice: INotice) => {
+            const errorReason = `${notice.title}! ${notice.body || ''}${
+              notice.text || ''
+            }`
+            cancelListeners()
+            reject(errorReason)
+            showError(errorReason)
+          })
+          VSPicgo.picgo.on('uploadProgress', onUploadProgress)
+          VSPicgo.picgo.on('failed', onFailed)
+          VSPicgo.picgo.on('notification', onNotification)
+          function cancelListeners() {
+            VSPicgo.picgo.off('uploadProgress', onUploadProgress)
+            VSPicgo.picgo.off('failed', onFailed)
+            VSPicgo.picgo.off('notification', onNotification)
+          }
+        })
+      }
+    )
+
+    return VSPicgo.picgo.upload(input)
   }
 
   async updateData(picInfos: IImgInfo[]) {

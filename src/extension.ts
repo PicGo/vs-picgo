@@ -44,8 +44,9 @@ async function uploadImageFromInputBox(vspicgo: VSPicgo) {
 }
 
 export async function activate(context: vscode.ExtensionContext) {
-  const vspicgo = new VSPicgo()
-  const panelManager = new PanelManager(context)
+  const vspicgo = VSPicgo.vspicgo
+  PanelManager.bindContext(context)
+  const panelManager = PanelManager.panelManager
   const disposable = [
     vscode.commands.registerCommand(
       'picgo.uploadImageFromClipboard',

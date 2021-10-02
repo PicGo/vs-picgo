@@ -61,7 +61,7 @@ fse.rmdirSync(outdir, { recursive: true })
 /** @type {import('esbuild').BuildOptions} */
 const commonOptions = {
   bundle: true,
-  sourcemap: !isProduction,
+  sourcemap: isProduction ? false : 'inline',
   watch: isWatch,
   loader: {
     '.js': 'jsx',

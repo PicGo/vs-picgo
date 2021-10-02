@@ -1,6 +1,13 @@
 /**
- * message method from webview to vscode starts with `W2V`
- * message method from vscode to webview starts with `V2W`
+ * message method from webview to vscode
  */
-export const W2V_GET_WEBVIEW_URI = 'W2V_GET_WEBVIEW_URI'
-export const W2V_SHOW_MESSAGE = 'W2V_SHOW_MESSAGE'
+export enum W2VMessage {
+  GET_WEBVIEW_URI = 'GET_WEBVIEW_URI',
+  SHOW_MESSAGE = 'SHOW_MESSAGE',
+  UPLOAD_FILES = 'UPLOAD_FILES'
+}
+
+/**
+ * message method from vscode to webview
+ */
+export enum V2WMessage {}

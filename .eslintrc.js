@@ -27,7 +27,8 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-undef': 'off',
     'react/jsx-sort-props': 'error',
-    'react/jsx-boolean-value': 'error'
+    'react/jsx-boolean-value': 'error',
+    'no-void': 'off'
   },
   overrides: [
     {

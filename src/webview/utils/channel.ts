@@ -1,10 +1,8 @@
 import Channel from '@luozhu/vscode-channel'
 import { IMessageToShow } from '../../utils'
-import {
-  W2V_GET_WEBVIEW_URI,
-  W2V_SHOW_MESSAGE
-} from '../../utils/message-method'
+import { W2VMessage } from '../../utils/message-method'
 import { asyncWrapper } from '.'
+import { IImgInfo } from 'picgo/dist/src/types'
 export const channel = new Channel()
 
 /**
@@ -13,12 +11,16 @@ export const channel = new Channel()
  * So we use an extra getWebviewUri call to get the Uri path
  */
 export const getWebviewUri = async (url: string) =>
-  (await channel.call<string, string>(W2V_GET_WEBVIEW_URI, url)).payload
+  (await channel.call<string, string>(W2VMessage.GET_WEBVIEW_URI, url)).payload
 
 /**
  * Show an message in VSCode bottom-down area
  */
 export const showMessage = asyncWrapper(
   async (messageToShow: IMessageToShow) =>
-    await channel.call<IMessageToShow>(W2V_SHOW_MESSAGE, messageToShow)
+    await channel.call<IMessageToShow>(W2VMessage.SHOW_MESSAGE, messageToShow)
 )
+
+export const uploadFiles = async (files: string[]) =>
+  (await channel.call<string[], IImgInfo[]>(W2VMessage.UPLOAD_FILES, files))
+    .payload

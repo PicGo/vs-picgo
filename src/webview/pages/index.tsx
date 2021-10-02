@@ -8,6 +8,7 @@ import { Demo } from './Demo'
 import { PicGoControlPanel } from './PicGoControlPanel'
 import { PageId } from '../../utils/page'
 import { ThemeWrapper } from '../components/ThemeWrapper'
+import { HashRouter, Switch } from 'react-router-dom'
 
 import './index.less'
 
@@ -31,9 +32,13 @@ export const renderApp = (pageId: PageId) => {
   ReactDOM.unmountComponentAtNode(root)
   ReactDOM.render(
     <React.StrictMode>
-      <ThemeWrapper>
-        <App />
-      </ThemeWrapper>
+      <HashRouter>
+        <Switch>
+          <ThemeWrapper>
+            <App />
+          </ThemeWrapper>
+        </Switch>
+      </HashRouter>
     </React.StrictMode>,
     root
   )
