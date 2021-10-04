@@ -11,13 +11,11 @@ import {
   formatString,
   showInfo,
   showError,
-  getUploadedName,
-  asyncWrapper
+  getUploadedName
 } from './utils'
-import { IImgInfo, IPlugin, IPicGo, IConfig } from 'picgo/dist/src/types'
-
 import _ from './utils/lodash-mixins'
-import PicGo = require('picgo')
+
+import { PicGo, IImgInfo, IPlugin, IPicGo, IConfig } from 'picgo'
 
 import nls = require('../../package.nls.json')
 
@@ -85,56 +83,51 @@ export default class VSPicgo extends EventEmitter {
   }
 
   addGenerateOutputListener() {
-    VSPicgo.picgo.on(
-      'finished',
-      asyncWrapper(async (ctx: PicGo) => {
-        let urlText = ''
-        const outputFormatTemplate =
-          vscode.workspace
-            .getConfiguration('picgo')
-            // eslint-disable-next-line no-template-curly-in-string
-            .get<string>('customOutputFormat') ?? '![${uploadedName}](${url})'
-        try {
-          urlText = ctx.output.reduce(
-            (acc: string, imgInfo: IImgInfo): string => {
-              return `${acc}${formatString(outputFormatTemplate, {
-                uploadedName: getUploadedName(imgInfo),
-                url: imgInfo.imgUrl ?? ''
-              })}\n`
-            },
-            ''
-          )
-          urlText = urlText.trim()
-          if (!urlText) {
-            throw new Error('no image URL found in the output')
-          }
-          await this.updateData(ctx.output)
-        } catch (err) {
-          if (err instanceof SyntaxError) {
-            showError(
-              `the data file ${this.dataPath} has syntax error, ` +
-                `please fix the error by yourself or delete the data file and vs-picgo will recreate for you.`
-            )
-          } else {
-            showError(
-              `failed to read from data file ${this.dataPath}: ${String(
-                err ?? ''
-              )}`
-            )
-          }
-          return
-        }
-        const editor = this.editor
-        await editor?.edit(
-          asyncWrapper(async (textEditor) => {
-            console.log(`urlText: ${urlText}`)
-            textEditor.replace(editor.selection, urlText)
-            this.emit(EVSPicgoHooks.updated, urlText)
-            showInfo(`image uploaded successfully.`)
-          })
+    VSPicgo.picgo.on('finished', (ctx: PicGo) => {
+      let urlText = ''
+      const outputFormatTemplate =
+        vscode.workspace
+          .getConfiguration('picgo')
+          // eslint-disable-next-line no-template-curly-in-string
+          .get<string>('customOutputFormat') ?? '![${uploadedName}](${url})'
+      try {
+        urlText = ctx.output.reduce(
+          (acc: string, imgInfo: IImgInfo): string => {
+            return `${acc}${formatString(outputFormatTemplate, {
+              uploadedName: getUploadedName(imgInfo),
+              url: imgInfo.imgUrl ?? ''
+            })}\n`
+          },
+          ''
         )
+        urlText = urlText.trim()
+        if (!urlText) {
+          throw new Error('no image URL found in the output')
+        }
+        this.updateData(ctx.output)
+      } catch (err) {
+        if (err instanceof SyntaxError) {
+          showError(
+            `the data file ${this.dataPath} has syntax error, ` +
+              `please fix the error by yourself or delete the data file and vs-picgo will recreate for you.`
+          )
+        } else {
+          showError(
+            `failed to read from data file ${this.dataPath}: ${String(
+              err ?? ''
+            )}`
+          )
+        }
+        return
+      }
+      const editor = this.editor
+      editor?.edit((textEditor) => {
+        console.log(`urlText: ${urlText}`)
+        textEditor.replace(editor.selection, urlText)
+        this.emit(EVSPicgoHooks.updated, urlText)
+        showInfo(`image uploaded successfully.`)
       })
-    )
+    })
   }
 
   registerRenamePlugin() {
@@ -223,7 +216,6 @@ export default class VSPicgo extends EventEmitter {
     // This is necessary, because user may have changed settings
     this.configPicgo()
 
-    // Error has been handled in on 'failed'
     // uploading progress, must be parallel with `picgo.upload` to catch events
     void vscode.window.withProgress(
       {
@@ -240,20 +232,20 @@ export default class VSPicgo extends EventEmitter {
               resolve()
             }
           }
-          const onFailed = asyncWrapper(async (error: Error) => {
+          const onFailed = (error: Error) => {
             const errorReason = error.message || 'Unknown error'
             cancelListeners()
-            reject(errorReason)
             showError(errorReason)
-          })
-          const onNotification = asyncWrapper(async (notice: INotice) => {
+            resolve()
+          }
+          const onNotification = (notice: INotice) => {
             const errorReason = `${notice.title}! ${notice.body || ''}${
               notice.text || ''
             }`
             cancelListeners()
-            reject(errorReason)
             showError(errorReason)
-          })
+            resolve()
+          }
           VSPicgo.picgo.on('uploadProgress', onUploadProgress)
           VSPicgo.picgo.on('failed', onFailed)
           VSPicgo.picgo.on('notification', onNotification)
@@ -266,7 +258,15 @@ export default class VSPicgo extends EventEmitter {
       }
     )
 
-    return VSPicgo.picgo.upload(input)
+    // Error has been handled in on 'failed', so we just catch error to avoid unhandled rejected promise
+    // Note that all unhandled promise in extension will be caught by vscode and show a warning like "command ran failed", which is not what we want
+    return VSPicgo.picgo
+      .upload(input)
+      .catch(() => {})
+      .then((res) => {
+        if (res instanceof Error) return void 0
+        else return res
+      })
   }
 
   async updateData(picInfos: IImgInfo[]) {

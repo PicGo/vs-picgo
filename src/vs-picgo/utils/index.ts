@@ -5,8 +5,9 @@
 import * as path from 'path'
 import { IUploadName, IOutputUrl } from '..'
 import { window } from 'vscode'
-import { IImgInfo } from 'picgo/dist/src/utils/interfaces'
+import { IImgInfo } from 'picgo'
 import { IMessageToShow } from '../../utils'
+import { getNLSText } from '../../utils/meta'
 
 export function formatParam(file: string, mdFileName: string): IUploadName {
   const dt = new Date()
@@ -46,8 +47,6 @@ export function formatString(
   )
 }
 
-import nls = require('../../../package.nls.json')
-
 function addPeriod(message: string) {
   if (!message.endsWith('.') && !message.endsWith('!')) {
     message = message + '.'
@@ -57,43 +56,41 @@ function addPeriod(message: string) {
 
 function decorateMessage(message: string): string {
   message = addPeriod(message)
-  return `${nls['ext.displayName']}: ${message}`
+  return `${getNLSText('ext.displayName')}: ${message}`
 }
 
-export const showWarning = asyncWrapper(async (message: string) => {
+export const showWarning = async (message: string) => {
   message = decorateMessage(message)
   console.warn(message)
   return await window.showWarningMessage(message)
-})
+}
 
-export const showError = asyncWrapper(async (message: string) => {
+export const showError = async (message: string) => {
   message = decorateMessage(message)
   console.warn(message)
   return await window.showErrorMessage(message)
-})
+}
 
-export const showInfo = asyncWrapper(async (message: string) => {
+export const showInfo = async (message: string) => {
   message = decorateMessage(message)
   console.warn(message)
   return await window.showInformationMessage(message)
-})
+}
 
-export const showMessage = asyncWrapper(
-  async (messageToShow: IMessageToShow) => {
-    switch (messageToShow.type) {
-      case 'warning':
-        await showWarning(messageToShow.message)
-        break
-      case 'error':
-        await showError(messageToShow.message)
-        break
-      case 'info':
-        await showInfo(messageToShow.message)
-        break
-      default:
-    }
+export const showMessage = (messageToShow: IMessageToShow) => {
+  switch (messageToShow.type) {
+    case 'warning':
+      showWarning(messageToShow.message)
+      break
+    case 'error':
+      showError(messageToShow.message)
+      break
+    case 'info':
+      showInfo(messageToShow.message)
+      break
+    default:
   }
-)
+}
 
 /**
  * Return uploaded name accrding to `imgInfo.fileName`,
@@ -109,20 +106,4 @@ export function getUploadedName(imgInfo: IImgInfo): string {
   }
   const basename = path.basename(fullName, path.extname(fullName))
   return basename
-}
-
-// Turn an async function to an ordinary function to avoid ESLint complaints
-// This function will turn an async function from return promise to return void, in this way you don't need to wait the async function finished
-export function asyncWrapper<Args extends any[], T>(
-  fn: (...args: Args) => Promise<T>
-) {
-  return (...args: Parameters<typeof fn>): void => {
-    ;(async () => {
-      // return T here
-      return await fn(...args)
-    })().catch(async (e) => {
-      await showError(`Unexpected error: ${String(e)}`)
-    })
-    // return void here
-  }
 }

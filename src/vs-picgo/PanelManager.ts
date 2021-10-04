@@ -5,7 +5,7 @@ import logo from '../images/squareLogo.png'
 import Channel from '@luozhu/vscode-channel'
 import path from 'path'
 import { PageId, pageMap } from '../utils/page'
-import { getChannel } from './channel'
+import { getChannel } from './utils/channel'
 
 /**
  * Type of variables that will be passed to the html template

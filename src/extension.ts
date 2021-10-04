@@ -69,7 +69,6 @@ export async function activate(context: vscode.ExtensionContext) {
     )
   ]
   context.subscriptions.push(...disposable)
-
   if (process.env.NODE_ENV === 'development') {
     panelManager.createOrShowWebviewPanel('PicGoControlPanel')
   }

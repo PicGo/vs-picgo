@@ -28,7 +28,9 @@ module.exports = {
     'no-undef': 'off',
     'react/jsx-sort-props': 'error',
     'react/jsx-boolean-value': 'error',
-    'no-void': 'off'
+    'no-void': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/promise-function-async': 'off'
   },
   overrides: [
     {

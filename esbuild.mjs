@@ -1,12 +1,11 @@
 /* eslint-disable no-console */
-// We use .mjs because globby package now is pure-esm, and can only be imported in esm mode, because this is a simple build script and we do not want to bother run esm-to-cjs build process, we just change our build script to esm
-// We cannot use "type": "module" in package.json because VSCode supports cjs modules only at the present
-import { globbySync } from 'globby'
+import globby from 'globby'
 import esbuild from 'esbuild'
 import fse from 'fs-extra'
 import minimist from 'minimist'
 import { lessLoader } from 'esbuild-plugin-less'
 import inlineImportPlugin from 'esbuild-plugin-inline-import'
+const { globbySync } = globby
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
@@ -34,12 +33,11 @@ const watchPlugin = (type) => ({
         )
       )
       firstBuildFinished.add(type)
+      status(`${type} build finished in ${Date.now() - buildStartTime} ms.`)
       if (firstBuildFinished.size === 2) {
         // esbuild problem matcher extension is listening for this log, once this is logged, it will open the Extension Host
         // So we have to assure only printing this when both extension and webview have been built
         status(`build finished in ${Date.now() - buildStartTime} ms.`)
-      } else {
-        status(`${type} build finished in ${Date.now() - buildStartTime} ms.`)
       }
     })
   }
@@ -84,9 +82,10 @@ esbuild
     ...commonOptions,
     outdir,
     entryPoints: isTest ? globbySync('test/**/*.ts') : ['src/extension.ts'],
-    external: isTest ? ['vscode', 'mocha', 'istanbul'] : ['vscode'],
+    external: isTest ? ['vscode', 'mocha', 'istanbul'] : ['vscode', 'electron'],
     format: 'cjs',
     platform: 'node',
+    mainFields: ['module', 'main'],
     plugins: [watchPlugin('extension'), inlineImportPlugin()]
   })
   .then(resultHandler)
@@ -94,7 +93,7 @@ esbuild
     process.exit(1)
   })
 // copy picgo's clipboard scripts
-fse.copy('node_modules/picgo/dist/src/utils/clipboard', `${outdir}/clipboard`, {
+fse.copy('node_modules/picgo/dist/clipboard', `${outdir}/clipboard`, {
   overwrite: true
 })
 

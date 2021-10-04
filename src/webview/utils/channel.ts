@@ -1,8 +1,7 @@
 import Channel from '@luozhu/vscode-channel'
 import { IMessageToShow } from '../../utils'
 import { W2VMessage } from '../../utils/message-method'
-import { asyncWrapper } from '.'
-import { IImgInfo } from 'picgo/dist/src/types'
+import { IImgInfo } from 'picgo'
 export const channel = new Channel()
 
 /**
@@ -16,11 +15,12 @@ export const getWebviewUri = async (url: string) =>
 /**
  * Show an message in VSCode bottom-down area
  */
-export const showMessage = asyncWrapper(
-  async (messageToShow: IMessageToShow) =>
-    await channel.call<IMessageToShow>(W2VMessage.SHOW_MESSAGE, messageToShow)
-)
+export const showMessage = async (messageToShow: IMessageToShow) =>
+  await channel.call<IMessageToShow>(W2VMessage.SHOW_MESSAGE, messageToShow)
 
 export const uploadFiles = async (files: string[]) =>
   (await channel.call<string[], IImgInfo[]>(W2VMessage.UPLOAD_FILES, files))
     .payload
+
+export const executeCommand = async (command: string) =>
+  await channel.call(W2VMessage.EXECUTE_COMMAND, command)
