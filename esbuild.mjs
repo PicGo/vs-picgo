@@ -5,7 +5,6 @@ import fse from 'fs-extra'
 import minimist from 'minimist'
 import { lessLoader } from 'esbuild-plugin-less'
 import inlineImportPlugin from 'esbuild-plugin-inline-import'
-const { globbySync } = globby
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
@@ -81,8 +80,10 @@ esbuild
   .build({
     ...commonOptions,
     outdir,
-    entryPoints: isTest ? globbySync('test/**/*.ts') : ['src/extension.ts'],
-    external: isTest ? ['vscode', 'mocha', 'istanbul'] : ['vscode', 'electron'],
+    entryPoints: isTest ? globby.sync('test/**/*.ts') : ['src/extension.ts'],
+    external: isTest
+      ? ['vscode', 'mocha', 'istanbul', 'electron']
+      : ['vscode', 'electron'],
     format: 'cjs',
     platform: 'node',
     mainFields: ['module', 'main'],
