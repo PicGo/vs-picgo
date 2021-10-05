@@ -1,25 +1,11 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Range, Position, window, workspace } from 'vscode'
-import {
-  DEFAULT_CONFIGS,
-  IVSPicgoUploadStarterOptions,
-  IVSPicgoConfigurationKeys
-} from './constants-and-interfaces'
-import { EVSPicgoHooks } from '../../src/vs-picgo'
+import { Range, Position, window } from 'vscode'
+import { CommandManager } from '../../src/vscode/CommandManager'
+import { IVSPicgoUploadStarterOptions } from './constants-and-interfaces'
 
 export async function VSPicgoUploadStarter(
   options: IVSPicgoUploadStarterOptions
-): Promise<string> {
-  // load custom configuration
-  const mergedConfig = Object.assign({}, DEFAULT_CONFIGS, options.configuration)
-
-  // update configuration
-  for (const section of Object.keys(mergedConfig)) {
-    await workspace
-      .getConfiguration('', null)
-      .update(section, mergedConfig[section as IVSPicgoConfigurationKeys], true)
-  }
-
+) {
   const editor = window.activeTextEditor
 
   if (!editor) {
@@ -37,13 +23,7 @@ export async function VSPicgoUploadStarter(
 
   editor.selection = options.editor.selection
 
-  await options.vspicgo.upload(options.args4uploader)
-
-  return new Promise((resolve, reject) => {
-    options.vspicgo.on(EVSPicgoHooks.updated, async (res: string) => {
-      console.log('updated: ' + res)
-
-      resolve(res)
-    })
-  })
+  return await CommandManager.commandManager.uploadCommand(
+    options.args4uploader
+  )
 }

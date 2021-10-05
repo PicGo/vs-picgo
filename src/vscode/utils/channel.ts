@@ -5,7 +5,7 @@ import { showMessage } from '.'
 import Channel from '@luozhu/vscode-channel'
 import path from 'path'
 import { PanelManager } from '../PanelManager'
-import VSPicgo from '..'
+import { CommandManager } from '../CommandManager'
 
 /**
  * Each Webview has a different channel connected to vscode, so we should call `getChannel` to create a channel for one webview
@@ -36,7 +36,7 @@ export const getChannel = (
 
   channel.bind<string[], any>(W2VMessage.UPLOAD_FILES, async (message) => {
     const files = message.params
-    return await VSPicgo.vspicgo.upload(files)
+    return await CommandManager.commandManager.uploadCommand(files)
   })
 
   channel.bind<string, any>(W2VMessage.EXECUTE_COMMAND, async (message) => {

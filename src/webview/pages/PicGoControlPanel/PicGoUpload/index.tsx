@@ -8,7 +8,8 @@ import {
   MenuList,
   MenuItem,
   ListItemText,
-  Divider
+  Divider,
+  Box
 } from '@mui/material'
 import {
   showMessage,
@@ -93,8 +94,13 @@ export const PicGoUpload = () => {
                 fontSize: 100
               }}
             />
-            <Typography variant="body1">
-              Drag and drop some files here to upload, or click to select files
+            <Typography sx={{ textAlign: 'center' }} variant="body1">
+              <Box component="span" sx={{ display: 'inline-block' }}>
+                Drag and drop some files here to upload,
+              </Box>{' '}
+              <Box component="span" sx={{ display: 'inline-block' }}>
+                or click to select files
+              </Box>
             </Typography>
           </Paper>
         </Grid>
@@ -124,7 +130,7 @@ export const PicGoUpload = () => {
                 }}>
                 <Divider sx={{ my: 1 }} />
                 {uploadCommands.map((cmd) => (
-                  <React.Fragment key={cmd.command}>
+                  <Box key={cmd.command}>
                     <MenuItem onClick={() => executeCommand(cmd.command)}>
                       <ListItemText>
                         {getNLSText(cmd.title.slice(1, -1) as any)}
@@ -150,7 +156,7 @@ export const PicGoUpload = () => {
                         ))}
                     </MenuItem>
                     <Divider />
-                  </React.Fragment>
+                  </Box>
                 ))}
               </MenuList>
             </Grid>

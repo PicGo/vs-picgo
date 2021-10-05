@@ -72,7 +72,7 @@ const commonOptions = {
     'process.env.NODE_ENV': isProduction ? '"production"' : '"development"'
   },
   minify: isProduction
-  // metafile: true,
+  // metafile: true
 }
 
 // build extension (node app)
@@ -93,10 +93,6 @@ esbuild
   .catch(() => {
     process.exit(1)
   })
-// copy picgo's clipboard scripts
-fse.copy('node_modules/picgo/dist/clipboard', `${outdir}/clipboard`, {
-  overwrite: true
-})
 
 // build webview (web app)
 esbuild

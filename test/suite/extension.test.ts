@@ -4,8 +4,8 @@
 /* eslint-disable no-undef */
 import * as assert from 'assert'
 import { workspace, window, Selection } from 'vscode'
-
-import VSPicgo from '../../src/vs-picgo'
+import { PicgoAPI } from '../../src/vscode/PicgoAPI'
+import { uploadName } from '../../src/vscode/settings'
 
 import {
   DEFAULT_CONFIGS,
@@ -16,7 +16,6 @@ import {
   VSPicgoUploadStarter
 } from '../utils'
 
-const vspicgo = VSPicgo.vspicgo
 const previousConfigs: IVSPicgoConfiguration = Object.assign(
   {},
   DEFAULT_CONFIGS
@@ -56,50 +55,52 @@ describe('VSPicgo', async function () {
 
   it('customOutputFormat should work', async function () {
     this.timeout(30000)
+    PicgoAPI.picgoAPI.setConfig(
+      'settings.vsPicgo.customUploadName',
+      uploadName.auto
+    )
     const res = await VSPicgoUploadStarter({
       args4uploader: [TEST_PICTURE_PATH],
-      configuration: {
-        'picgo.customOutputFormat': '![${uploadedName}](${url})'
-      },
       editor: {
         content: '',
         selection: new Selection(0, 0, 0, 0)
-      },
-      vspicgo
+      }
     })
-    console.log('customOutputFormat result: ' + res)
+    console.log('customOutputFormat result: ', res)
     assert.equal(REG4CUSTOM_OUTPUT_FORMAT.test(res), true)
   })
 
   it('customUploadName should work', async function () {
     this.timeout(30000)
+    PicgoAPI.picgoAPI.setConfig(
+      'settings.vsPicgo.customUploadName',
+      uploadName.dateExt
+    )
     const res = await VSPicgoUploadStarter({
       args4uploader: [TEST_PICTURE_PATH],
-      configuration: {
-        'picgo.customUploadName': '${date}${extName}'
-      },
       editor: {
         content: '',
         selection: new Selection(0, 0, 0, 0)
-      },
-      vspicgo
+      }
     })
-    console.log('customUploadName result: ' + res)
+    console.log('customUploadName result: ', res)
     assert.equal(REG4CUSTOM_FILE_FORMAT.test(res), true)
   })
 
   it('selection as fileName should work', async function () {
     this.timeout(30000)
+    PicgoAPI.picgoAPI.setConfig(
+      'settings.vsPicgo.customUploadName',
+      uploadName.auto
+    )
     const res = await VSPicgoUploadStarter({
       args4uploader: [TEST_PICTURE_PATH],
-      configuration: {},
       editor: {
         content: 'TEST',
         selection: new Selection(0, 0, 0, 4)
-      },
-      vspicgo
+      }
     })
-    console.log('selection as fileName result: ' + res)
+    console.log('selection as fileName result: ', res)
     assert.equal(res.indexOf('TEST'), 2)
   })
 })
