@@ -39,6 +39,15 @@ export const PicGoDrawerList = () => {
           </ListItemIcon>
           <ListItemText primary="Gallery" />
         </ListItemButton>
+
+        <ListItemButton
+          onClick={() => history.push('/settings')}
+          selected={pathname === '/settings'}>
+          <ListItemIcon>
+            <MuiIconsMaterial.Settings />
+          </ListItemIcon>
+          <ListItemText primary="Settings" />
+        </ListItemButton>
       </List>
     </Box>
   )

@@ -5,6 +5,7 @@ import { store } from './store'
 import { PicGoDrawerList } from './PicGoDrawerList'
 import { PicGoUpload } from './PicGoUpload'
 import { PicGoGallery } from './PicGoGallery'
+import { PicGoSettings } from './PicGoSettings'
 
 export const PicGoControlPanel = () => {
   return (
@@ -12,6 +13,7 @@ export const PicGoControlPanel = () => {
       <PicGoControlPanelWrapper drawerList={<PicGoDrawerList />}>
         <PicGoUpload />
         <PicGoGallery />
+        <PicGoSettings />
       </PicGoControlPanelWrapper>
     </Provider>
   )

@@ -80,7 +80,6 @@ export const ThemeWrapper: React.FunctionComponent = (props) => {
   useEffect(() => {
     const onVSCodeColorThemeChanged = () => {
       const theme = calculateTheme()
-      console.log('new theme', theme)
       setTheme(theme)
     }
     const observer = new MutationObserver(onVSCodeColorThemeChanged)

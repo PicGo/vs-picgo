@@ -19,8 +19,11 @@ export interface IOutputUrl {
   url: string
 }
 
-export class PicgoPlugins {
-  static picgoPlugins = new PicgoPlugins()
+/**
+ * Some helpful plugins or functions to enhance picgo core
+ */
+export class PicgoAddon {
+  static picgoAddon = new PicgoAddon()
   // eslint-disable-next-line no-useless-constructor
   private constructor() {}
 

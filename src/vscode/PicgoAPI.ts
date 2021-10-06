@@ -1,4 +1,4 @@
-import { IConfig, PicGo, IHelper, LifecyclePlugins } from 'picgo'
+import { IConfig, PicGo, IHelper, LifecyclePlugins, IPluginConfig } from 'picgo'
 import { DataStore } from './DataStore'
 import vscode from 'vscode'
 import { decorateMessage, showError, showInfo } from './utils'
@@ -6,6 +6,12 @@ import { defaultSettings } from './settings'
 import _ from 'lodash-es'
 import { Get } from 'type-fest'
 export type GetConfig<T extends string> = Get<IConfig, T>
+
+export interface IUploaderConfig {
+  uploaderName: string
+  uploaderID: string
+  configList?: IPluginConfig[]
+}
 
 export class PicgoAPI {
   static picgoAPI = new PicgoAPI()
@@ -52,6 +58,38 @@ export class PicgoAPI {
   setConfig<T extends string>(configName: T, value: GetConfig<T>) {
     this.picgo.saveConfig({
       [configName]: value
+    })
+  }
+
+  getAllUploaders() {
+    return this.picgo.helper.uploader.getIdList()
+  }
+
+  handleConfigWithFunction = (configList?: IPluginConfig[]) => {
+    if (!configList) return
+    for (const config of configList) {
+      if (typeof config.default === 'function') {
+        config.default = config.default()
+      }
+      if (typeof config.choices === 'function') {
+        config.choices = config.choices()
+      }
+    }
+    return configList
+  }
+
+  getAllUploaderConfigs(): IUploaderConfig[] {
+    return this.getAllUploaders().map((uploaderID) => {
+      const uploader = this.picgo.helper.uploader.get(uploaderID)
+      const uploaderName = uploader?.name ?? uploaderID
+      const configList = this.handleConfigWithFunction(
+        uploader?.config?.(this.picgo)
+      )
+      return {
+        uploaderID,
+        uploaderName,
+        configList
+      }
     })
   }
 

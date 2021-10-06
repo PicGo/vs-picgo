@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as vscode from 'vscode'
 import { Editor } from './Editor'
 import { PicgoAPI } from './PicgoAPI'
-import { PicgoPlugins } from './PicgoPlugins'
+import { PicgoAddon } from './PicgoAddon'
 import { showError } from './utils'
 
 export class CommandManager {
@@ -12,7 +12,7 @@ export class CommandManager {
   async uploadCommand(input?: string[]) {
     const pluginName = 'vspicgo'
     PicgoAPI.picgoAPI.setCurrentPluginName(pluginName)
-    const [id, plugin] = PicgoPlugins.picgoPlugins.beforeUploadPlugin()
+    const [id, plugin] = PicgoAddon.picgoAddon.beforeUploadPlugin()
     PicgoAPI.picgoAPI.helper.beforeUploadPlugins.register(id, plugin)
 
     const output = await PicgoAPI.picgoAPI.upload(input)
@@ -21,7 +21,7 @@ export class CommandManager {
     // error has been handled in picgoAPI.upload
     if (!output) return
 
-    const outputString = PicgoPlugins.picgoPlugins.outputToString(output)
+    const outputString = PicgoAddon.picgoAddon.outputToString(output)
 
     vscode.env.clipboard.writeText(outputString)
     Editor.writeToEditor(outputString)
