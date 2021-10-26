@@ -3,6 +3,7 @@
 > The VSCode extension of [PicGo](https://github.com/PicGo).
 
 [![version](https://img.shields.io/vscode-marketplace/v/Spades.vs-picgo.svg?style=flat-square&label=vscode%20marketplace)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
+![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/Spades.vs-picgo?style=flat-square)
 [![installs](https://img.shields.io/vscode-marketplace/d/Spades.vs-picgo.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=Spades.vs-picgo)
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FPicGo%2Fvs-picgo%2Fbadge%3Fref%3Ddev&style=flat-square)](https://actions-badge.atrox.dev/PicGo/vs-picgo/goto?ref=dev)
 [![Coveralls github branch](https://img.shields.io/coveralls/github/PicGo/vs-picgo/refs/heads/dev.svg?style=flat-square)](https://coveralls.io/github/PicGo/vs-picgo?branch=refs/heads/dev)

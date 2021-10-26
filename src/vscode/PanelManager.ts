@@ -14,7 +14,6 @@ export interface IHtmlConfig {
   pageId: PageId
   jsSrc: string
   cssHref: string
-  vscodeEnv: string
 }
 
 /**
@@ -54,8 +53,7 @@ export class PanelManager {
     const htmlConfig: IHtmlConfig = {
       pageId: pageId,
       jsSrc: getUriStr('js'),
-      cssHref: getUriStr('css'),
-      vscodeEnv: JSON.stringify(vscode.env)
+      cssHref: getUriStr('css')
     }
     return pupa(templateHtml, htmlConfig)
   }

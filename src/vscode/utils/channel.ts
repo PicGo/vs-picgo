@@ -17,40 +17,31 @@ export const getChannel = (
 ) => {
   const channel = new Channel(context, panel)
 
-  channel.bind<string, string>(
-    W2VMessage.GET_WEBVIEW_URI,
-    async ({ request: filename }) => {
-      return panel.webview
-        .asWebviewUri(
-          vscode.Uri.file(
-            path.join(
-              context.extensionPath,
-              PanelManager.WEBVIEW_FOLDER,
-              filename
-            )
+  channel.bind<string, string>(W2VMessage.GET_WEBVIEW_URI, async (filename) => {
+    return panel.webview
+      .asWebviewUri(
+        vscode.Uri.file(
+          path.join(
+            context.extensionPath,
+            PanelManager.WEBVIEW_FOLDER,
+            filename
           )
         )
-        .toString()
-    }
-  )
+      )
+      .toString()
+  })
 
-  channel.bind<IMessageToShow>(W2VMessage.SHOW_MESSAGE, ({ request: msg }) =>
+  channel.bind<IMessageToShow>(W2VMessage.SHOW_MESSAGE, (msg) =>
     showMessage(msg)
   )
 
-  channel.bind<string[], any>(
-    W2VMessage.UPLOAD_FILES,
-    async ({ request: files }) => {
-      return await CommandManager.commandManager.uploadCommand(files)
-    }
-  )
+  channel.bind<string[], any>(W2VMessage.UPLOAD_FILES, async (files) => {
+    return await CommandManager.commandManager.uploadCommand(files)
+  })
 
-  channel.bind<string, any>(
-    W2VMessage.EXECUTE_COMMAND,
-    async ({ request: command }) => {
-      return await vscode.commands.executeCommand(command)
-    }
-  )
+  channel.bind<string, any>(W2VMessage.EXECUTE_COMMAND, async (command) => {
+    return await vscode.commands.executeCommand(command)
+  })
 
   channel.bind(W2VMessage.GET_ALL_UPLOADERS, () => {
     return PicgoAPI.picgoAPI.getAllUploaders()
@@ -61,8 +52,8 @@ export const getChannel = (
 
   channel.bind<Parameters<PicgoAPI['setConfig']>>(
     W2VMessage.SET_CONFIG,
-    ({ request: args }) => {
-      return PicgoAPI.picgoAPI.setConfig(...args)
+    (request) => {
+      return PicgoAPI.picgoAPI.setConfig(...request)
     }
   )
 

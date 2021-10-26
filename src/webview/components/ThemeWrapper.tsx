@@ -74,7 +74,7 @@ const calculateTheme = () => {
   })
 }
 
-export const ThemeWrapper: React.FunctionComponent = (props) => {
+export const ThemeWrapper: React.FunctionComponent = ({ children }) => {
   const [theme, setTheme] = useState<DefaultTheme | undefined>()
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export const ThemeWrapper: React.FunctionComponent = (props) => {
   return theme ? (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {props.children}
+      {children}
     </ThemeProvider>
   ) : null
 }

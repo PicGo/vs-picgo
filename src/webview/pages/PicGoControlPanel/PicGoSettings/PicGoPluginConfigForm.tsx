@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 
 export interface IPicGoPluginConfigFormProps {
+  pluginId: string
   pluginName: string
   pluginConfigList?: IPluginConfig[]
   onConfigChange: <V = any>(configName: string, value: V) => void
@@ -23,11 +24,15 @@ export const PicGoPluginConfigForm: React.FC<IPicGoPluginConfigFormProps> = ({
   pluginConfigList,
   currentPluginConfig,
   onConfigChange,
-  pluginName
+  pluginName,
+  pluginId
 }) => {
   return (
     <Grid
+      id={pluginId}
       item
+      lg={9}
+      md={8}
       sx={{
         textAlign: 'center'
       }}
@@ -42,7 +47,7 @@ export const PicGoPluginConfigForm: React.FC<IPicGoPluginConfigFormProps> = ({
             - ...
           */}
         <Typography component="h2" gutterBottom variant="h6">
-          Settings of: {pluginName}
+          Settings of {pluginName}
         </Typography>
         {pluginConfigList?.map((config) => {
           switch (config.type) {
@@ -52,7 +57,7 @@ export const PicGoPluginConfigForm: React.FC<IPicGoPluginConfigFormProps> = ({
                 <TextField
                   fullWidth
                   key={config.name}
-                  label={config.name}
+                  label={config.alias ?? config.name}
                   onChange={(e) => {
                     onConfigChange(config.name, e.target.value)
                   }}

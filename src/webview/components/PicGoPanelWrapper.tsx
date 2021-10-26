@@ -16,8 +16,6 @@ import * as MuiIconsMaterial from '@mui/icons-material'
 import logo from '../../images/squareLogo.png'
 import { Copyright } from './Copyright'
 
-const drawerWidth: number = 240
-
 interface IAppBarProps extends MuiAppBarProps {
   open?: boolean
 }
@@ -38,6 +36,9 @@ const AppBar = styled(MuiAppBar, {
   })
 }))
 
+const drawerWidth: number = 240
+const drawerScrollbarWidth = 8
+
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open'
 })(({ theme, open }) => ({
@@ -45,6 +46,8 @@ const Drawer = styled(MuiDrawer, {
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
+    // the scrollbar occupies no width but overlaying in the right padding of the drawer. To make the drawer looks nicer, we should apply the same left padding as the right padding, ref: the MUI docs page's left sidebar
+    overflow: 'overlay',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
@@ -61,6 +64,9 @@ const Drawer = styled(MuiDrawer, {
         width: theme.spacing(9)
       }
     })
+  },
+  '& .MuiDrawer-paper::-webkit-scrollbar': {
+    width: drawerScrollbarWidth
   }
 }))
 
@@ -78,7 +84,7 @@ export const PicGoControlPanelWrapper: React.FC<IPicGoControlPanelWrapperProps> 
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', maxHeight: '100vh' }}>
       <Drawer open={open} variant="permanent">
         <Toolbar
           sx={{
@@ -92,12 +98,16 @@ export const PicGoControlPanelWrapper: React.FC<IPicGoControlPanelWrapperProps> 
             component="img"
             src={logo}
             sx={{
-              width: 32
+              width: 32,
+              borderRadius: 2
             }}
           />
           <Typography
             sx={{
-              ...(!open && { display: 'none' })
+              ...(!open && { display: 'none' }),
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
             variant="h6">
             vs-picgo
@@ -111,7 +121,12 @@ export const PicGoControlPanelWrapper: React.FC<IPicGoControlPanelWrapperProps> 
           </IconButton>
         </Toolbar>
         <Divider />
-        {drawerList}
+        <Box
+          sx={{
+            px: `${drawerScrollbarWidth}px`
+          }}>
+          {drawerList}
+        </Box>
       </Drawer>
       <Box
         component="main"
@@ -158,13 +173,20 @@ export const PicGoControlPanelWrapper: React.FC<IPicGoControlPanelWrapperProps> 
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
+        <Container
+          maxWidth="lg"
+          sx={{
+            mt: 4,
+            mb: 4,
+            flexGrow: 1
+          }}>
           {children}
         </Container>
         <Paper
           sx={{
             bottom: 0,
-            position: 'sticky'
+            position: 'sticky',
+            zIndex: 1000
           }}>
           <Copyright
             sx={{

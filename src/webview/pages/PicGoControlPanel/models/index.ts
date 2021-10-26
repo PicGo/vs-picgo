@@ -1,4 +1,5 @@
 import { Models, createModel } from '@rematch/core'
+import { settings } from './settings'
 
 export interface ICommonState {
   count: number
@@ -22,6 +23,7 @@ export const common = createModel<IRootModel>()({
 
 export interface IRootModel extends Models<IRootModel> {
   common: typeof common
+  settings: typeof settings
 }
 
-export const models: IRootModel = { common }
+export const models: IRootModel = { common, settings }
