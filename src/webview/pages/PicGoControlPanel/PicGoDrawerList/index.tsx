@@ -62,7 +62,7 @@ export const PicGoDrawerList = () => {
         <ListItemIcon>
           <MuiIconsMaterial.Settings />
         </ListItemIcon>
-        <ListItemText primary="Settings" />
+        <ListItemText primary="Uploaders" />
         {uploaderListOpened ? (
           <MuiIconsMaterial.ExpandLess />
         ) : (
