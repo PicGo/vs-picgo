@@ -12,7 +12,9 @@
       "runtimeExecutable": "${execPath}",
       "args": [
         "--disable-extensions",
-        "--extensionDevelopmentPath=${workspaceFolder}"
+        "--user-data-dir=tmp",
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "${workspaceFolder}/assets"
       ],
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "preLaunchTask": "${defaultBuildTask}"

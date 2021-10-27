@@ -1,49 +1,41 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Range, Position, window, workspace } from 'vscode'
-import {
-  DEFAULT_CONFIGS,
-  IVSPicgoUploadStarterOptions,
-  IVSPicgoConfigurationKeys
-} from './constants-and-interfaces'
-import { EVSPicgoHooks } from '../../src/vs-picgo'
+import { Range, Position, window } from 'vscode'
+import { CommandManager } from '../../src/vscode/CommandManager'
+import { IVSPicgoUploadStarterOptions } from './constants-and-interfaces'
 
 export async function VSPicgoUploadStarter(
   options: IVSPicgoUploadStarterOptions
-): Promise<string> {
-  // load custom configuration
-  const mergedConfig = Object.assign({}, DEFAULT_CONFIGS, options.configuration)
-
-  // update configuration
-  for (const section of Object.keys(mergedConfig)) {
-    await workspace
-      .getConfiguration('', null)
-      .update(section, mergedConfig[section as IVSPicgoConfigurationKeys], true)
-  }
-
+) {
   const editor = window.activeTextEditor
 
   if (!editor) {
     throw new Error('No activeTextEditor.')
   }
 
-  await editor.edit((editorBuilder) => {
+  const applied = await editor.edit((editorBuilder) => {
     // clean up content in test.md, insert custom content
-    const fullRange = new Range(
-      new Position(0, 0),
-      editor.document.positionAt(editor.document.getText().length)
+    const endPosition = editor.document.positionAt(
+      editor.document.getText().length
     )
+    console.log(
+      'document text',
+      editor.document.getText(),
+      editor.document.getText().length
+    )
+    console.log('endPosition', endPosition)
+    const fullRange = new Range(new Position(0, 0), endPosition)
     editorBuilder.replace(fullRange, options.editor.content)
   })
+  if (!applied) {
+    console.error('edit cannot be applied')
+  }
 
   editor.selection = options.editor.selection
 
-  await options.vspicgo.upload(options.args4uploader)
-
-  return new Promise((resolve, reject) => {
-    options.vspicgo.on(EVSPicgoHooks.updated, async (res: string) => {
-      console.log('updated: ' + res)
-
-      resolve(res)
-    })
-  })
+  console.log('before upload text content', editor.document.getText())
+  const ans = await CommandManager.commandManager.uploadCommand(
+    options.args4uploader
+  )
+  console.log('after upload text content', editor.document.getText())
+  return ans
 }

@@ -1,13 +1,11 @@
 import vscode from 'vscode'
-import path from 'path'
 import pupa from 'pupa'
 import templateHtml from 'inline:./template.html'
 import logo from '../images/squareLogo.png'
 import Channel from '@luozhu/vscode-channel'
-import { W2V_GET_WEBVIEW_URI, W2V_SHOW_MESSAGE } from '../utils/message-method'
-import { showMessage } from './utils'
+import path from 'path'
 import { PageId, pageMap } from '../utils/page'
-import { IMessageToShow } from '../utils'
+import { getChannel } from './utils/channel'
 
 /**
  * Type of variables that will be passed to the html template
@@ -16,18 +14,22 @@ export interface IHtmlConfig {
   pageId: PageId
   jsSrc: string
   cssHref: string
-  vscodeEnv: string
 }
 
 /**
  * Manage all webview pages in one panel manager
  */
 export class PanelManager {
+  static panelManager: PanelManager
+  static bindContext(context: vscode.ExtensionContext) {
+    this.panelManager = new PanelManager(context)
+  }
+
   context: vscode.ExtensionContext
   pageId2WebviewPanel: Map<string, [vscode.WebviewPanel, Channel]>
   static WEBVIEW_FOLDER = 'dist/webview'
   static DIST_FOLDER = 'dist'
-  constructor(context: vscode.ExtensionContext) {
+  private constructor(context: vscode.ExtensionContext) {
     this.context = context
     this.pageId2WebviewPanel = new Map()
   }
@@ -51,8 +53,7 @@ export class PanelManager {
     const htmlConfig: IHtmlConfig = {
       pageId: pageId,
       jsSrc: getUriStr('js'),
-      cssHref: getUriStr('css'),
-      vscodeEnv: JSON.stringify(vscode.env)
+      cssHref: getUriStr('css')
     }
     return pupa(templateHtml, htmlConfig)
   }
@@ -104,24 +105,10 @@ export class PanelManager {
       this.context.subscriptions
     )
 
-    const channel = new Channel(this.context, panel)
-    channel.bind<string, string>(W2V_GET_WEBVIEW_URI, async (message) => {
-      return panel.webview
-        .asWebviewUri(
-          vscode.Uri.file(
-            path.join(
-              this.context.extensionPath,
-              PanelManager.WEBVIEW_FOLDER,
-              message.params
-            )
-          )
-        )
-        .toString()
-    })
-    channel.bind<IMessageToShow>(W2V_SHOW_MESSAGE, (message) =>
-      showMessage(message.params)
-    )
-
-    this.pageId2WebviewPanel.set(pageId, [panel, channel])
+    this.pageId2WebviewPanel.set(pageId, [
+      panel,
+      // Each Webview has a associated channel
+      getChannel(this.context, panel)
+    ])
   }
 }

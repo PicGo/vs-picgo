@@ -3,11 +3,12 @@
  */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { showMessage } from './channel'
+import { showMessage } from '../utils/channel'
 import { Demo } from './Demo'
 import { PicGoControlPanel } from './PicGoControlPanel'
 import { PageId } from '../../utils/page'
-import { ThemeWrapper } from './ThemeWrapper'
+import { ThemeWrapper } from '../components/ThemeWrapper'
+import { HashRouter, Switch } from 'react-router-dom'
 
 import './index.less'
 
@@ -27,10 +28,17 @@ export const renderApp = (pageId: PageId) => {
     return
   }
 
+  const App = pages[pageId]
   ReactDOM.unmountComponentAtNode(root)
   ReactDOM.render(
     <React.StrictMode>
-      <ThemeWrapper App={pages[pageId]} />
+      <HashRouter>
+        <Switch>
+          <ThemeWrapper>
+            <App />
+          </ThemeWrapper>
+        </Switch>
+      </HashRouter>
     </React.StrictMode>,
     root
   )

@@ -9,17 +9,6 @@ module.exports = {
     project: './tsconfig.json'
   },
   rules: {
-    '@typescript-eslint/naming-convention': [
-      'error',
-      {
-        selector: 'interface',
-        format: ['PascalCase'],
-        custom: {
-          regex: '^I[A-Z]',
-          match: true
-        }
-      }
-    ],
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/strict-boolean-expressions': 0,
     'no-console': 'warn',
@@ -27,7 +16,12 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-undef': 'off',
     'react/jsx-sort-props': 'error',
-    'react/jsx-boolean-value': 'error'
+    'react/jsx-boolean-value': 'error',
+    'no-void': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/promise-function-async': 'off',
+    // don't need this, because already has @typescript-eslint/no-unused-vars
+    'no-unused-vars': 'off'
   },
   overrides: [
     {
@@ -35,6 +29,22 @@ module.exports = {
       rules: {
         'import/no-anonymous-default-export': 0,
         'filenames/match-exported': 0
+      }
+    },
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      rules: {
+        '@typescript-eslint/naming-convention': [
+          'error',
+          {
+            selector: 'interface',
+            format: ['PascalCase'],
+            custom: {
+              regex: '^I[A-Z]',
+              match: true
+            }
+          }
+        ]
       }
     }
   ]

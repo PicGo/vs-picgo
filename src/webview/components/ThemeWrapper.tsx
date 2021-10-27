@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { DefaultTheme } from '@mui/system'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
@@ -73,32 +74,26 @@ const calculateTheme = () => {
   })
 }
 
-export interface IThemeWrapperProps {
-  App: () => JSX.Element
-}
-
-export const ThemeWrapper = ({ App }: IThemeWrapperProps) => {
-  const [theme, setTheme] = useState(calculateTheme())
+export const ThemeWrapper: React.FunctionComponent = ({ children }) => {
+  const [theme, setTheme] = useState<DefaultTheme | undefined>()
 
   useEffect(() => {
     const onVSCodeColorThemeChanged = () => {
-      setTheme(() => {
-        const theme = calculateTheme()
-        console.log('new theme:\n', theme)
-        return theme
-      })
+      const theme = calculateTheme()
+      setTheme(theme)
     }
     const observer = new MutationObserver(onVSCodeColorThemeChanged)
     observer.observe(document.body, {
       attributes: true,
       attributeFilter: ['class']
     })
+    onVSCodeColorThemeChanged()
   }, [])
 
-  return (
+  return theme ? (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      {children}
     </ThemeProvider>
-  )
+  ) : null
 }

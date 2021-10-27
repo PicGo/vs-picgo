@@ -2,8 +2,6 @@
 import * as path from 'path'
 import { Selection } from 'vscode'
 
-import VSPicgo from '../../src/vs-picgo'
-
 export interface IVSPicgoConfiguration {
   'picgo.configPath': string | undefined
   'picgo.dataPath': string | undefined
@@ -70,9 +68,7 @@ export interface IVSPicgoConfiguration {
 export type IVSPicgoConfigurationKeys = keyof IVSPicgoConfiguration
 
 export interface IVSPicgoUploadStarterOptions {
-  vspicgo: VSPicgo
   args4uploader: string[] // arguments sent to func,
-  configuration: Partial<IVSPicgoConfiguration>
   editor: {
     content: string
     selection: Selection
