@@ -6,9 +6,9 @@ export class Editor {
     return vscode.window.activeTextEditor
   }
 
-  static writeToEditor(text: string) {
+  static async writeToEditor(text: string) {
     const editor = this.editor
-    editor?.edit((textEditor) => {
+    return await editor?.edit((textEditor) => {
       textEditor.replace(editor.selection, text)
     })
   }

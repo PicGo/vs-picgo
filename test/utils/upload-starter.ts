@@ -12,18 +12,30 @@ export async function VSPicgoUploadStarter(
     throw new Error('No activeTextEditor.')
   }
 
-  await editor.edit((editorBuilder) => {
+  const applied = await editor.edit((editorBuilder) => {
     // clean up content in test.md, insert custom content
-    const fullRange = new Range(
-      new Position(0, 0),
-      editor.document.positionAt(editor.document.getText().length)
+    const endPosition = editor.document.positionAt(
+      editor.document.getText().length
     )
+    console.log(
+      'document text',
+      editor.document.getText(),
+      editor.document.getText().length
+    )
+    console.log('endPosition', endPosition)
+    const fullRange = new Range(new Position(0, 0), endPosition)
     editorBuilder.replace(fullRange, options.editor.content)
   })
+  if (!applied) {
+    console.error('edit cannot be applied')
+  }
 
   editor.selection = options.editor.selection
 
-  return await CommandManager.commandManager.uploadCommand(
+  console.log('before upload text content', editor.document.getText())
+  const ans = await CommandManager.commandManager.uploadCommand(
     options.args4uploader
   )
+  console.log('after upload text content', editor.document.getText())
+  return ans
 }

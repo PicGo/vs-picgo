@@ -24,7 +24,7 @@ export class CommandManager {
     const outputString = PicgoAddon.picgoAddon.outputToString(output)
 
     vscode.env.clipboard.writeText(outputString)
-    Editor.writeToEditor(outputString)
+    await Editor.writeToEditor(outputString)
     return outputString
   }
 

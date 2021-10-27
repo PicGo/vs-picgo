@@ -8,20 +8,10 @@ import { PicgoAPI } from '../../src/vscode/PicgoAPI'
 import { uploadName } from '../../src/vscode/settings'
 
 import {
-  DEFAULT_CONFIGS,
-  IVSPicgoConfiguration,
-  IVSPicgoConfigurationKeys,
   TEST_MD_FILE_PATH,
   TEST_PICTURE_PATH,
   VSPicgoUploadStarter
 } from '../utils'
-
-const previousConfigs: IVSPicgoConfiguration = Object.assign(
-  {},
-  DEFAULT_CONFIGS
-)
-
-const configKeys = Object.keys(previousConfigs)
 
 const REG4CUSTOM_OUTPUT_FORMAT = /^\!\[.+\]\(.+\)$/
 const REG4CUSTOM_FILE_FORMAT = /^\!\[\d{4}\-\d{2}\-\d{2}]\(.+\)$/
@@ -32,29 +22,8 @@ before(async () => {
 })
 
 describe('VSPicgo', async function () {
-  beforeEach(() => {
-    // save old configuration info
-    for (const section of configKeys) {
-      previousConfigs[
-        section as IVSPicgoConfigurationKeys
-      ] = workspace.getConfiguration('', null).get(section)
-    }
-  })
-
-  afterEach(async function () {
-    for (const section of configKeys) {
-      await workspace
-        .getConfiguration('', null)
-        .update(
-          section,
-          previousConfigs[section as IVSPicgoConfigurationKeys],
-          true
-        )
-    }
-  })
-
   it('customOutputFormat should work', async function () {
-    this.timeout(30000)
+    this.timeout(1e10)
     PicgoAPI.picgoAPI.setConfig(
       'settings.vsPicgo.customUploadName',
       uploadName.auto
@@ -71,7 +40,7 @@ describe('VSPicgo', async function () {
   })
 
   it('customUploadName should work', async function () {
-    this.timeout(30000)
+    this.timeout(1e10)
     PicgoAPI.picgoAPI.setConfig(
       'settings.vsPicgo.customUploadName',
       uploadName.dateExt
@@ -88,7 +57,7 @@ describe('VSPicgo', async function () {
   })
 
   it('selection as fileName should work', async function () {
-    this.timeout(30000)
+    this.timeout(1e10)
     PicgoAPI.picgoAPI.setConfig(
       'settings.vsPicgo.customUploadName',
       uploadName.auto
