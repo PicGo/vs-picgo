@@ -3,6 +3,7 @@ import React from 'react'
 import { PicGoPluginConfigForm } from './PicGoPluginConfigForm'
 import { useState, useDispatch } from '../hooks'
 import { useParams } from 'react-router-dom'
+import { VSPicGoSettings } from './VSPicGoSettings'
 
 export interface IPicGoSettingsParams {
   uploaderID?: string
@@ -17,6 +18,8 @@ export const PicGoSettings: React.FC = () => {
 
   return (
     <Grid container justifyContent="center" spacing={3}>
+      {/* This vs-picgo Settings page */}
+      <VSPicGoSettings />
       {/* If it is a uploader config page */}
       {params.uploaderID
         ? (() => {

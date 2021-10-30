@@ -1,5 +1,6 @@
 import { createModel } from '@rematch/core'
 import type { IUploaderConfig } from '../../../../vscode/PicgoAPI'
+import type { IPicGoSettings } from '../../../../vscode/settings'
 import { IRootModel } from '../models'
 import { setConfig } from '../../../utils/channel'
 export interface IPicGoSettingState {
@@ -13,6 +14,7 @@ export interface IPicGoSettingState {
    * currentUploaderConfigs[uploaderID][config.name] = value
    */
   currentUploaderConfigs: Record<string, Record<string, any>>
+  picgoSettings: IPicGoSettings | null
 }
 
 export interface IUpdateCurrentUploaderConfigsPayload {
@@ -21,13 +23,14 @@ export interface IUpdateCurrentUploaderConfigsPayload {
   value: any
 }
 
-export const defaultCommonState: IPicGoSettingState = {
+export const defaultSettingsState: IPicGoSettingState = {
   allUploaderConfigs: [],
-  currentUploaderConfigs: {}
+  currentUploaderConfigs: {},
+  picgoSettings: null
 }
 
 export const settings = createModel<IRootModel>()({
-  state: defaultCommonState,
+  state: defaultSettingsState,
   reducers: {
     /**
      * This reducer should be called on paged loaded so that we have the initial `currentUploaderConfigs` state for page to render correctly, such as the uploader list in the drawer and the whole settings page.
@@ -51,6 +54,10 @@ export const settings = createModel<IRootModel>()({
     ) {
       setConfig(`picBed.${uploaderID}.${configName}`, value)
       state.currentUploaderConfigs[uploaderID][configName] = value
+    },
+
+    setPicGoSettings(state, picgoSettings: IPicGoSettings) {
+      state.picgoSettings = picgoSettings
     }
   },
   selectors: (slice, createSelector, hasProps) => ({

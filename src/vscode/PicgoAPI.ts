@@ -1,15 +1,18 @@
-import { IConfig, PicGo, IHelper, LifecyclePlugins, IPluginConfig } from 'picgo'
+import { IConfig, PicGo, LifecyclePlugins, IPluginConfig } from 'picgo'
 import { DataStore } from './DataStore'
 import vscode from 'vscode'
 import { decorateMessage, showError, showInfo } from './utils'
-import { defaultSettings } from './settings'
-import _ from 'lodash-es'
+import { defaultSettings, IPicGoSettings } from './settings'
+import _, { isObject } from 'lodash-es'
 import { Get } from 'type-fest'
 export type GetConfig<T extends string> = Get<IConfig, T>
 
 export interface IUploaderConfig {
   uploaderName: string
   uploaderID: string
+  /**
+   * The current list of all configurations of the uploader. An uploader will have a `IPlugin.config` function to determine the current configurations. Usually it will be calculated as something like `default: userConfig.xxx || 'github'`, that is, read the picgo core configuration first and set something as fallback
+   */
   configList?: IPluginConfig[]
 }
 
@@ -17,25 +20,33 @@ export class PicgoAPI {
   static picgoAPI = new PicgoAPI()
 
   private readonly picgo: PicGo
-  helper: IHelper
   constructor() {
     this.picgo = new PicGo(DataStore.dataStore.configPath)
     this.picgo.saveConfig({
       debug: true
     })
     this.initConfig()
-    this.helper = this.picgo.helper
   }
 
   initConfig() {
-    this.setConfigIfNotExist(
-      'settings.vsPicgo.customOutputFormat',
-      defaultSettings.settings.vsPicgo.customOutputFormat
-    )
-    this.setConfigIfNotExist(
-      'settings.vsPicgo.customUploadName',
-      defaultSettings.settings.vsPicgo.customUploadName
-    )
+    const dfs = (val: any, path: string[]) => {
+      if (isObject(val)) {
+        for (const key of Object.keys(val)) {
+          dfs((val as any)[key], [...path, key])
+        }
+      } else {
+        // Leaf condition is a non-object value, we init this value if it does not exist in the config file
+        this.setConfigIfNotExist(path.join('.'), val)
+        // for example:
+        // this.setConfigIfNotExist(
+        //   'settings.vsPicgo.customOutputFormat',
+        //   defaultSettings.settings.vsPicgo.customOutputFormat
+        // )
+      }
+    }
+
+    // Init all values in the `defaultSettings` object
+    dfs(defaultSettings, [])
   }
 
   setConfigIfNotExist<T extends string>(configName: T, value: GetConfig<T>) {
@@ -91,6 +102,15 @@ export class PicgoAPI {
         configList
       }
     })
+  }
+
+  getPicGoSettings(): IPicGoSettings {
+    const config = this.picgo.getConfig<IPicGoSettings>()
+    // Although there is no configuration in the config file, we should let user know the current default log level and log path etc.
+    config.settings.logLevel ??= this.picgo.log.logLevel
+    config.settings.logPath ??= this.picgo.log.logPath
+
+    return config
   }
 
   /**
