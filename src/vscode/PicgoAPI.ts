@@ -19,7 +19,7 @@ export interface IUploaderConfig {
 export class PicgoAPI {
   static picgoAPI = new PicgoAPI()
 
-  private readonly picgo: PicGo
+  readonly picgo: PicGo
   constructor() {
     this.picgo = new PicGo(DataStore.dataStore.configPath)
     this.picgo.saveConfig({
