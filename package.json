@@ -369,7 +369,7 @@
     "cz-conventional-changelog": "^3.1.0",
     "cz-customizable": "6.2.0",
     "decache": "^4.5.1",
-    "electron": "15.1.0",
+    "electron": "15.5.5",
     "esbuild": "0.13.3",
     "esbuild-plugin-inline-import": "1.0.1",
     "esbuild-plugin-less": "1.1.0",
