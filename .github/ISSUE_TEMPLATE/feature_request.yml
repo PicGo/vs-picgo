@@ -25,6 +25,7 @@ body:
         - Mac
         - Mac(arm64)
         - Linux
+        - All
     validations:
       required: true
   - type: textarea
