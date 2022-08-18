@@ -1,0 +1,36 @@
+name: "✨ Feature Request"
+description: 功能请求 / Feature request
+title: "[Feature]: "
+labels: ["feature request"]
+assignees:
+  - molunerfinn
+body:
+  - type: markdown
+    attributes:
+      value: |+
+        ## VS-PicGo Issue 模板
+
+        请依照该模板来提交，否则将会被关闭。
+        **提问之前请注意你看过文档以及那些被关闭的 issues。否则同样的提问也会被关闭！**
+
+        Please submit according to this template, otherwise it will be closed.
+        **Before asking a question, please note that you have read the Doc, and those closed issues. Otherwise the same question will also be closed! **
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 系统信息 | System Information
+      options:
+        - Windows
+        - Mac
+        - Mac(arm64)
+        - Linux
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 功能请求 | Feature request
+      description: 详细描述你所预想的功能或者是现有功能的改进 | Describe in detail the features you envision or improvements to existing features
+    validations:
+      required: true
