@@ -312,6 +312,7 @@
       }
     }
   },
+  "extensionKind": ["ui"],
   "scripts": {
     "vscode:prepublish": "yarn && yarn build:prod",
     "build": "node esbuild.mjs",
