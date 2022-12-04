@@ -391,7 +391,7 @@
     "istanbul": "^0.4.5",
     "lint-staged": "10.5.4",
     "lodash-es": "4.17.21",
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "mocha": "^7.0.1",
     "prettier": "2.2.1",
     "prettier-config-standard": "4.0.0",
