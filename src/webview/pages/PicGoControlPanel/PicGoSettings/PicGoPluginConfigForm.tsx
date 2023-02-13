@@ -4,7 +4,6 @@ import {
   Grid,
   Paper,
   TextField,
-  Select,
   MenuItem,
   Typography,
   Box,
@@ -84,12 +83,15 @@ export const PicGoPluginConfigForm: React.FC<IPicGoPluginConfigFormProps> = ({
                     />
                   }
                   label={config.name}
+                  sx={{
+                    my: 1
+                  }}
                 />
               )
             case 'list':
             case 'checkbox':
               return (
-                <Select
+                <TextField
                   fullWidth
                   key={config.name}
                   label={config.name}
@@ -98,6 +100,7 @@ export const PicGoPluginConfigForm: React.FC<IPicGoPluginConfigFormProps> = ({
                   }}
                   placeholder={config.message ?? config.name}
                   required={config.required}
+                  select
                   sx={{
                     my: 1
                   }}
@@ -110,7 +113,7 @@ export const PicGoPluginConfigForm: React.FC<IPicGoPluginConfigFormProps> = ({
                       </MenuItem>
                     )
                   })}
-                </Select>
+                </TextField>
               )
             default:
               return (

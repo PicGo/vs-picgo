@@ -28,6 +28,9 @@ export const PicGoControlPanelInner = () => {
       <Route exact path={`/settings/uploader/:uploaderID`}>
         <PicGoSettings />
       </Route>
+      <Route exact path={`/settings/vs-picgo`}>
+        <PicGoSettings />
+      </Route>
       <Route exact path={`/settings/plugin/:pluginID`}>
         <PicGoSettings />
       </Route>

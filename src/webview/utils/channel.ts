@@ -3,6 +3,7 @@ import { IMessageToShow } from '../../utils'
 import { W2VMessage } from '../../utils/message-method'
 import { IImgInfo } from 'picgo'
 import type { IUploaderConfig, PicgoAPI } from '../../vscode/PicgoAPI'
+import type { IPicGoSettings } from '../../vscode/settings'
 
 export const channel = new Channel()
 
@@ -40,3 +41,14 @@ export const getAllUploaderConfigs = async () =>
 /** Set picgo config */
 export const setConfig = async (...args: Parameters<PicgoAPI['setConfig']>) =>
   await channel.call(W2VMessage.SET_CONFIG, args)
+
+/**
+ * Reveal a file in system file explorer
+ */
+export const revealFileInOS = async (path: string) => {
+  return await channel.call(W2VMessage.REVEAL_FILE_IN_OS, path)
+}
+
+/** Get picgo configurations and settings */
+export const getPicGoSettings = () =>
+  channel.call<unknown, IPicGoSettings>(W2VMessage.GET_PICGO_SETTINGS)

@@ -57,5 +57,16 @@ export const getChannel = (
     }
   )
 
+  channel.bind<string>(W2VMessage.REVEAL_FILE_IN_OS, async (path) => {
+    return await vscode.commands.executeCommand(
+      'revealFileInOS',
+      vscode.Uri.file(path)
+    )
+  })
+
+  channel.bind(W2VMessage.GET_PICGO_SETTINGS, () => {
+    return PicgoAPI.picgoAPI.getPicGoSettings()
+  })
+
   return channel
 }

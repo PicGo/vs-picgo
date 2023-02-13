@@ -13,10 +13,10 @@ export class CommandManager {
     const pluginName = 'vspicgo'
     PicgoAPI.picgoAPI.setCurrentPluginName(pluginName)
     const [id, plugin] = PicgoAddon.picgoAddon.beforeUploadPlugin()
-    PicgoAPI.picgoAPI.helper.beforeUploadPlugins.register(id, plugin)
+    PicgoAPI.picgoAPI.picgo.helper.beforeUploadPlugins.register(id, plugin)
 
     const output = await PicgoAPI.picgoAPI.upload(input)
-    PicgoAPI.picgoAPI.helper.beforeUploadPlugins.unregister(pluginName)
+    PicgoAPI.picgoAPI.picgo.helper.beforeUploadPlugins.unregister(pluginName)
 
     // error has been handled in picgoAPI.upload
     if (!output) return

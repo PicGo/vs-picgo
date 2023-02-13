@@ -1,13 +1,25 @@
 /* eslint-disable no-template-curly-in-string */
-export interface IPicgoSettings {
+import { PartialDeep } from 'type-fest'
+import { IConfig, LogLevel } from 'picgo'
+/**
+ * All this settings are configurable in the settings page of the picgo control panel
+ */
+export interface IPicGoSettings extends IConfig {
   settings: {
     vsPicgo: {
       customUploadName: string
       customOutputFormat: string
     }
+    logLevel: LogLevel | LogLevel[]
+    logPath: string
+  }
+  picBed: {
+    current: string
+    uploader: string
   }
 }
 
+// TODO: add a select in settings page for user to select this presets
 export const outputFormats = {
   Markdown: '![${uploadedName}](${url})',
   HTML: '<img src="${url}" alt="${uploadedName}">',
@@ -16,17 +28,16 @@ export const outputFormats = {
 }
 
 export const uploadName = {
-  auto:
+  SelectionOrOriginalName:
     '${editorSelectionText ? `${editorSelectionText}${imgIdx}` : fileName}${extName}',
-  dateExt: '${date}${extName}'
+  Date: '${date}${extName}'
 }
 
-export const defaultSettings: IPicgoSettings = {
+export const defaultSettings: PartialDeep<IPicGoSettings> = {
   settings: {
     vsPicgo: {
       customOutputFormat: outputFormats.Markdown,
-      customUploadName:
-        '${editorSelectionText ? `${editorSelectionText}${imgIdx}` : fileName}${extName}'
+      customUploadName: uploadName.SelectionOrOriginalName
     }
   }
 }

@@ -60,7 +60,7 @@ export const PicGoDrawerList = () => {
           my: 0.5
         }}>
         <ListItemIcon>
-          <MuiIconsMaterial.Settings />
+          <MuiIconsMaterial.Cloud />
         </ListItemIcon>
         <ListItemText primary="Uploaders" />
         {uploaderListOpened ? (
@@ -86,6 +86,19 @@ export const PicGoDrawerList = () => {
           ))}
         </List>
       </Collapse>
+
+      <ListItemButton
+        onClick={() => history.push('/settings/vs-picgo')}
+        selected={pathname === '/settings/vs-picgo'}
+        sx={{
+          borderRadius: 4,
+          my: 0.5
+        }}>
+        <ListItemIcon>
+          <MuiIconsMaterial.Settings />
+        </ListItemIcon>
+        <ListItemText primary="Settings" />
+      </ListItemButton>
     </List>
   )
 }

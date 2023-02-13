@@ -26,7 +26,7 @@ describe('VSPicgo', async function () {
     this.timeout(1e10)
     PicgoAPI.picgoAPI.setConfig(
       'settings.vsPicgo.customUploadName',
-      uploadName.auto
+      uploadName.SelectionOrOriginalName
     )
     const res = await VSPicgoUploadStarter({
       args4uploader: [TEST_PICTURE_PATH],
@@ -43,7 +43,7 @@ describe('VSPicgo', async function () {
     this.timeout(1e10)
     PicgoAPI.picgoAPI.setConfig(
       'settings.vsPicgo.customUploadName',
-      uploadName.dateExt
+      uploadName.Date
     )
     const res = await VSPicgoUploadStarter({
       args4uploader: [TEST_PICTURE_PATH],
@@ -60,7 +60,7 @@ describe('VSPicgo', async function () {
     this.timeout(1e10)
     PicgoAPI.picgoAPI.setConfig(
       'settings.vsPicgo.customUploadName',
-      uploadName.auto
+      uploadName.SelectionOrOriginalName
     )
     const res = await VSPicgoUploadStarter({
       args4uploader: [TEST_PICTURE_PATH],
